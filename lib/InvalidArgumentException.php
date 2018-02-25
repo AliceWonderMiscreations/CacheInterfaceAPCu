@@ -57,5 +57,5 @@ class InvalidArgumentException extends \InvalidArgumentException implements \Psr
     }
 }
 
-// Dear PSR-2: You can take my closing tag when you can pry it from my cold dead fingers.
+// Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.
 ?>

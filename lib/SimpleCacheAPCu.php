@@ -373,4 +373,5 @@ class SimpleCacheAPCu {
 
 }
 
+// Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.
 ?>
