@@ -1,7 +1,5 @@
 <?php
 
-//  requires APCu >= 3.0.17
-
 /*
  +-------------------------------------------------------+
  |                                                       |
@@ -10,14 +8,11 @@
  |                                                       |
  | When implementation of PSR-16 is finished I will port |
  |  coding style to PSR-2 except I will keep trailing ?> |
- |  and class name will change to SimpleCacheAPCu        |
  |                                                       |
  +-------------------------------------------------------+
  | Purpose: PSR-16 APCu Interface - not yet there...     |
  +-------------------------------------------------------+
 */
-
-// method feature comments preceded by ** are not yet implemented
 
 namespace AliceWonderMiscreations\SimpleCacheAPCu;
 
@@ -133,7 +128,6 @@ class SimpleCacheAPCu {
 
   /**
    * Sets the default cache time in seconds. NOT part of PSR-16.
-   *
    *
    * @param int $seconds The default seconds to cache entries
    *
@@ -353,7 +347,7 @@ class SimpleCacheAPCu {
   }
   
   // needed for unit testing
-  public function getRealKey( string $key ) {
+  public function getRealKey( string $key ): string {
     return $this->adjustKey($key);
   }
 
