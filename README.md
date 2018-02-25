@@ -1,5 +1,5 @@
-CacheInterfaceAPCu
-==================
+SimpleCacheAPCu
+===============
 
 This is an implementation of [PSR-16](https://www.php-fig.org/psr/psr-16/) for
 the APCu caching engine.
