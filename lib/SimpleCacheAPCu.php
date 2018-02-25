@@ -19,7 +19,6 @@
 
 // method feature comments preceded by ** are not yet implemented
 
-//namespace AliceWonderMiscreations\Psr;
 namespace AliceWonderMiscreations\SimpleCacheAPCu;
 
 //class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface {
@@ -30,7 +29,14 @@ class SimpleCacheAPCu {
   // 0 tells APCu to store it as long as it can
   protected $defaultSeconds = 0;
 
-  protected function weakHash( string $key ) {
+  /**
+   * Creates hash substring to use in internal key. NOT part of PSR-16.
+   *
+   * @param string $key The user defined key to hash
+   *
+   * @return string     sixteen character substring of salted ripemd160
+   */
+  protected function weakHash( string $key ): string {
     // purpose is not cryptographic, but to avoid odd characters
     //  in the actual apcu key.
     // salt is because I prefer salted hashes for private use hashes
@@ -40,51 +46,53 @@ class SimpleCacheAPCu {
     return substr($key, 17, 16);
   }
 
-  protected function adjustKey( string $key ) {
+  /**
+   * Takes user supplied key and creates internal key. NOT part of PSR-16.
+   *
+   * @param string $key The user defined cache key to hash
+   *
+   * @return string     The key the class uses with APCu
+   *
+   * @throws \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException
+   */
+  protected function adjustKey( string $key ): string {
     $key = trim($key);
     if(strlen($key) === 0) {
-      throw new \Error("Key Empty");
+      throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::emptyKey();
     }
     if(strlen($key) > 255) {
       // key should not be larger
       //  than 255 character
-      throw new \Error("Key Too Long");
+      throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::keyTooLong($key);
     }
     if(preg_match('/[\[\]\{\}\(\)\/\@\:\\\]/', $key) !== 0) {
       // PSR-16 says those characters not allowed
-      throw new \Error("Key Contains Illegal Character");
+      throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::invalidKeyCharacter($key);
     }
     $key = $this->webappPrefix . $this->weakHash($key);
     return $key;
   }
 
-  protected function setWebAppPrefix( string $str ) {
+  protected function setWebAppPrefix( string $str ): void {
     $str = strtoupper(trim($str));
     if(strlen($str) < 3) {
-      // prefix must be at least three characters
-      return false;
+      throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::webappPrefixTooShort($str);
     }
     if(strlen($str) > 32) {
-      // prefix must not be larger than 32 characters
-      return false;
+      throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::webappPrefixTooLong($str);
     }
     if(preg_match('/[^A-Z0-9]/', $str) !== 0) {
-      // prefix must only contain letters and numbers
-      return false;
+      throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::webappPrefixNotAlphaNumeric($str);
     }
     $this->webappPrefix = $str . '_';
-    
-    return true;
   }
   
-  protected function setHashSalt( string $str ) {
+  protected function setHashSalt( string $str ): void {
     $str = trim($str);
     if(strlen($str) < 8) {
-      // salt must be at least eight characters
-      return false;
+      throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::saltTooShort($str);
     }
     $this->salt = $str;
-    return true;
   }
   
   /*
@@ -95,7 +103,7 @@ class SimpleCacheAPCu {
    * The function will always return a positive integer number of seconds
    *  using the class default if it must.
    */
-  protected function ttlToSeconds( $ttl ) {
+  protected function ttlToSeconds( $ttl ): int {
     if(is_null($ttl)) {
       return $this->defaultSeconds;
     }
@@ -129,16 +137,15 @@ class SimpleCacheAPCu {
    *
    * @param int $seconds The default seconds to cache entries
    *
-   * @return bool true on success, false on failure
+   * @return void
    *
-  ** FIXME - throw an exception at invalid argument
+   * @throws \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException
    */
-  public function setDefaultSeconds( int $seconds ) {
+  public function setDefaultSeconds( int $seconds ): void {
     if($seconds < 0) {
-      throw new \Error("Default TTL can not be negative");
+      throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::negativeDefaultTTL($seconds);
     }
     $this->defaultSeconds = $seconds;
-    return true;
   }
 
   /**
@@ -148,9 +155,6 @@ class SimpleCacheAPCu {
    * @param mixed  $default Default value to return if the key does not exist.
    *
    * @return mixed The value of the item from the cache, or $default in case of cache miss.
-   *
-  ** @throws \Psr\SimpleCache\InvalidArgumentException
-   *   MUST be thrown if the $key string is not a legal value.
    */
   public function get( string $key, $default = null ) {
     $key = $this->adjustKey($key);
@@ -173,11 +177,8 @@ class SimpleCacheAPCu {
    *                                      for it or let the driver take care of that.
    *
    * @return bool True on success and false on failure.
-   *
-  ** @throws \Psr\SimpleCache\InvalidArgumentException
-   *   MUST be thrown if the $key string is not a legal value.
    */
-  public function set( string $key, $value, $ttl = null ) {
+  public function set( string $key, $value, $ttl = null ): bool {
     $key = $this->adjustKey($key);
     if($this->enabled) {
       $seconds = $this->ttlToSeconds($ttl);
@@ -192,15 +193,9 @@ class SimpleCacheAPCu {
     * @param string $key The unique cache key of the item to delete.
     *
     * @return bool True if the item was successfully removed. False if there was an error.
-    *
-   ** @throws \Psr\SimpleCache\InvalidArgumentException
-    *   MUST be thrown if the $key string is not a legal value.
     */
-  public function delete( string $key ) {
-    if(! $key = $this->adjustKey($key)) {
-      // fixme throw exception
-      return false;
-    }
+  public function delete( string $key ): bool {
+    $key = $this->adjustKey($key);
     if($this->enabled) {
       return apcu_delete($key);
     }
@@ -214,7 +209,7 @@ class SimpleCacheAPCu {
     *
     * @return bool True on success and false on failure.
     */
-  public function clear() {
+  public function clear(): bool {
     $return = false;
     if($this->enabled) {
       $info = apcu_cache_info();
@@ -240,7 +235,7 @@ class SimpleCacheAPCu {
    *
    * @return bool True on success and false on failure.
    */
-  public function clearAll() {
+  public function clearAll(): bool {
     $return = false;
     if($this->enabled) {
       $return = true;
@@ -289,7 +284,7 @@ class SimpleCacheAPCu {
    *   MUST be thrown if $values is neither an array nor a Traversable,
    *   or if any of the $values are not a legal value.
    */
-  public function setMultiple( array $pairs, int $ttl = null ) {
+  public function setMultiple( array $pairs, int $ttl = null ): bool {
     if(count($pairs === 0)) {
       //FIXME throw exception if empty array
       return false;
@@ -320,7 +315,7 @@ class SimpleCacheAPCu {
    *   MUST be thrown if $keys is neither an array nor a Traversable,
    *   or if any of the $keys are not a legal value.
    */
-  public function deleteMultiple( array $keys ) {
+  public function deleteMultiple( array $keys ): bool {
     if(count($keys === 0)) {
       //FIXME throw exception if empty array
       return false;
@@ -348,15 +343,9 @@ class SimpleCacheAPCu {
    * @param string $key The cache item key.
    *
    * @return bool
-   *
-  ** @throws \Psr\SimpleCache\InvalidArgumentException
-   *   MUST be thrown if the $key string is not a legal value.
    */
-  public function has( string $key ) {
-    if(! $key = $this->adjustKey($key)) {
-      // fixme throw exception
-      return false;
-    }
+  public function has( string $key ): bool {
+    $key = $this->adjustKey($key);
     if($this->enabled) {
       return apcu_exists($key);
     }
@@ -379,21 +368,10 @@ class SimpleCacheAPCu {
    *                             APCu key. Must be at least eight characters long. There is a
    *                             default salt that is used if you do not specify. Note that when
    *                             you change the salt, all the internal keys change.
-   *
-   * @return bool false on failure, class object on success.
-   *
-  ** @throw an exception on error
-   *
    */
   public function __construct( string $webappPrefix='Default', string $salt='6Dxypt3ePw2SM2zYzEVAFkDBQpxbk16z1') {
-    if(! $this->setHashSalt($salt)) {
-      // FIXME throw exception
-      throw new \Exception('Failed Setting Salt');
-    }
-    if(! $this->setWebAppPrefix($webappPrefix)) {
-      // FIXME throw exception
-      throw new \Exception('Failed Setting Prefix');
-    }
+    $this->setHashSalt($salt);
+    $this->setWebAppPrefix($webappPrefix);
     if (extension_loaded('apcu') && ini_get('apc.enabled')) {
       $this->enabled = true;
     }
