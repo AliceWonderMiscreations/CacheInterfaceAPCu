@@ -1,5 +1,17 @@
 <?php
 
+/*
+ +-------------------------------------------------------+
+ |                                                       |
+ | Copyright (c) 2018 Alice Wonder Miscreations          |
+ |  May be used under terms of MIT license               |
+ |                                                       |
+ | This class provides the catch-able exceptions for     |
+ |  invalid arguments as required by PSR-16              |
+ |                                                       |
+ +-------------------------------------------------------+
+*/
+
 namespace AliceWonderMiscreations\SimpleCacheAPCu;
 
 class InvalidArgumentException extends \InvalidArgumentException implements \Psr\SimpleCache\InvalidArgumentException
