@@ -1,10 +1,10 @@
 SimpleCacheAPCuUnitTest Unit Test Results
 =========================================
 
-Test Date         : 2018 February 26 at 08:45:55 am UTC
-Test PHP Version  : 7.1.14
-Test APCu Version : 
-Test Platform     : Linux
+Test Date         : 2018 February 26 at 04:54:41 pm UTC  
+Test PHP Version  : 7.1.14  
+Test APCu Version :  
+Test Platform     : Linux  
 
 
 Implementation Incomplete
@@ -60,3 +60,14 @@ Testing Webapp Prefix and Salt Features
 * Test Set Absurdly Large Salt    : *PASSED*
 
 4 of 4 Unit Tests Passed.
+
+
+Testing Clear Cache Features
+----------------------------
+
+int(18)
+int(18)
+* Test Clear Specific Webapp Prefix Only  : *PASSED*
+* Test Clear All Cache                    : *PASSED*
+
+2 of 2 Unit Tests Passed.

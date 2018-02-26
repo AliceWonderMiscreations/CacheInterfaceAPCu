@@ -477,6 +477,59 @@ class SimpleCacheAPCuUnitTest
         }
         return false;
     }
+    
+    // cache clearing operations
+    public static function testClearLocalAppCache(): bool {
+        $prefix = 'LOLIAMUNIQUE';
+        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+        $simpleCache->set('key1', 'value1');
+        $info = apcu_cache_info();
+        $start = count($info['cache_list']);
+        // now real test
+        $prefix = 'IAMUNIQUE';
+        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+        $simpleCache->set('key1', 'value1');
+        $simpleCache->set('key2', 'value2');
+        $simpleCache->set('key3', 'value3');
+        $simpleCache->set('key4', 'value4');
+        $simpleCache->set('key5', 'value5');
+        $info = apcu_cache_info();
+        $count = count($info['cache_list']);
+        if(($count - $start) !== 5) {
+            return false;
+        }
+        $simpleCache->clear();
+        $info = apcu_cache_info();
+        $count = count($info['cache_list']);
+        if($count === $start) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static function testClearAllCache(): bool {
+        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu('fofofo');
+        $simpleCache->set('key1', 'value1');
+        $info = apcu_cache_info();
+        $start = count($info['cache_list']);
+        if($start === 0) {
+            return false;
+        }
+        $test = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu('tststststs');
+        $test->set('key1', 'value1');
+        $info = apcu_cache_info();
+        $count = count($info['cache_list']);
+        if($count <= $start) {
+            return false;
+        }
+        $test->clearAll();
+        $info = apcu_cache_info();
+        $count = count($info['cache_list']);
+        if($count === 0) {
+            return true;
+        }
+        return false;
+    }
 }
 
 // Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.

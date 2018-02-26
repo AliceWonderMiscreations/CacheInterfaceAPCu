@@ -1,6 +1,25 @@
 <?php
+
+/*
+ +--------------------------------------------------------+
+ |                                                        |
+ | Copyright (c) 2018 Alice Wonder Miscreations           |
+ |  May be used under terms of MIT license                |
+ |                                                        |
+ | This file executes unit tests for SimpleCacheAPCu as   |
+ |  they can not be done with PHPUnit.                    |
+ |                                                        |
+ | Output is markdown compatible text/plain               |
+ |                                                        |
+ | Testing could be improved, e.g. handling of unexpected |
+ |  errors.                                               |
+ |                                                        |
+ +--------------------------------------------------------+
+*/
+
 ob_end_flush();
-set_time_limit(0);
+// tests should not take more than fraction of second
+set_time_limit(5);
 header("Content-Type: text/plain");
 
 $continue = false;
@@ -10,10 +29,6 @@ if (extension_loaded('apcu') && ini_get('apc.enabled')) {
 if(! $continue) {
     die("I must have APCu loaded and enabled.");
 }
-
-// we can't unit test with phpunit because APCu no workie in phpunit
-//  so we must roll our own unit test to run from within a web server
-//  with APCU enabled
 
 if(file_exists('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.php')) {
     require('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.php');
@@ -194,6 +209,22 @@ $name = "Set Absurdly Large Salt    ";
 $a = CacheUnitTest::testReallyLargeSalt();
 showTestResults($name, $a);
 
+echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
+
+echo "\n\nTesting Clear Cache Features\n----------------------------\n\n";
+
+$counter = 0;
+$passed = 0;
+
+$a = false;
+$name = "Clear Specific Webapp Prefix Only  ";
+$a = CacheUnitTest::testClearLocalAppCache();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Clear All Cache                    ";
+$a = CacheUnitTest::testClearAllCache();
+showTestResults($name, $a);
 
 
 
