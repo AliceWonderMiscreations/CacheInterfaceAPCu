@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 /*
  +-------------------------------------------------------+
@@ -102,13 +103,13 @@ class SimpleCacheAPCu {
     if(is_null($ttl)) {
       return $this->defaultSeconds;
     }
+    $type = gettype($ttl);
+    if(! in_array($type, array('integer', 'string'))) {
+        throw \AliceWonderMiscreations\SimpleCacheAPCu\StrictTypeException::ttlTypeError($ttl);
+    }
     $now = time();
-    if(is_numeric($ttl)) {
-      try {
-        $seconds = intval($ttl, 10);
-      } catch (\Exception $e) {
-        return $this->defaultSeconds;
-      }
+    if(is_int($ttl)) {
+      $seconds = $ttl;
       if($seconds > $now) {
         return ($seconds - $now);
       } 

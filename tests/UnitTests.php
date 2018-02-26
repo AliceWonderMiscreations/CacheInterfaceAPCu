@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 /*
  +--------------------------------------------------------+
@@ -42,6 +43,7 @@ if(file_exists('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.p
 
 if(file_exists('/usr/share/ccm/custom/libraries/alicewondermiscreations/simplecacheapcu/InvalidArgumentException.php')) {
     require('/usr/share/ccm/custom/libraries/alicewondermiscreations/simplecacheapcu/InvalidArgumentException.php');
+    require('/usr/share/ccm/custom/libraries/alicewondermiscreations/simplecacheapcu/StrictTypeException.php');
     require('/usr/share/ccm/custom/libraries/alicewondermiscreations/simplecacheapcu/SimpleCacheAPCu.php');
     require('/usr/share/ccm/custom/libraries/alicewondermiscreations/simplecacheapcu/Test/SimpleCacheAPCuUnitTest.php');
 } else {
@@ -66,14 +68,14 @@ function showTestResults( string $name, bool $result) {
 
 echo "SimpleCacheAPCuUnitTest Unit Test Results\n=========================================\n\n";
 
-echo "Test Date         : " . date("Y F j \a\\t h:i:s a e") . "  \n";
-echo "Test PHP Version  : " . PHP_VERSION . "  \n";
-echo "Test APCu Version :  \n";
-echo "Test Platform     : " . PHP_OS . "  \n";
+echo "__Test Date__         : " . date("Y F j \a\\t h:i:s A e") . "  \n";
+echo "__Test PHP Version__  : " . PHP_VERSION . "  \n";
+echo "__Test APCu Version__ :  \n";
+echo "__Test Platform__     : " . PHP_OS . "  \n";
 
 echo "\n\nImplementation Incomplete\n-------------------------\n\n";
 
-echo "Unit Tests for Exceptions are not yet written.\n\n";
+echo "Unit Tests for Exceptions are not yet finished.\n\n";
 echo "The following functions need complete rewrite and are not tested:\n\n";
 
 echo "* `getMultiple( array \$keys, \$default = null )`\n";
@@ -229,6 +231,99 @@ showTestResults($name, $a);
 
 
 
+
+
+
+
+
+
+
+
+echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
+
+echo "\n\nTesting Exceptions\n------------------\n\n";
+
+$counter = 0;
+$passed = 0;
+
+$a = false;
+$name = "Empty Webapp Prefix Exception                ";
+$a = CacheUnitTest::testEmptyWebappPrefixException();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Too Barely Too Short Webapp Prefix Exception ";
+$a = CacheUnitTest::testBarelyTooShortPrefixException();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Non AlphaNumeric Webapp Prefix Exception     ";
+$a = CacheUnitTest::testNonAlphaNumericPrefix();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Type Error Prefix Not String Exception       ";
+$a = CacheUnitTest::testTypeErrorPrefixNotString();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Empty Salt Exception                         ";
+$a = CacheUnitTest::testEmptySalt();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Salt Barely Too Short Exception              ";
+$a = CacheUnitTest::testSaltBarelyTooShort();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Type Error Salt Not String Exception         ";
+$a = CacheUnitTest::testTypeErrorSaltNotString();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Negative Default TTL Exception               ";
+$a = CacheUnitTest::testExceptionNegativeDefaultTTL();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Type Error Default TTL Not Integer Exception ";
+$a = CacheUnitTest::testTypeErrorTTLNotInt();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Empty Key Exception                          ";
+$a = CacheUnitTest::testEmptyKey();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Barely Too Long Key Exception                ";
+$a = CacheUnitTest::testBarelyTooLongKey();
+showTestResults($name, $a);
+
+$a = false;
+$name = "PSR-16 Reserved Character In Key Exception   ";
+$a = CacheUnitTest::testReservedCharacterInKey();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Type Error Key Not String Exception          ";
+$a = CacheUnitTest::testTypeErrorKeyNotString();
+showTestResults($name, $a);
+
+
+
+
+
+
+
+
+
+
+$a = false;
+$name = "Type Error TTL Not Int or String Exception   ";
+$a = CacheUnitTest::testTypeErrorTTL();
+showTestResults($name, $a);
 
 
 

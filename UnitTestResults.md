@@ -1,16 +1,16 @@
 SimpleCacheAPCuUnitTest Unit Test Results
 =========================================
 
-Test Date         : 2018 February 26 at 04:54:41 pm UTC  
-Test PHP Version  : 7.1.14  
-Test APCu Version :  
-Test Platform     : Linux  
+__Test Date__         : 2018 February 26 at 10:56:49 PM UTC  
+__Test PHP Version__  : 7.1.14  
+__Test APCu Version__ :  
+__Test Platform__     : Linux  
 
 
 Implementation Incomplete
 -------------------------
 
-Unit Tests for Exceptions are not yet written.
+Unit Tests for Exceptions are not yet finished.
 
 The following functions need complete rewrite and are not tested:
 
@@ -65,9 +65,28 @@ Testing Webapp Prefix and Salt Features
 Testing Clear Cache Features
 ----------------------------
 
-int(18)
-int(18)
 * Test Clear Specific Webapp Prefix Only  : *PASSED*
 * Test Clear All Cache                    : *PASSED*
 
 2 of 2 Unit Tests Passed.
+
+
+Testing Exceptions
+------------------
+
+* Test Empty Webapp Prefix Exception                : *PASSED*
+* Test Too Barely Too Short Webapp Prefix Exception : *PASSED*
+* Test Non AlphaNumeric Webapp Prefix Exception     : *PASSED*
+* Test Type Error Prefix Not String Exception       : *PASSED*
+* Test Empty Salt Exception                         : *PASSED*
+* Test Salt Barely Too Short Exception              : *PASSED*
+* Test Type Error Salt Not String Exception         : *PASSED*
+* Test Negative Default TTL Exception               : *PASSED*
+* Test Type Error Default TTL Not Integer Exception : *PASSED*
+* Test Empty Key Exception                          : *PASSED*
+* Test Barely Too Long Key Exception                : *PASSED*
+* Test PSR-16 Reserved Character In Key Exception   : *PASSED*
+* Test Type Error Key Not String Exception          : *PASSED*
+* Test Type Error TTL Not Int or String Exception   : *PASSED*
+
+14 of 14 Unit Tests Passed.
