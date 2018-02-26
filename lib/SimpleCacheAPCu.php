@@ -211,8 +211,8 @@ class SimpleCacheAPCu {
         $return = true;
         $cachelist = $info['cache_list'];
         foreach($cachelist as $item) {
-          if(isset($item['key'])) {
-            $key = $item['key'];
+          if(isset($item['info'])) {
+            $key = $item['info'];
             if(strpos($key, $this->webappPrefix) === 0) {
               apcu_delete($key);
             }
