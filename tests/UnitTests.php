@@ -51,10 +51,10 @@ function showTestResults( string $name, bool $result) {
 
 echo "SimpleCacheAPCuUnitTest Unit Test Results\n=========================================\n\n";
 
-echo "Test Date         : " . date("Y F j \a\\t h:i:s a e") . "\n";
-echo "Test PHP Version  : " . PHP_VERSION . "\n";
-echo "Test APCu Version : \n";
-echo "Test Platform     : " . PHP_OS . "\n";
+echo "Test Date         : " . date("Y F j \a\\t h:i:s a e") . "  \n";
+echo "Test PHP Version  : " . PHP_VERSION . "  \n";
+echo "Test APCu Version :  \n";
+echo "Test Platform     : " . PHP_OS . "  \n";
 
 echo "\n\nImplementation Incomplete\n-------------------------\n\n";
 
