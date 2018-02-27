@@ -41,15 +41,21 @@ if(file_exists('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.p
     require('../vendor/psr/simple-cache/src/CacheInterface.php');
 }
 
-if(file_exists('/usr/share/ccm/custom/libraries/alicewondermiscreations/simplecacheapcu/InvalidArgumentException.php')) {
-    require('/usr/share/ccm/custom/libraries/alicewondermiscreations/simplecacheapcu/InvalidArgumentException.php');
-    require('/usr/share/ccm/custom/libraries/alicewondermiscreations/simplecacheapcu/StrictTypeException.php');
-    require('/usr/share/ccm/custom/libraries/alicewondermiscreations/simplecacheapcu/SimpleCacheAPCu.php');
-    require('/usr/share/ccm/custom/libraries/alicewondermiscreations/simplecacheapcu/Test/SimpleCacheAPCuUnitTest.php');
+if(file_exists('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/InvalidArgumentException.php')) {
+    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/InvalidArgumentException.php');
+    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/StrictTypeException.php');
+    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/SimpleCacheAPCu.php');
+    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/Test/SimpleCacheAPCuUnitTest.php');
+    
+    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/Test/SimpleCacheAPCuTypeErrorTest.php');
+    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/Test/SimpleCacheAPCuInvalidArgumentTest.php');
 } else {
     require('../lib/InvalidArgumentException.php');
     require('../lib/SimpleCacheAPCu.php');
     require('../lib/Test/SimpleCacheAPCuUnitTest.php');
+    
+    require('../lib/Test/SimpleCacheAPCuTypeErrorTest.php');
+    require('../lib/Test/SimpleCacheAPCuInvalidArgumentTest.php');
 }
 
 use \AliceWonderMiscreations\SimpleCacheAPCu\Test\SimpleCacheAPCuUnitTest as CacheUnitTest;
@@ -78,9 +84,9 @@ echo "\n\nImplementation Incomplete\n-------------------------\n\n";
 echo "Unit Tests for Exceptions are not yet finished.\n\n";
 echo "The following functions need complete rewrite and are not tested:\n\n";
 
-echo "* `getMultiple( array \$keys, \$default = null )`\n";
-echo "* `setMultiple( array \$pairs, int \$ttl = null )`\n";
-echo "* `deleteMultiple( array \$keys )`\n";
+echo "* `getMultiple( \$keys, \$default = null )`\n";
+echo "* `setMultiple( \$pairs, \$ttl = null )`\n";
+echo "* `deleteMultiple( \$keys )`\n";
 
 echo "\n\nTesting Single Key Features\n---------------------------\n\n";
 
@@ -93,37 +99,37 @@ $a = CacheUnitTest::testCacheMissReturnsNull();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Set And Fetch String    ";
+$name = "Set and Get String      ";
 $a = CacheUnitTest::testSetAndGetString();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Set And Fetch Integer   ";
+$name = "Set and Get Integer     ";
 $a = CacheUnitTest::testSetAndGetInteger();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Set And Fetch Floats    ";
+$name = "Set and Get Floats      ";
 $a = CacheUnitTest::testSetAndGetFloats();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Set And Fetch Boolean   ";
+$name = "Set and Get Boolean     ";
 $a = CacheUnitTest::testSetAndGetBoolean();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Set And Fetch Null      ";
+$name = "Set and Get Null        ";
 $a = CacheUnitTest::testSetAndGetNull();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Set And Fetch Array     ";
+$name = "Set and Get Array       ";
 $a = CacheUnitTest::testSetAndGetArray();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Set And Fetch Object    ";
+$name = "Set and Get Object      ";
 $a = CacheUnitTest::testSetAndGetObject();
 showTestResults($name, $a);
 
@@ -243,87 +249,118 @@ echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
 
 echo "\n\nTesting Exceptions\n------------------\n\n";
 
+use \AliceWonderMiscreations\SimpleCacheAPCu\Test\SimpleCacheAPCuTypeErrorTest as TypeTests;
+
+echo "### Type Error Tests\n\n";
+
 $counter = 0;
 $passed = 0;
 
 $a = false;
-$name = "Empty Webapp Prefix Exception                ";
-$a = CacheUnitTest::testEmptyWebappPrefixException();
+$name = "Type Error Prefix Not String Exception Strict     ";
+$a = TypeTests::testTypeErrorPrefixNotStringStrict();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Too Barely Too Short Webapp Prefix Exception ";
-$a = CacheUnitTest::testBarelyTooShortPrefixException();
+$name = "Type Error Prefix Not String Exception Loose      ";
+$a = TypeTests::testTypeErrorPrefixNotString();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Non AlphaNumeric Webapp Prefix Exception     ";
-$a = CacheUnitTest::testNonAlphaNumericPrefix();
+$name = "Type Error Salt Not String Exception Strict       ";
+$a = TypeTests::testTypeErrorSaltNotStringStrict();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Prefix Not String Exception       ";
-$a = CacheUnitTest::testTypeErrorPrefixNotString();
+$name = "Type Error Salt Not String Exception Loose        ";
+$a = TypeTests::testTypeErrorSaltNotString();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Empty Salt Exception                         ";
-$a = CacheUnitTest::testEmptySalt();
+$name = "Type Error Default TTL Not Int Exception Strict   ";
+$a = TypeTests::testTypeErrorDefaultTTLNotIntStrict();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Salt Barely Too Short Exception              ";
-$a = CacheUnitTest::testSaltBarelyTooShort();
+$name = "Type Error Default TTL Not Int Exception Loose    ";
+$a = TypeTests::testTypeErrorDefaultTTLNotInt();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Salt Not String Exception         ";
-$a = CacheUnitTest::testTypeErrorSaltNotString();
+$name = "Type Error Key Not String Exception Strict        ";
+$a = TypeTests::testTypeErrorKeyNotStringStrict();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Negative Default TTL Exception               ";
-$a = CacheUnitTest::testExceptionNegativeDefaultTTL();
+$name = "Type Error Key Not String Exception Loose         ";
+$a = TypeTests::testTypeErrorKeyNotString();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Default TTL Not Integer Exception ";
-$a = CacheUnitTest::testTypeErrorTTLNotInt();
+$name = "Type Error TTL Not Int or String Exception Strict ";
+$a = TypeTests::testTypeErrorTTL_Strict();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Empty Key Exception                          ";
-$a = CacheUnitTest::testEmptyKey();
+$name = "Type Error TTL Not Int or String Exception Loose  ";
+$a = TypeTests::testTypeErrorTTL();
+showTestResults($name, $a);
+
+echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
+
+use \AliceWonderMiscreations\SimpleCacheAPCu\Test\SimpleCacheAPCuInvalidArgumentTest as ArgTests;
+
+echo "\n### Invalid Argument Tests\n\n";
+
+$counter = 0;
+$passed = 0;
+
+$a = false;
+$name = "Empty Webapp Prefix Exception                   ";
+$a = ArgTests::testEmptyWebappPrefixException();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Barely Too Long Key Exception                ";
-$a = CacheUnitTest::testBarelyTooLongKey();
+$name = "Barely Too Short Webapp Prefix Exception        ";
+$a = ArgTests::testBarelyTooShortPrefixException();
 showTestResults($name, $a);
 
 $a = false;
-$name = "PSR-16 Reserved Character In Key Exception   ";
-$a = CacheUnitTest::testReservedCharacterInKey();
+$name = "Non AlphaNumeric Webapp Prefix Exception        ";
+$a = ArgTests::testNonAlphaNumericPrefix();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Key Not String Exception          ";
-$a = CacheUnitTest::testTypeErrorKeyNotString();
+$name = "Empty Salt Exception                            ";
+$a = ArgTests::testEmptySalt();
 showTestResults($name, $a);
-
-
-
-
-
-
-
-
-
 
 $a = false;
-$name = "Type Error TTL Not Int or String Exception   ";
-$a = CacheUnitTest::testTypeErrorTTL();
+$name = "Salt Barely Too Short Exception                 ";
+$a = ArgTests::testSaltBarelyTooShort();
 showTestResults($name, $a);
+
+$a = false;
+$name = "Negative Default TTL Exception                  ";
+$a = ArgTests::testExceptionNegativeDefaultTTL();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Empty Key Exception                             ";
+$a = ArgTests::testEmptyKey();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Barely Too Long Key Exception                   ";
+$a = ArgTests::testBarelyTooLongKey();
+showTestResults($name, $a);
+
+$a = false;
+$name = "PSR-16 Reserved Character In Key Exception      ";
+$a = ArgTests::testReservedCharacterInKey();
+showTestResults($name, $a);
+
+
 
 
 

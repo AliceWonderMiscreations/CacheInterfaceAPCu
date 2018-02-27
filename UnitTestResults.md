@@ -1,7 +1,7 @@
 SimpleCacheAPCuUnitTest Unit Test Results
 =========================================
 
-__Test Date__         : 2018 February 26 at 10:56:49 PM UTC  
+__Test Date__         : 2018 February 27 at 09:01:33 AM UTC  
 __Test PHP Version__  : 7.1.14  
 __Test APCu Version__ :  
 __Test Platform__     : Linux  
@@ -14,22 +14,22 @@ Unit Tests for Exceptions are not yet finished.
 
 The following functions need complete rewrite and are not tested:
 
-* `getMultiple( array $keys, $default = null )`
-* `setMultiple( array $pairs, int $ttl = null )`
-* `deleteMultiple( array $keys )`
+* `getMultiple( $keys, $default = null )`
+* `setMultiple( $pairs, $ttl = null )`
+* `deleteMultiple( $keys )`
 
 
 Testing Single Key Features
 ---------------------------
 
 * Test Cache Miss Returns Null : *PASSED*
-* Test Set And Fetch String    : *PASSED*
-* Test Set And Fetch Integer   : *PASSED*
-* Test Set And Fetch Floats    : *PASSED*
-* Test Set And Fetch Boolean   : *PASSED*
-* Test Set And Fetch Null      : *PASSED*
-* Test Set And Fetch Array     : *PASSED*
-* Test Set And Fetch Object    : *PASSED*
+* Test Set and Get String      : *PASSED*
+* Test Set and Get Integer     : *PASSED*
+* Test Set and Get Floats      : *PASSED*
+* Test Set and Get Boolean     : *PASSED*
+* Test Set and Get Null        : *PASSED*
+* Test Set and Get Array       : *PASSED*
+* Test Set and Get Object      : *PASSED*
 * Test Delete A Key            : *PASSED*
 * Test One Character Key       : *PASSED*
 * Test 255 Character Key       : *PASSED*
@@ -74,19 +74,31 @@ Testing Clear Cache Features
 Testing Exceptions
 ------------------
 
-* Test Empty Webapp Prefix Exception                : *PASSED*
-* Test Too Barely Too Short Webapp Prefix Exception : *PASSED*
-* Test Non AlphaNumeric Webapp Prefix Exception     : *PASSED*
-* Test Type Error Prefix Not String Exception       : *PASSED*
-* Test Empty Salt Exception                         : *PASSED*
-* Test Salt Barely Too Short Exception              : *PASSED*
-* Test Type Error Salt Not String Exception         : *PASSED*
-* Test Negative Default TTL Exception               : *PASSED*
-* Test Type Error Default TTL Not Integer Exception : *PASSED*
-* Test Empty Key Exception                          : *PASSED*
-* Test Barely Too Long Key Exception                : *PASSED*
-* Test PSR-16 Reserved Character In Key Exception   : *PASSED*
-* Test Type Error Key Not String Exception          : *PASSED*
-* Test Type Error TTL Not Int or String Exception   : *PASSED*
+### Type Error Tests
 
-14 of 14 Unit Tests Passed.
+* Test Type Error Prefix Not String Exception Strict     : *PASSED*
+* Test Type Error Prefix Not String Exception Loose      : *PASSED*
+* Test Type Error Salt Not String Exception Strict       : *PASSED*
+* Test Type Error Salt Not String Exception Loose        : *PASSED*
+* Test Type Error Default TTL Not Int Exception Strict   : *PASSED*
+* Test Type Error Default TTL Not Int Exception Loose    : *PASSED*
+* Test Type Error Key Not String Exception Strict        : *PASSED*
+* Test Type Error Key Not String Exception Loose         : *PASSED*
+* Test Type Error TTL Not Int or String Exception Strict : *PASSED*
+* Test Type Error TTL Not Int or String Exception Loose  : *PASSED*
+
+10 of 10 Unit Tests Passed.
+
+### Invalid Argument Tests
+
+* Test Empty Webapp Prefix Exception                   : *PASSED*
+* Test Barely Too Short Webapp Prefix Exception        : *PASSED*
+* Test Non AlphaNumeric Webapp Prefix Exception        : *PASSED*
+* Test Empty Salt Exception                            : *PASSED*
+* Test Salt Barely Too Short Exception                 : *PASSED*
+* Test Negative Default TTL Exception                  : *PASSED*
+* Test Empty Key Exception                             : *PASSED*
+* Test Barely Too Long Key Exception                   : *PASSED*
+* Test PSR-16 Reserved Character In Key Exception      : *PASSED*
+
+9 of 9 Unit Tests Passed.
