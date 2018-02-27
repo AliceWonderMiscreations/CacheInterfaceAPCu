@@ -37,6 +37,21 @@ class InvalidArgumentException extends \InvalidArgumentException implements \Psr
     {
         return new self(sprintf('The default TTL can not be a negative number. You supplied %s.', $seconds));
     }
+    
+    public static function negativeTTL( int $seconds )
+    {
+        return new self(sprintf('The TTL can not be a negative number. You supplied %s.', $seconds));
+    }
+    
+    public static function dateStringInPast( string $str )
+    {
+        return new self(sprintf('The cache expiration can not be in the past. You supplied %s.', $str));
+    }
+    
+    public static function invalidTTL( string $str )
+    {
+        return new self(sprintf('The cache expiration must be a non-zero TTL in seconds, seconds from UNIX epoch, a DateInterval, or an expiration date string. You supplied: %s'), $str);
+    }
 
     public static function saltTooShort( string $str )
     {
