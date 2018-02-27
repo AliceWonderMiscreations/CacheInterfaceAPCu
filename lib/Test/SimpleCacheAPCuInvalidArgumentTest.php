@@ -14,14 +14,14 @@
  +-------------------------------------------------------+
 */
 
-namespace AliceWonderMiscreations\SimpleCacheAPCu\Test;
+namespace AWonderPHP\SimpleCacheAPCu\Test;
 
 class SimpleCacheAPCuInvalidArgumentTest
 {
     public static function testEmptyWebappPrefixException(): bool {
         $prefix = '   ';
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         } catch(\InvalidArgumentException $e) {
             $reference = "The WebApp Prefix must be at least 3 characters. You supplied an empty Prefix.";
             $actual = $e->getMessage();
@@ -33,11 +33,11 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
     public static function testBarelyTooShortPrefixException(): bool {
         $prefix = '  aa ';
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         } catch(\InvalidArgumentException $e) {
             $reference = "The WebApp Prefix must be at least 3 characters. You supplied a 2 character Prefix: AA";
             $actual = $e->getMessage();
@@ -49,11 +49,11 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
     public static function testNonAlphaNumericPrefix(): bool {
         $prefix = '  aa_bb ';
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         } catch(\InvalidArgumentException $e) {
             $reference = "The WebApp Prefix can only contain A-Z letters and 0-9 numbers. You supplied: AA_BB";
             $actual = $e->getMessage();
@@ -65,14 +65,14 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
     // salt tests
-    
+
     public static function testEmptySalt(): bool {
         $prefix = '  aabb ';
         $salt = '                        ';
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
         } catch(\InvalidArgumentException $e) {
             $reference = "The internal key salt must be at least 8 characters. You supplied an empty salt.";
             $actual = $e->getMessage();
@@ -84,12 +84,12 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
     public static function testSaltBarelyTooShort(): bool {
         $prefix = '  aabb ';
         $salt = '        1234567                ';
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
         } catch(\InvalidArgumentException $e) {
             $reference = "The internal key salt must be at least 8 characters. You supplied a 7 character salt: 1234567";
             $actual = $e->getMessage();
@@ -101,12 +101,12 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
     // TTL tests
-    
+
     public static function testExceptionNegativeDefaultTTL(): bool {
         $ttl = -7;
-        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu();
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         try {
             $simpleCache->setDefaultSeconds($ttl);
         } catch(\InvalidArgumentException $e) {
@@ -120,13 +120,13 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
     // key set tests
-    
+
     public static function testEmptyKey(): bool {
         $key = '    ';
         $value = 'Test Value';
-        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu();
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         try {
             $simpleCache->set($key, $value);
         } catch(\InvalidArgumentException $e) {
@@ -140,7 +140,7 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
     public static function testBarelyTooLongKey(): bool {
         $a='AAAAABB';
         $b='BBBBBBBB';
@@ -155,7 +155,7 @@ class SimpleCacheAPCuInvalidArgumentTest
             return false;
         }
         $value = 'foobar';
-        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu();
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         try {
             $simpleCache->set($key, $value);
         } catch(\InvalidArgumentException $e) {
@@ -169,11 +169,11 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
     public static function testReservedCharacterInKey(): bool {
         $reserved = array('key{key', 'key}key', 'key(key', 'key)key', 'key/key', 'key\\key',  'key@key', 'key:key');
         $value = 'value';
-        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu();
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $reference = 'Cache keys may not contain any of the following characters: "  {}()/\@:  " but your key';
         foreach($reserved as $key) {
             $caught = false;

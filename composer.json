@@ -1,5 +1,5 @@
 {
-    "name": "alicewondermiscreations/simplecacheapcu",
+    "name": "awonderphp/simplecacheapcu",
     "description": "An implementation of PSR-16 for APCu",
     "homepage": "https://github.com/AliceWonderMiscreations/SimpleCacheAPCu",
     "license": "MIT",

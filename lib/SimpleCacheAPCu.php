@@ -15,7 +15,7 @@ declare(strict_types = 1);
  +-------------------------------------------------------+
 */
 
-namespace AliceWonderMiscreations\SimpleCacheAPCu;
+namespace AWonderPHP\SimpleCacheAPCu;
 
 //class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface {
 class SimpleCacheAPCu
@@ -47,8 +47,8 @@ class SimpleCacheAPCu
      *
      * @param string $key The user defined cache key to hash
      *
-     * @throws \AliceWonderMiscreations\SimpleCacheAPCu\StrictTypeException
-     * @throws \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
      * @return string     The key the class uses with APCu
      */
@@ -62,20 +62,20 @@ class SimpleCacheAPCu
             }
         }
         if(! is_string($key)) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\StrictTypeException::keyTypeError($key);
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::keyTypeError($key);
         }
         $key = trim($key);
         if(strlen($key) === 0) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::emptyKey();
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::emptyKey();
         }
         if(strlen($key) > 255) {
             // key should not be larger
             //  than 255 character
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::keyTooLong($key);
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::keyTooLong($key);
         }
         if(preg_match('/[\[\]\{\}\(\)\/\@\:\\\]/', $key) !== 0) {
             // PSR-16 says those characters not allowed
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::invalidKeyCharacter($key);
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::invalidKeyCharacter($key);
         }
         $key = $this->webappPrefix . $this->weakHash($key);
         return $key;
@@ -86,8 +86,8 @@ class SimpleCacheAPCu
      *
      *  @param string  The string to use as internal key prefix.
      *
-     *  @throws \AliceWonderMiscreations\SimpleCacheAPCu\StrictTypeException
-     *  @throws \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException
+     *  @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     *  @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
      *  @returns void
      */
@@ -95,17 +95,17 @@ class SimpleCacheAPCu
     {
         $type = gettype($str);
         if(! is_string($str)) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\StrictTypeException::cstrTypeError($str, 'WebApp Prefix');
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::cstrTypeError($str, 'WebApp Prefix');
         }
         $str = strtoupper(trim($str));
         if(strlen($str) < 3) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::webappPrefixTooShort($str);
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::webappPrefixTooShort($str);
         }
         if(strlen($str) > 32) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::webappPrefixTooLong($str);
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::webappPrefixTooLong($str);
         }
         if(preg_match('/[^A-Z0-9]/', $str) !== 0) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::webappPrefixNotAlphaNumeric($str);
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::webappPrefixNotAlphaNumeric($str);
         }
         $this->webappPrefix = $str . '_';
     }
@@ -115,8 +115,8 @@ class SimpleCacheAPCu
      *
      *  @param string  The string to use as the salt when creating the internal key prefix.
      *
-     *  @throws \AliceWonderMiscreations\SimpleCacheAPCu\StrictTypeException
-     *  @throws \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException
+     *  @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     *  @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
      *  @returns void
      */
@@ -124,22 +124,22 @@ class SimpleCacheAPCu
     {
         $type = gettype($str);
         if(! is_string($str)) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\StrictTypeException::cstrTypeError($str, 'Salt');
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::cstrTypeError($str, 'Salt');
         }
         $str = trim($str);
         if(strlen($str) < 8) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::saltTooShort($str);
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::saltTooShort($str);
         }
         $this->salt = $str;
     }
-  
+
     /*
      * This function takes input and either turns it into a usable number
      *   of seconds to set as cache TTL or it throws an exception
      *
      * @param mixed $ttl  The length to cache or the expected expiration.
      *
-     * @throws \AliceWonderMiscreations\SimpleCacheAPCu\StrictTypeException
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      *
      * @return int
      */
@@ -155,7 +155,7 @@ class SimpleCacheAPCu
         }
         $type = gettype($ttl);
         if(! in_array($type, array('integer', 'string'))) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\StrictTypeException::ttlTypeError($ttl);
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::ttlTypeError($ttl);
         }
         $now = time();
         if(is_int($ttl)) {
@@ -164,7 +164,7 @@ class SimpleCacheAPCu
                 return ($seconds - $now);
             } 
             if($seconds < 0) {
-                throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::negativeTTL($seconds);
+                throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::negativeTTL($seconds);
             }
             return $seconds;
         }
@@ -173,10 +173,10 @@ class SimpleCacheAPCu
             if($seconds > $now) {
                 return ($seconds - $now);
             } else {
-                throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::dateStringInPast($ttl);
+                throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::dateStringInPast($ttl);
             }
         }
-        throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::invalidTTL($ttl);
+        throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::invalidTTL($ttl);
     }
 
     /**
@@ -186,7 +186,7 @@ class SimpleCacheAPCu
      *
      * @return void
      *
-     * @throws \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException
+     * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      */
     public function setDefaultSeconds( $seconds ): void
     {
@@ -196,10 +196,10 @@ class SimpleCacheAPCu
             }
         }
         if(! is_int($seconds)) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\StrictTypeException::DefaultTTL($seconds);
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::DefaultTTL($seconds);
         }
         if($seconds < 0) {
-            throw \AliceWonderMiscreations\SimpleCacheAPCu\InvalidArgumentException::negativeDefaultTTL($seconds);
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::negativeDefaultTTL($seconds);
         }
         $this->defaultSeconds = $seconds;
     }
@@ -412,7 +412,7 @@ class SimpleCacheAPCu
         }
         return false;
     }
-  
+
     /**
      * Returns the actual internal key being used with APCu. Needed for unit testing.
      *

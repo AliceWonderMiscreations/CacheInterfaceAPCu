@@ -14,7 +14,7 @@
  +-------------------------------------------------------+
 */
 
-namespace AliceWonderMiscreations\SimpleCacheAPCu\Test;
+namespace AWonderPHP\SimpleCacheAPCu\Test;
 
 class SimpleCacheAPCuTypeErrorTest
 {
@@ -24,7 +24,7 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix = 5555;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
         } catch(\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type integer.';
             $actual = $e->getMessage();
@@ -42,7 +42,7 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix = 55.55;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
         } catch(\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type double.';
             $actual = $e->getMessage();
@@ -60,7 +60,7 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix = true;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
         } catch(\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
             $actual = $e->getMessage();
@@ -78,7 +78,7 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix = array(1,2,3,4,5);
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
         } catch(\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
             $actual = $e->getMessage();
@@ -97,7 +97,7 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix->foobar = "fubar";
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
         } catch(\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
             $actual = $e->getMessage();
@@ -113,13 +113,13 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return true;
     }
-    
+
     public static function testTypeErrorPrefixNotString(): bool {
         //integer
         $prefix = 5555;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         } catch(\TypeError $e) {
             $caught = true;
         }
@@ -131,7 +131,7 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix = 55.55;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         } catch(\InvalidArgumentException $e) {
             $reference = 'The WebApp Prefix can only contain A-Z letters and 0-9 numbers. You supplied: 55.55';
             $actual = $e->getMessage();
@@ -149,7 +149,7 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix = true;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         } catch(\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
             $actual = $e->getMessage();
@@ -167,7 +167,7 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix = array(1,2,3,4,5);
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         } catch(\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
             $actual = $e->getMessage();
@@ -186,7 +186,7 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix->foobar = "fubar";
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         } catch(\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
             $actual = $e->getMessage();
@@ -202,14 +202,14 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return true;
     }
-    
+
     public static function testTypeErrorSaltNotStringStrict(): bool {
         $prefix = null;
         //integer
         $salt = 123456789;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
         } catch(\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type integer.';
             $actual = $e->getMessage();
@@ -227,7 +227,7 @@ class SimpleCacheAPCuTypeErrorTest
         $salt = 1234.56789;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
         } catch(\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type double.';
             $actual = $e->getMessage();
@@ -245,7 +245,7 @@ class SimpleCacheAPCuTypeErrorTest
         $salt = true;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
         } catch(\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
             $actual = $e->getMessage();
@@ -263,7 +263,7 @@ class SimpleCacheAPCuTypeErrorTest
         $salt = array(1,2,3,4,5,6,7,8,9);
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
         } catch(\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
             $actual = $e->getMessage();
@@ -282,7 +282,7 @@ class SimpleCacheAPCuTypeErrorTest
         $salt->foobar = "fubar98765";
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
         } catch(\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
             $actual = $e->getMessage();
@@ -298,14 +298,14 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return true;
     }
-    
+
     public static function testTypeErrorSaltNotString(): bool {
         $prefix = null;
         //integer
         $salt = 123456789;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
         } catch(\TypeError $e) {
             $caught = true;
         }
@@ -317,7 +317,7 @@ class SimpleCacheAPCuTypeErrorTest
         $salt = 1234.56789;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
         } catch(\TypeError $e) {
             $caught = true;
         }
@@ -329,7 +329,7 @@ class SimpleCacheAPCuTypeErrorTest
         $salt = true;
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
         } catch(\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
             $actual = $e->getMessage();
@@ -347,7 +347,7 @@ class SimpleCacheAPCuTypeErrorTest
         $salt = array(1,2,3,4,5,6,7,8,9);
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
         } catch(\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
             $actual = $e->getMessage();
@@ -366,7 +366,7 @@ class SimpleCacheAPCuTypeErrorTest
         $salt->foobar = "fubar98765";
         $caught = false;
         try {
-            $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
         } catch(\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
             $actual = $e->getMessage();
@@ -382,9 +382,9 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return true;
     }
-    
+
     public static function testTypeErrorDefaultTTLNotIntStrict(): bool {
-        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
         //null
         $ttl = null;
         $caught = false;
@@ -496,9 +496,9 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return false;
     }
-    
+
     public static function testTypeErrorDefaultTTLNotInt(): bool {
-        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu();
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         //null
         $ttl = null;
         $caught = false;
@@ -604,9 +604,9 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return false;
     }
-    
+
     public static function testTypeErrorKeyNotStringStrict(): bool {
-        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
         $value = '99 bottles of beer on the wall';
         //null
         $key = null;
@@ -719,9 +719,9 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return true;
     }
-    
+
     public static function testTypeErrorKeyNotString(): bool {
-        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu();
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $value = '99 bottles of beer on the wall';
         //null
         $key = null;
@@ -822,11 +822,11 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return true;
     }
-    
+
     public static function testTypeErrorTTL_Strict(): bool {
         $key = 'foo';
         $value = 'bar';
-        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
         
         // float
         $ttl = 65.83;
@@ -903,11 +903,11 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return true;
     }
-    
+
     public static function testTypeErrorTTL(): bool {
         $key = 'foo';
         $value = 'bar';
-        $simpleCache = new \AliceWonderMiscreations\SimpleCacheAPCu\SimpleCacheAPCu();
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         
         // float
         $ttl = 65.83;

@@ -6,7 +6,4 @@ the APCu caching engine.
 
 It is not yet PSR-16 compliant.
 
-It can be installed with Composer and will also be available as an RPM
-package from the
-[PHP Composer Class Manager](https://github.com/AliceWonderMiscreations/php-ccm)
-Project.
+It is getting close to being ready...
