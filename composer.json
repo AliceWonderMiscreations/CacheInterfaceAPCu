@@ -1,6 +1,6 @@
 {
     "name": "awonderphp/simplecacheapcu",
-    "description": "An implementation of PSR-16 for APCu",
+    "description": "An implementation of the PSR-16 SimpleCache Interface for APCu",
     "homepage": "https://github.com/AliceWonderMiscreations/SimpleCacheAPCu",
     "license": "MIT",
     "type": "library",
@@ -13,6 +13,7 @@
     ],
     "require": {
         "php": "~7.1.0 || ~7.2.0",
+        "ext-apcu": "^5.0",
         "psr/simple-cache": "^1.0"
     },
     "provide": {
@@ -20,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "AliceWonderMiscreations\\SimpleCacheAPCu\\": "lib/"
+            "AWonderPHP\\SimpleCacheAPCu\\": "lib/"
         }
     }
 }
