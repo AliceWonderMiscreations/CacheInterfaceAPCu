@@ -14,6 +14,11 @@ interface specification, please see the PHP-FIG website:
 
 [https://www.php-fig.org/psr/psr-16/](https://www.php-fig.org/psr/psr-16/)
 
+An Appendix follows the section on Exceptions.
+
+__NOTE:__ I am sometimes accused of being too verbose when I write
+documentation. For less verbose documentation, you can read the code itself.
+
 
 Calling the Class
 -----------------
@@ -342,18 +347,142 @@ try and recast the data type to what is required.
 
 3. It is not possible to recast the data type to what is required.
 
+This usually indicates a serious problem with your code that needs to be
+resolved, your code should not be trying to pass parameters to methods and
+functions that are of the wrong type, and when it does, it often indicates an
+uncaught error happened somewhere (or it is sloppy code).
+
+Under those circumstances, this class will throw a:
+
+    \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+        extends \TypeError
+        implements \Psr\SimpleCache\InvalidArgumentException
+
+Exception.
+
+You can catch these based on `\TypeError` or the PSR implementation.
 
 
+### Data Invalid Exception
+
+Exceptions of this type are thrown when the data type is valid but the data
+itself is not valid. For example, your `$key` may be a valid string but might
+contain one of the characters PSR-16 considers to be reserved.
+
+In those circumstances, this class will throw a:
+
+    \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+        extends \InvalidArgumentException
+        implements \Psr\SimpleCache\InvalidArgumentException
+
+Exception.
+
+You can catch these based on `InvalidArgumentException` or the PSR implementation.
 
 
+### About Catching Exceptions
+
+Catching Exceptions allows your code to gracefully handle the error. The way to
+catch an exception is with a `try{}catch(){}` block:
+
+    try{
+        $CacheObj->get($key);
+    } catch(\TypeError $e) {
+        // code to handle based on $e
+    } catch(\InvalidArgumentException $e) {
+        // code to handle based on $e
+    } catch(\Error $e) {
+        // code to handle based on $e
+    }
+
+That code takes advantage of which Exception classes in core PHP are extended
+by SimpleCacheAPCu with the third `catch` block catching Exceptions that are
+not extensions of `\TypeError` or `\InvalidArgument`.
+
+The above does not distinguish between Exceptions intentionally thrown by the
+class and Exceptions thrown by methods and functions the class calls.
+
+If you wish to do that, then catch the Exceptions based on the PSR-16
+interfaces for exceptions before the more generic Exception classes.
 
 
+APPENDIX
+========
 
 
+Extending This Class
+====================
+
+It is my *opinion* that when a web application implements a third party library
+such as this one that is an implementation of a standardized interface such as
+PSR-16, the web application should create a class that extends the third party
+library.
+
+This way if, for example, I do become homeless and am not able to maintain this
+class as bugs are found or as PHP continues to evolve and deprecate ways of
+doing things this class uses, you can either modify your extended class to use
+a different implementation of PSR-16 or you can modify your extended class to
+replace methods in this class that need to be patched.
+
+Only your extended class needs to be modified, the rest of your code then calls
+your extended class and continues to work.
+
+     namespace YourCompany/YourProducted/ThirdPartyExtended
+     
+     class CustomCacheWrapper extends \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu
+     {
+         public function __construct()
+         {
+             $MyAppNamespace = 'COOLBANANAS';
+             $MySalt = 'pFfbk5fAWppb4zxF6lRprKNcLsgAqV2irUe';
+             parent::__construct($MyAppNamespace, $MySalt, true);
+         }
+     }
+
+In your web application code where you need an instance of a PSR-16 compliant
+cache handler:
+
+    use \YourCompany/YourProducted/ThirdPartyExtended\CustomCacheWrapper as SimpleCache;
+    
+    $CacheObj = new SimpleCache;
+
+If you then ever need to use a different class for your PSR-16 implementation,
+all you need to do is modify the extended class to extend the different
+implementation and modify the `__construct` method to suit the new class you
+are using.
+
+You can also of course add custom methods of your own.
 
 
+UNIT TESTING
+============
 
+Unit Tests are __NOT__ being done with [PHPUnit](https://phpunit.de/) because
+APCu stores its cache in the server daemon memory and PHPUnit uses the php-cli
+environment.
 
+It is *possible* to configure APCu to work with `php-cli` and that *might*
+allow unit testing with PHPUnit, but it would mean everyone who uses this class
+would have configure APCu to work within php-cli in order to run the unit tests.
 
+Instead, I wrote the unit tests to work within a web browser and generate a
+[Markdown](https://daringfireball.net/projects/markdown/syntax) compatible
+report.
 
+I actually spent more time on the unit tests than on the class itself, but it
+was important to do so as it revealed some bugs (e.g. improper handling of
+cached boolean type).
 
+I will be rewriting the unit tests, creating a framework that makes it easy for
+me to reuse the same style of unit testing elsewhere and with better ability
+report what went wrong in the failures.
+
+I will not be able to create something as extensive as PHPUnit, but I actually
+see value in being able to run the tests within a server configured the same
+way as the production server and generate a markdown report of the tests.
+
+The actual unit tests themselves are within classes in the `Test/` subdirectory
+of the `lib/` directory, and the script that runs the tests is within the
+`tests/` directory that is parallel to the `lib/` directory.
+
+More extensive testing is planned once I design the framework for it.
