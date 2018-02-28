@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-/*
+/**
  +-------------------------------------------------------+
  |                                                       |
  | Copyright (c) 2018 Alice Wonder Miscreations          |
@@ -15,6 +15,12 @@ declare(strict_types = 1);
 
 namespace AWonderPHP\SimpleCacheAPCu;
 
+/**
+ * Extends `\InvalidArgumentException` class and implements `\Psr\SimpleCache\InvalidArgumentException`
+ *
+ * This class is used to throw an exception when the argument supplied to a SimpleCacheAPCu method is
+ *  of the correct argument type but does not meet the conditions required by the method.
+ */
 class InvalidArgumentException extends \InvalidArgumentException implements \Psr\SimpleCache\InvalidArgumentException
 {
     public static function emptyKey()
@@ -50,7 +56,7 @@ class InvalidArgumentException extends \InvalidArgumentException implements \Psr
 
     public static function invalidTTL( string $str )
     {
-        return new self(sprintf('The cache expiration must be a non-zero TTL in seconds, seconds from UNIX epoch, a DateInterval, or an expiration date string. You supplied: %s'), $str);
+        return new self(sprintf('The cache expiration must be a non-zero TTL in seconds, seconds from UNIX epoch, a DateInterval, or an expiration date string. You supplied: %s', $str));
     }
 
     public static function saltTooShort( string $str )
@@ -83,6 +89,7 @@ class InvalidArgumentException extends \InvalidArgumentException implements \Psr
     {
         return new self(sprintf('The WebApp Prefix can only contain A-Z letters and 0-9 numbers. You supplied: %s', $str));
     }
+
 }
 
 // Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.

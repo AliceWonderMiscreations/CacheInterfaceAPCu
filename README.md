@@ -4,7 +4,7 @@ SimpleCacheAPCu
 This is an implementation of [PSR-16](https://www.php-fig.org/psr/psr-16/) for
 the APCu caching engine.
 
-Please refer to the files `INSTALL.md`, `USAGE.md`, and `MONEY.md` for more
+Please refer to the files `INSTALL.md`, `USAGE.md`, and `SURVIVAL.md` for more
 information specific to SimpleCacheAPCu.
 
 Please refer to the file `LICENSE.md` for the terms of the MIT License this

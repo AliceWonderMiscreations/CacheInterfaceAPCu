@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-/*
+/**
  +-------------------------------------------------------+
  |                                                       |
  | Copyright (c) 2018 Alice Wonder Miscreations          |
@@ -11,14 +11,22 @@ declare(strict_types = 1);
  |  coding style to PSR-2 except I will keep trailing ?> |
  |                                                       |
  +-------------------------------------------------------+
- | Purpose: PSR-16 APCu Interface - not yet there...     |
+ | Purpose: PSR-16 APCu Interface                        |
  +-------------------------------------------------------+
 */
 
 namespace AWonderPHP\SimpleCacheAPCu;
 
-//class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface {
-class SimpleCacheAPCu
+/**
+ * An APCu implementation of the PSR-16 Simple Cache Interface
+ *
+ * This class implements the [PHP-FIG PSR-16](https://www.php-fig.org/psr/psr-16/)
+ *  interface for a cache class.
+ *
+ * It needs PHP 7.1 or newer and obviously the [APCu PECL](https://pecl.php.net/package/APCu) extension.
+ *  I am not sure of the minimum APCu version, I am using 5.1.9 myself at the moment.
+ */
+class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
 {
     protected $enabled = false;
     protected $strictType = false;
@@ -27,12 +35,23 @@ class SimpleCacheAPCu
     // 0 tells APCu to store it as long as it can
     protected $defaultSeconds = 0;
 
+    protected function checkIterable( $arg ): void
+    {
+        if(! is_iterable($arg)) {
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::typeNotIterable($arg);
+        }
+    }
+
     /**
-     * Creates hash substring to use in internal key. NOT part of PSR-16.
+     * Creates hash substring to use in internal cache key.
+     *
+     * This class obfuscates the user supplied cache keys by using a substring
+     * of the hex representation of a hash of that key. This function creates
+     * the hex representation of the hash and grabs a 16 character substring.
      *
      * @param string $key The user defined key to hash
      *
-     * @return string     sixteen character substring of salted ripemd160
+     * @return string
      */
     protected function weakHash( $key ): string
     {
@@ -43,14 +62,18 @@ class SimpleCacheAPCu
     }
 
     /**
-     * Takes user supplied key and creates internal key. NOT part of PSR-16.
+     * Takes user supplied key and creates internal cache key.
+     *
+     * This function takes the user defined cache key, gets the substring of a
+     * hash from the weakHash function, and appends that substring to the WebApp
+     * prefix string to create the actual key that will be used with APCu.
      *
      * @param string $key The user defined cache key to hash
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
-     * @return string     The key the class uses with APCu
+     * @return string
      */
     protected function adjustKey( $key ): string
     {
@@ -133,13 +156,21 @@ class SimpleCacheAPCu
         $this->salt = $str;
     }
 
-    /*
-     * This function takes input and either turns it into a usable number
-     *   of seconds to set as cache TTL or it throws an exception
+    /**
+     * Generates Time To Live parameter to use with APCu.
      *
-     * @param mixed $ttl  The length to cache or the expected expiration.
+     * This function takes either NULL, an integer or a string. When supplied
+     * with an integer, if it is less than the current seconds from UNIX Epoch
+     * it is treated as desired seconds the record should last. If it is larger
+     * it assumed it is an expiration time and then calculates the corresponding
+     * TTL. When fed a string, the `strtotime()` function is used to turn the
+     * string into a UNIX seconds from Epoch expiration, and it then calculates
+     * the corresponding TTL. When fed NULL, it uses the class default TTL.
+     *
+     * @param null|int|string $ttl  The length to cache or the expected expiration.
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
      * @return int
      */
@@ -180,13 +211,14 @@ class SimpleCacheAPCu
     }
 
     /**
-     * Sets the default cache time in seconds. NOT part of PSR-16.
+     * Sets the default cache TTL in seconds.
      *
      * @param int $seconds The default seconds to cache entries
      *
-     * @return void
-     *
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+     *
+     * @return void
      */
     public function setDefaultSeconds( $seconds ): void
     {
@@ -209,6 +241,9 @@ class SimpleCacheAPCu
      *
      * @param string $key     The unique key of this item in the cache.
      * @param mixed  $default Default value to return if the key does not exist.
+     *
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
      * @return mixed The value of the item from the cache, or $default in case of cache miss.
      */
@@ -246,12 +281,12 @@ class SimpleCacheAPCu
     }
 
     /**
-      * Delete an item from the cache by its unique key.
-      *
-      * @param string $key The unique cache key of the item to delete.
-      *
-      * @return bool True if the item was successfully removed. False if there was an error.
-      */
+     * Delete an item from the cache by its unique key.
+     *
+     * @param string $key The unique cache key of the item to delete.
+     *
+     * @return bool True if the item was successfully removed. False if there was an error.
+     */
     public function delete( $key ): bool
     {
         $key = $this->adjustKey($key);
@@ -262,16 +297,22 @@ class SimpleCacheAPCu
     }
 
     /**
-      * Wipes clean the entire cache's keys. This implementation
-      *  only wipes for matching webappPrefix (custom NON PSR-16
-      *  feature set during constructor)
-      *
-      * @return bool True on success and false on failure.
-      */
+     * Wipes clean the entire cache's keys. This implementation only wipes for matching
+     * webappPrefix (custom NON PSR-16 feature set during constructor)
+     *
+     * @return bool True on success and false on failure.
+     */
     public function clear(): bool
     {
-        $return = false;
         if($this->enabled) {
+            if(class_exists('\APCUIterator', false)) {
+                $iterator = new \APCUIterator('#^' . $this->webappPrefix . '#', APC_ITER_KEY);
+                foreach ($iterator as $item) {
+                    $key = $item['key'];
+                    apcu_delete($key);
+                }
+                return true;
+            }
             $info = apcu_cache_info();
             if(isset($info['cache_list'])) {
                 $return = true;
@@ -284,9 +325,10 @@ class SimpleCacheAPCu
                         }
                     }
                 }
+                return true;
             }
         }
-        return $return;
+        return false;
     }
 
     /**
@@ -306,91 +348,100 @@ class SimpleCacheAPCu
         return $return;
     }
 
-  /**
-   * Obtains multiple cache items by their unique keys.
-   *
-  ** @param iterable $keys    A list of keys that can obtained in a single operation.
-   * @param mixed    $default Default value to return for keys that do not exist.
-   *
-   * @return iterable A list of key => value pairs. Cache keys that do not exist or are stale will have $default as value.
-   *
-  ** @throws \Psr\SimpleCache\InvalidArgumentException
-   *   MUST be thrown if $keys is neither an array nor a Traversable,
-   *   or if any of the $keys are not a legal value.
-   */
-  public function getMultiple( $keys, $default = null ) {
-    if(count($keys === 0)) {
-      //FIXME throw exception if empty array
-      return false;
-    }
-    $return = array();
-    foreach($keys as $key) {
-      $return[] = $this->get($key, $default);
-    }
-    return $return;
-  }
-
-  /**
-   * Persists a set of key => value pairs in the cache, with an optional TTL.
-   *
-  ** @param iterable               $values A list of key => value pairs for a multiple-set operation.
-   * @param null|int|\DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and
-   *                                       the driver supports TTL then the library may set a default value
-   *                                       for it or let the driver take care of that.
-   *
-   * @return bool True on success and false on failure.
-   *
-  ** @throws \Psr\SimpleCache\InvalidArgumentException
-   *   MUST be thrown if $values is neither an array nor a Traversable,
-   *   or if any of the $values are not a legal value.
-   */
-  public function setMultiple( $pairs, int $ttl = null ): bool {
-    if(count($pairs === 0)) {
-      //FIXME throw exception if empty array
-      return false;
-    }
-    $seconds = $this->ttlToSeconds($ttl);
-    $success = 0;
-    if($this->enabled) {
-      foreach($pairs as $key => $value) {
-        if ($this->set($key, $value, $seconds)) {
-          $success++;
+    /**
+     * Obtains multiple cache items by their unique keys.
+     *
+     * @param iterable $keys    A list of keys that can obtained in a single operation.
+     * @param mixed    $default Default value to return for keys that do not exist.
+     *
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+     *
+     * @return iterable A list of key => value pairs. Cache keys that do not exist or are stale will have $default as value.
+     */
+    public function getMultiple( $keys, $default = null ): iterable
+    {
+        $this->checkIterable($keys);
+        foreach($keys as $userKey) {
+            if(! is_string($userKey)) {
+                throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::iterableKeyMustBeString($userKey);
+            }
+            $value = $default;
+            if($this->enabled) {
+                $realKey = $this->adjustKey($userKey);
+                $PreValue = apcu_fetch($realKey, $success);
+                if($success) {
+                    $value = $PreValue;
+                }
+            }
+            $return[$userKey] = $value;
         }
-      }
+        return $return;
     }
-    if(count($pairs === $success)) {
-      return true;
-    }
-    return false;
-  }
 
-  /**
-   * Deletes multiple cache items in a single operation.
-   *
-  ** @param iterable $keys A list of string-based keys to be deleted.
-   *
-   * @return bool True if the items were successfully removed. False if there was an error.
-   *
-  ** @throws \Psr\SimpleCache\InvalidArgumentException
-   *   MUST be thrown if $keys is neither an array nor a Traversable,
-   *   or if any of the $keys are not a legal value.
-   */
-  public function deleteMultiple( $keys ): bool {
-    if(count($keys === 0)) {
-      //FIXME throw exception if empty array
-      return false;
+    /**
+     * Persists a set of key => value pairs in the cache, with an optional TTL.
+     *
+     * @param iterable               $values A list of key => value pairs for a multiple-set operation.
+     * @param null|int|\DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and
+     *                                       the driver supports TTL then the library may set a default value
+     *                                       for it or let the driver take care of that.
+     *
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+     *
+     * @return bool True on success and false on failure.
+     */
+    public function setMultiple( $pairs, $ttl = null ): bool {
+        if(! $this->enabled) {
+            return false;
+        }
+        $this->checkIterable($pairs);
+        $seconds = $this->ttlToSeconds($ttl);
+        $arr = array();
+        foreach($pairs as $kkey => $value) {
+            if(! is_string($kkey)) {
+                throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::iterableKeyMustBeString($kkey);
+            }
+            $key = $this->adjustKey($kkey);
+            $arr[$key] = $value;
+        }
+        foreach($arr as $key => $value) {
+            if(! apcu_store($key, $value, $seconds)) {
+                return false;
+            }
+        }
+        return true;
     }
-    $success = 0;
-    foreach($keys as $key) {
-      if ($this->delete($key)) {
-        $success++;
-      }
+
+    /**
+     * Deletes multiple cache items in a single operation.
+     *
+     * @param iterable $keys A list of string-based keys to be deleted.
+     *
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+     *
+     * @return bool True if the items were successfully removed. False if there was an error.
+     */
+    public function deleteMultiple( $keys ): bool
+    {
+        if(! $this->enabled) {
+            return false;
+        }
+        $return = true;
+        $this->checkIterable($keys);
+        foreach($keys as $userKey) {
+            if(! is_string($userKey)) {
+                throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::iterableKeyMustBeString($userKey);
+            }
+            $realKey = $this->adjustKey($userKey);
+            if(! apcu_delete($realKey)) {
+                $return = false;
+            }
+        }
+        return $return;
     }
-    if(count($keys) === $success) {
-      return true;
-    }
-    return false;
-  }
 
     /**
      * Determines whether an item is present in the cache.
@@ -416,8 +467,10 @@ class SimpleCacheAPCu
     /**
      * Returns the actual internal key being used with APCu. Needed for unit testing.
      *
-     *
      * @param string $key  The key you wanted translated to the APCu key.
+     *
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
      * @return string
      */
@@ -427,7 +480,7 @@ class SimpleCacheAPCu
     }
 
     /**
-     * Constructor function. Takes three arguments with defaults.
+     * Class constructor function. Takes three arguments with defaults.
      *
      * @param string $webappPrefix Sets the prefix to use for internal APCu key assignment. Useful
      *                               to avoid key collisions between web applications (think of it
@@ -467,6 +520,7 @@ class SimpleCacheAPCu
         }
         $this->strictType = $strictType;
     }
+
 }
 
 // Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.

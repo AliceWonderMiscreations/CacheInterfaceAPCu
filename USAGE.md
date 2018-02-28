@@ -1,0 +1,347 @@
+SimpleCacheAPCu Usage
+=====================
+
+This documentation has the following sections:
+
+1. Calling the Class
+2. PSR-16 Parameters
+3. PSR-16 Methods
+4. SimpleCacheAPCu Specific Methods
+5. Exceptions
+
+Please note the PSR-16 related notes here are only partial. To read the full
+interface specification, please see the PHP-FIG website:
+
+[https://www.php-fig.org/psr/psr-16/](https://www.php-fig.org/psr/psr-16/)
+
+
+Calling the Class
+-----------------
+
+The easiest way to create an object of this class:
+
+    use \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu as SimpleCache;
+    $CacheObj = new SimpleCache();
+
+I personally recommend your web application *extend* the class, see the
+appendix for how to do that and why.
+
+
+The Class Constructor
+---------------------
+
+The class constructor takes three parameters:
+
+1. `$webappPrefix` -- defaults to `NULL`
+2. `$salt` -- defaults to `NULL`
+3. `$strictType` -- defaults to `FALSE`
+
+
+### The Web Application Prefix
+
+APCu does not provide any kind of namespacing, which means key collisions where
+two different web applications or the same web application on two different
+virtual hosts running on the same web server use the same key for different
+data.
+
+Key collisions are bad. Not only can they potentially screw up how your
+application works, but they can potentially leak information.
+
+To solve this problem, this class modifies the key supplied to it to provide a
+namespaced internal key to use with APCu.
+
+The Web Application Prefix is an upper case alpha-numeric `[A-Z0-9]` string
+that is always used at the beginning of the internal key.
+
+By default, this prefix is `DEFAULT`. You change it by supplying a different
+namespace as the first argument when creating an instance of the class:
+
+    $CacheObj = new SimpleCache('FOOBAR');
+
+The Web Application Prefix must be at least three characters long and can not
+be longer than 32 characters. It can *only* contain upper case letters and the
+numbers 0-9, but the class will convert lower case letters to upper case for
+you.
+
+
+### Web Application Salt
+
+The key you supply to the class to store and fetch data with APCu is hsshed
+using `ripemd160` and a sixteen character substring of the hex representation
+of that hash is then used as part of the internal key.
+
+The benefit of using a hash, I do not have to care what characters are legal to
+the actual cache engine. If I want to use a username as part of the the web
+application uses and a user uses “バニーガール” as their username, it's cool. I
+can feed that to the class and it will hash it to produce a simple ASCII key
+that will work with any cache engine.
+
+Hashing also obfuscates the real key, which can be of limited benefit in the
+event a bug in the web server or a module the web server runs allows a theft of
+the APCu content.
+
+Anyway, if you want to specify a custom salt, you may as the second argument:
+
+    $CacheObj = new SimpleCache('FOOBAR', 'KmsIs5Q##@6GfpeC@irKIHA');
+
+To specify a custom salt *without* changing the default namespace, just use
+`null` as the first argument when creating the class object.
+
+
+### Strict Types
+
+When you feed a parameter to a function or class method, that parameter has two
+properties: The data itself, and the *data type*.
+
+When the data type does not match what the function or method expects, there
+are two options:
+
+A. Throw an exception and stop processing
+B. Attempt to recast the data type to what is needed
+
+You can not always do option B. You can not recast an array as an integer and
+you can not recast an object as a boolean.
+
+It also can be dangerous to recast. If a function that normally outputs an
+integer fails and instead responds with the boolean type False, that boolean
+False if recast as an integer would equate to 0 which may cause problems if
+the code did not check the data type before using it as an integer.
+
+I prefer Option A, to throw an exception when the data type is not what is
+expected, but PSR-16 does not specify strict data type checking, so it is an
+option that is disabled by default. With the default of false, this class
+recast data types when I believe it is safe to do so.
+
+To enable strict data type checking, set the third option to true:
+
+    $CacheObj = new SimpleCache('FOOBAR', 'KmsIs5Q##@6GfpeC@irKIHA', true);
+
+If you do not wish to alter the Web Application Prefix or Salt, just use `null`
+for those parameters.
+
+Note that this third parameter is the *only* place where a SimpleCacheAPUc
+method uses type hinting to let PHP know what type the method expects. This
+is because with type hinting, PHP will automatically recast the type if it
+can and throw a `TypeError` exception if it can not.
+
+Personally I find automatic type casting to be dangerous, so this class does
+use parameter type hinting *except* with this parameter, to make sure that if
+a value is specified, it is type `bool`. All other parameters, the type is
+checked by the method itself. If `$strictType` is `FALSE` *and* it is *safe*
+to recast a parameter that does not meet the expected type, then the method
+will recast the parameter itself. Otherwise it throws an exception.
+
+
+PSR-16 Parameters
+-----------------
+
+
+### Cache Key
+
+The `key` associated in a `key => value` pair __MUST__ be of the type `string`.
+
+The character `A-Z`, `a-z`, `0-9`, `_`, and `.` __MUST__ be allowed. The
+characters `{}()/\@:` __MUST NOT__ be allowed.
+
+Any other characters are up to the implementor to decide. SimpleCacheAPCu has
+no restrictions on characters other than not allowing what PSR-16 specifically
+forbids.
+
+The `key` must be at least one character in length and any key length up to 64
+characters must be allowed. SimpleCacheAPCu allows key lengths up to 255
+characters in length.
+
+The `key` as defined here is referred to as the `$key` parameter when used in
+the context of a method or function elsewhere in this documentation.
+
+
+### Time To Live
+
+This parameter is either an integer specifying the number of seconds for which
+the cached value is to be considered valid *or* a string containing a valid
+[DateInterval](http://php.net/manual/en/class.dateinterval.php) string.
+
+This parameter is referred to as the `$ttl` when used in the context of a
+method or function elsewhere in this documentation.
+
+
+#### SimpleCacheAPCu Notes
+
+If an integer is specified as the `$ttl` parameter that is greater than the
+current number of seconds since Unix Epoch, this class will assume you are
+specifying an intended expiration rather than a TTL that is longer than the
+hardware your server is running on will live.
+
+If the TTL evaluates to a time in the past, this class will throw an exception
+as that certainly is not what you intend and indicates a bug in your code that
+you need to know about.
+
+
+PSR-16 Methods
+--------------
+
+This section describes the methods defined by the PSR-16 interface
+specification. These methods will be available in any cache class that
+implements PSR-16.
+
+
+### `$CacheObj->get($key, $default=null);`
+
+This method will attempt to fetch the `value` associated with `key` and will
+return it. If their is not a `key => value` pair associated with the `$key`
+then the method will return whatever is specified by `$default` and if a
+`$default` value is not specified when calling this method, it will return
+`null`.
+
+
+### `$CacheObj->set($key, $value, $ttl = null);`
+
+This method will attempt to set the `key => value` with the specified `$ttl`.
+It returns a boolean type `TRUE` on success and `FALSE` on failure.
+
+If the `$ttl` parameter is not specified, the class default TTL will be used.
+
+
+### `$CacheObj->delete($key);`
+
+This method will attempt to delete the `key => value` pair associated with the
+specified `$key`. It returns a boolean type `TRUE` on success and `FALSE` on
+failure.
+
+
+### `$CacheObj->clear();`
+
+In PSR-16 this method will remove all `key => value` pairs from the cache.
+
+Since SimpleCacheAPCu implements a form of namespacing with the Web Application
+Prefix, I deviate from PSR-16 in my implementation of this method. I only
+clear the records associated with the Web Application Prefix associated with
+the object the method is being called from.
+
+If you do not use more than one Web Application Prefix, then it effectively
+is the same as clearing them all.
+
+If you do use more than one Web Application Prefix, then clearing them all is
+probably *not* what you actually want.
+
+This method returns a boolean type `TRUE` on success and `FALSE` on failure.
+
+
+### `$CacheObj->getMultiple($keys, $default = null);`
+
+In this method, the parameter `$keys` __MUST__ be a
+[Traversable](https://php.net/manual/en/class.traversable.php) pseudo-type
+(a type that can be traversed with the
+[foreach](http://php.net/manual/en/control-structures.foreach.php) language
+construct).
+
+Usually that means an array, but *some* objects are also traversible.
+
+The method allows you to request many `key => value` pairs at once. It returns
+a traversible type with `key => value` using `$default` as the value associated
+with keys that are not in the cache. If you do not specify the `$default`
+parameter, it defaults to `NULL`.
+
+In the SimpleCacheAPCu implementation, it returns a `key => value` array.
+
+
+### `$CacheObj->setMultiple($values, $ttl = null);`
+
+In this method, the parameter `$values` __MUST__ be a Traversible pseudo-type
+containing `key => value` pairs. The `key` __MUST__ be a string that meets the
+earlier conditions.
+
+The `$ttl` parameter if specified indicates the TTL that should be used for all
+the `key => value` pairs, this method does not support specifying a different
+TTL to use depending on the individual pair.
+
+This method returns a boolean type `TRUE` on success and `FALSE` on failure.
+
+
+### `$CacheObj->deleteMultiple($keys);`
+
+In this method, the parameter `$keys` __MUST__ be a Traversible pseudo-type
+containing keys you want deleted from the cache.
+
+This method returns a boolean type `TRUE` on success and `FALSE` on failure.
+
+
+### `$CacheObj->has($key)`
+
+This method checks to see whether or not the specified `$key` has a value
+stored in the cache.
+
+If it does, it return a boolean `TRUE`, otherwise a boolean `FALSE`.
+
+
+SimpleCacheAPCu Specific Methods
+--------------------------------
+
+In addition to providing the PSR-16 specified methods, this class offers a few
+others.
+
+
+### `$CacheObj->setDefaultSeconds( $seconds );`
+
+This allows you to specify the default number of seconds to use for the TTL
+when it is not specified in the `set()` or `setMultiple()` methods.
+
+By default, the value is `0` which tells APCu to keep the `key => value`
+pair in cache until the server daemon is restarted or until the memory is
+needed for something else.
+
+Personally I think that rarely is a good idea. Web applications _SHOULD_
+either delete the cached entry or update the cached entry when the data is
+no longer valid, but because programmers are human, the code to do that is not
+always written or bug free.
+
+Setting the default to something like two weeks (`1209600`) helps reduce the
+impact of stale cache.
+
+Regardless of what you set the default to, if `$ttl` is specified to `set()` or
+`setMultiple()` it will __ALWAYS__ override the default.
+
+
+### `$cacheObj->clearAll();`
+
+This calls `apcu_clear_cache()` which will clear all cache entries, regardless
+of what the Web Application Prefix is set to. If you use more than one Prefix,
+this probably is not what you want to do.
+
+This is the equivalent of the PSR-16 `clear()` method.
+
+
+### `$cacheObj->getRealKey($key)`
+
+The key the web application uses to interface with SimpleCacheAPCu is different
+that the key SimpleCacheAPCu uses to interface with APCu.
+
+This method returns the internal key SimpleCacheAPCu uses to talk to APCu.
+
+It is needed for unit testing.
+
+
+Exceptions
+----------
+
+There are two conditions that can cause SimpleCacheAPCu to intentionally throw
+an exception:
+
+1. The data type used in a parameter is incorrect
+2. The data used in a parameter is not valid for use
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

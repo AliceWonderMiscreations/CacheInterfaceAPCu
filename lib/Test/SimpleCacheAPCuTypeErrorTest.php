@@ -978,6 +978,241 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return true;
     }
+
+    public static function testNotIterableSet(): bool {
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        //null
+        $caught = false;
+        $key = null;
+        try {
+            $simpleCache->setMultiple($key);
+        } catch(\TypeError $e) {
+            $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type NULL.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                $caught = true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        if(! $caught) {
+            var_dump($key);
+            return false;
+        }
+        //integer
+        $caught = false;
+        $key = 7;
+        try {
+            $simpleCache->setMultiple($key);
+        } catch(\TypeError $e) {
+            $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type integer.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                $caught = true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        if(! $caught) {
+            var_dump($key);
+            return false;
+        }
+        //float
+        $caught = false;
+        $key = 7.6;
+        try {
+            $simpleCache->setMultiple($key);
+        } catch(\TypeError $e) {
+            $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type double.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                $caught = true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        if(! $caught) {
+            var_dump($key);
+            return false;
+        }
+        //boolean
+        $caught = false;
+        $key = false;
+        try {
+            $simpleCache->setMultiple($key);
+        } catch(\TypeError $e) {
+            $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type boolean.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                $caught = true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        if(! $caught) {
+            var_dump($key);
+            return false;
+        }
+        //string
+        $caught = false;
+        $key = 'Hello World!';
+        try {
+            $simpleCache->setMultiple($key);
+        } catch(\TypeError $e) {
+            $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type string.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                $caught = true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        if(! $caught) {
+            var_dump($key);
+            return false;
+        }
+        return true;
+    }
+
+    public static function testIterableSetNonStringIndex(): bool {
+        $obj = new \stdClass;
+        $obj->animal = "Frog";
+        $obj->mineral = "Quartz";
+        $obj->vegetable = "Spinach";
+        $arr = array("testInt" => 5, "testFloat" => 3.278, "testString" => "WooHoo", "testBoolean" => true, "testNull" => null, "testArray" => array(1, 2, 3, 4, 5), "testObject" => $obj);
+        $arr[] = 'Hello';
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        try {
+            $simpleCache->setMultiple($arr);
+        } catch(\TypeError $e) {
+            $reference = "The key in an iterable argument must be a string. You supplied type integer.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                return true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        return false;
+    }
+    
+    public static function testNotIterableGet(): bool {
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        //null
+        $caught = false;
+        $key = null;
+        try {
+            $simpleCache->getMultiple($key);
+        } catch(\TypeError $e) {
+            $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type NULL.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                $caught = true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        if(! $caught) {
+            var_dump($key);
+            return false;
+        }
+        //integer
+        $caught = false;
+        $key = 7;
+        try {
+            $simpleCache->getMultiple($key);
+        } catch(\TypeError $e) {
+            $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type integer.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                $caught = true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        if(! $caught) {
+            var_dump($key);
+            return false;
+        }
+        //float
+        $caught = false;
+        $key = 7.6;
+        try {
+            $simpleCache->getMultiple($key);
+        } catch(\TypeError $e) {
+            $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type double.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                $caught = true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        if(! $caught) {
+            var_dump($key);
+            return false;
+        }
+        //boolean
+        $caught = false;
+        $key = false;
+        try {
+            $simpleCache->getMultiple($key);
+        } catch(\TypeError $e) {
+            $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type boolean.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                $caught = true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        if(! $caught) {
+            var_dump($key);
+            return false;
+        }
+        //string
+        $caught = false;
+        $key = 'Hello World!';
+        try {
+            $simpleCache->getMultiple($key);
+        } catch(\TypeError $e) {
+            $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type string.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                $caught = true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        if(! $caught) {
+            var_dump($key);
+            return false;
+        }
+        return true;
+    }
+    
+    public static function testIterableGetNonStringIndex(): bool {
+        $obj = new \stdClass;
+        $obj->animal = "Frog";
+        $obj->mineral = "Quartz";
+        $obj->vegetable = "Spinach";
+        $arr = array("testInt" => 5, "testFloat" => 3.278, "testString" => "WooHoo", "testBoolean" => true, "testNull" => null, "testArray" => array(1, 2, 3, 4, 5), "testObject" => $obj);
+        $arr[] = 'Hello';
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        try {
+            $simpleCache->getMultiple($arr);
+        } catch(\TypeError $e) {
+            $reference = "The key in an iterable argument must be a string. You supplied type integer.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                return true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        return false;
+    }
+
 }
 
 // Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.

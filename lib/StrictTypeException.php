@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-/*
+/**
  +-------------------------------------------------------+
  |                                                       |
  | Copyright (c) 2018 Alice Wonder Miscreations          |
@@ -15,7 +15,14 @@ declare(strict_types = 1);
 
 namespace AWonderPHP\SimpleCacheAPCu;
 
-class StrictTypeException extends \TypeError implements \Psr\SimpleCache\CacheException
+/**
+ * Extends `\TypeError` class and implements `\Psr\SimpleCache\InvalidArgumentException`
+ *
+ * This class is used to throw an exception when the argument supplied to a SimpleCacheAPCu method is
+ *  of the wrong type and either can not be recast to correct type or the SimpleCacheAPCu strict type
+ *  mode is enabled.
+ */
+class StrictTypeException extends \TypeError implements \Psr\SimpleCache\InvalidArgumentException
 {
     public static function cstrTypeError( $var, string $str )
     {
@@ -40,6 +47,17 @@ class StrictTypeException extends \TypeError implements \Psr\SimpleCache\CacheEx
         $type = gettype($var);
         return new self(sprintf('The cache TTL argument must be an integer or a string. You supplied type %s.', $type));
     }
+
+    public static function typeNotIterable( $var ) {
+        $type = gettype($var);
+        return new self(sprintf('Caching functions for multiple cache operations require an iterable argument. You supplied type %s.', $type));
+    }
+
+    public static function iterableKeyMustBeString( $var ) {
+        $type = gettype($var);
+        return new self(sprintf('The key in an iterable argument must be a string. You supplied type %s.', $type));
+    }
+
 }
 
 // Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.

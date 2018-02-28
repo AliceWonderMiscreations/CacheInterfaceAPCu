@@ -190,6 +190,100 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return true;
     }
+    
+    public static function testNegativeTTL(): bool {
+        $key = "foo";
+        $value = "bar";
+        $ttl = -379;
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        try {
+            $simpleCache->set('foo', 'bar', $ttl);
+        } catch(\InvalidArgumentException $e) {
+            $reference = "The TTL can not be a negative number. You supplied -379.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                return true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        return false;
+    }
+    
+    public static function testDateStringInPastTTL(): bool {
+        $key = "foo";
+        $value = "bar";
+        $ttl = "1984-02-21";
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        try {
+            $simpleCache->set('foo', 'bar', $ttl);
+        } catch(\InvalidArgumentException $e) {
+            $reference = "The cache expiration can not be in the past. You supplied 1984-02-21.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                return true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        return false;
+    }
+    
+    public static function testDateRangeInPastTTL(): bool {
+        $key = "foo";
+        $value = "bar";
+        $ttl = "-1 week";
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        try {
+            $simpleCache->set('foo', 'bar', $ttl);
+        } catch(\InvalidArgumentException $e) {
+            $reference = "The cache expiration can not be in the past. You supplied -1 week.";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                return true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        return false;
+    }
+    
+    public static function testBogusStringinTTL(): bool {
+        $key = "foo";
+        $value = "bar";
+        $ttl = "LKvfs4dh#";
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        try {
+            $simpleCache->set('foo', 'bar', $ttl);
+        } catch(\InvalidArgumentException $e) {
+            $reference = "The cache expiration must be a non-zero TTL in seconds, seconds from UNIX epoch, a DateInterval, or an expiration date string. You supplied: LKvfs4dh#";
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                return true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        return false;
+    }
+    
+    public static function testKeyInIterableSetNotLegal(): bool {
+        $arr = array('key1' => 'value1', 'key2' => 'value2', 'ke}y3' => 'value3', 'key4' => 'value4', 'key5' => 'value5');
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        try {
+            $simpleCache->setMultiple($arr);
+        } catch(\InvalidArgumentException $e) {
+            $reference = 'Cache keys may not contain any of the following characters: "  {}()/\@:  " but your key "  ke}y3  " does.';
+            $actual = $e->getMessage();
+            if($reference === $actual) {
+                return true;
+            } else {
+                var_dump($actual);
+            }
+        }
+        return false;
+    }
+
 }
 
 // Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.

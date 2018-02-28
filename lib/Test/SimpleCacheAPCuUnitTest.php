@@ -477,6 +477,148 @@ class SimpleCacheAPCuUnitTest
         }
         return false;
     }
+    // iterable arguments
+    public static function testSetMultiplePairs():bool
+    {
+        $obj = new \stdClass;
+        $obj->animal = "Frog";
+        $obj->mineral = "Quartz";
+        $obj->vegetable = "Spinach";
+        $arr = array("testInt" => 5, "testFloat" => 3.278, "testString" => "WooHoo", "testBoolean" => true, "testNull" => null, "testArray" => array(1, 2, 3, 4, 5), "testObject" => $obj);
+        $arr['Hello'] = null;
+        $arr['Goodbye'] = null;
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu('TESTITERABLE');
+        $simpleCache->setMultiple($arr);
+        foreach(array('testInt', 'testFloat', 'testString', 'testBoolean', 'testArray', 'testObject') as $key) {
+            $a = $simpleCache->get($key);
+            switch($key) {
+                case "testObject":
+                    if($a->animal !== $obj->animal) {
+                        return false;
+                    }
+                    if($a->mineral !== $obj->mineral) {
+                        return false;
+                    }
+                    if($a->vegetable !== $obj->vegetable) {
+                        return false;
+                    }
+                    break;
+                default:
+                    if($arr[$key] !== $a) {
+                        return false;
+                    }
+            }
+        }
+        // test the three that should be null
+        foreach(array('testNull', 'Hello', 'Goodbye') as $key) {
+            $a = $simpleCache->get($key);
+            if(! is_null($a)) {
+                echo "failed NULL value test with key " . $key . "\n";
+                return false;
+            }
+            if(! $simpleCache->has($key)) {
+                echo "failed NULL has test with key " . $key . "\n";
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static function testGetMultiplePairs():bool {
+        // depends upon previous test
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu('TESTITERABLE');
+        $arr = array();
+        $arr[] = 'testBoolean';
+        $arr[] = 'testFloat';
+        $arr[] = 'testCacheMiss';
+        $arr[] = 'testString';
+        $result = $simpleCache->getMultiple($arr);
+        if(! array_key_exists('testBoolean', $result)) {
+            return false;
+        }
+        if(! array_key_exists('testFloat', $result)) {
+            return false;
+        }
+        if(! array_key_exists('testCacheMiss', $result)) {
+            return false;
+        }
+        if(! array_key_exists('testString', $result)) {
+            return false;
+        }
+        // boolean
+        if(! is_bool($result['testBoolean'])) {
+            echo "Fetch of Boolean failed type\n";
+            return false;
+        }
+        if(! $result['testBoolean']) {
+            echo "Fetch of Boolean failed value\n";
+            return false;
+        }
+        // float
+        if(! is_float($result['testFloat'])) {
+            echo "Fetch of Float failed type\n";
+            return false;
+        }
+        if($result['testFloat'] !== 3.278 ) {
+            echo "Fetch of Float failed value\n";
+            return false;
+        }
+        // string
+        if(! is_string($result['testString'])) {
+            echo "Fetch of String failed type\n";
+            return false;
+        }
+        if($result['testString'] !== "WooHoo" ) {
+            echo "Fetch of String failed value\n";
+            return false;
+        }
+        // cache miss
+        if(is_null($result['testCacheMiss'])) {
+            if(! $simpleCache->has('testCacheMiss')) {
+                return true;
+            }
+        }
+        var_dump($result['testCacheMiss']);
+        return false;
+    }
+
+    public static function testDeleteMultiple(): bool {
+        $prefix = 'DELETEMANY';
+        $arr = array();
+        $records = rand(220,370);
+        for($i=0; $i <= $records; $i++) {
+            $key = 'KeyNumber-' . $i;
+            $val = 'ValueNumber-' . $i;
+            $arr[$key] = $val;
+        }
+        //var_dump($arr);
+        $start = count($arr);
+        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+        $simpleCache->setMultiple($arr);
+        $del = array();
+        $n = rand(75, 167);
+        $max = $records - 5;
+        for($i=0; $i<$n; $i++) {
+            $key = 'KeyNumber-' . rand(5, $max);
+            if(! in_array($key, $del)) {
+                $del[] = $key;
+            }
+        }
+        $delcount = count($del);
+        $expected = $start - $delcount;
+        $simpleCache->deleteMultiple($del);
+        $hits = 0;
+        for($i=0; $i<= $records; $i++) {
+            $key = 'KeyNumber-' . $i;
+            if($simpleCache->has($key)) {
+                $hits++;
+            }
+        }
+        if($expected === $hits) {
+            return true;
+        }
+        return false;
+    }
 
     // cache clearing operations
     public static function testClearLocalAppCache(): bool {
