@@ -4,10 +4,11 @@ SimpleCacheAPCu Usage
 This documentation has the following sections:
 
 1. Calling the Class
-2. PSR-16 Parameters
-3. PSR-16 Methods
-4. SimpleCacheAPCu Specific Methods
-5. Exceptions
+2. The Class Constructor
+3. PSR-16 Parameters
+4. PSR-16 Methods
+5. SimpleCacheAPCu Specific Methods
+6. Exceptions
 
 Please note the PSR-16 related notes here are only partial. To read the full
 interface specification, please see the PHP-FIG website:
@@ -190,10 +191,10 @@ specification. These methods will be available in any cache class that
 implements PSR-16.
 
 
-### `$CacheObj->get($key, $default=null);`
+### `$CacheObj->get($key, $default = null);`
 
 This method will attempt to fetch the `value` associated with `key` and will
-return it. If their is not a `key => value` pair associated with the `$key`
+return it. If there is not a `key => value` pair associated with the `$key`
 then the method will return whatever is specified by `$default` and if a
 `$default` value is not specified when calling this method, it will return
 `null`.
@@ -286,7 +287,7 @@ In addition to providing the PSR-16 specified methods, this class offers a few
 others.
 
 
-### `$CacheObj->setDefaultSeconds( $seconds );`
+### `$CacheObj->setDefaultSeconds($seconds);`
 
 This allows you to specify the default number of seconds to use for the TTL
 when it is not specified in the `set()` or `setMultiple()` methods.
@@ -303,8 +304,9 @@ always written or bug free.
 Setting the default to something like two weeks (`1209600`) helps reduce the
 impact of stale cache.
 
-Regardless of what you set the default to, if `$ttl` is specified to `set()` or
-`setMultiple()` it will __ALWAYS__ override the default.
+Regardless of what you set the default to, if `$ttl` is specified when the
+`set()` or `setMultiple()` method is called it will __ALWAYS__ override the
+default.
 
 
 ### `$cacheObj->clearAll();`
@@ -316,7 +318,7 @@ this probably is not what you want to do.
 This is the equivalent of the PSR-16 `clear()` method.
 
 
-### `$cacheObj->getRealKey($key)`
+### `$cacheObj->getRealKey($key);`
 
 The key the web application uses to interface with SimpleCacheAPCu is different
 that the key SimpleCacheAPCu uses to interface with APCu.

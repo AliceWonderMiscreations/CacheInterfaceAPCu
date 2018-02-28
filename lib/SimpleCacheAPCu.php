@@ -2,6 +2,10 @@
 declare(strict_types = 1);
 
 /**
+ * @package AWonderPHP\SimpleCacheAPCu
+ * @author Alice Wonder <paypal@domblogger.net>
+ * @license https://opensource.org/licenses/MIT MIT
+ * @link https://github.com/AliceWonderMiscreations/SimpleCacheAPCu
  +-------------------------------------------------------+
  |                                                       |
  | Copyright (c) 2018 Alice Wonder Miscreations          |
@@ -35,9 +39,18 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     // 0 tells APCu to store it as long as it can
     protected $defaultSeconds = 0;
 
+    /**
+     * Checks whether or not a parameter is of the iterable pseudo-type
+     *
+     * @param mixed $arg The parameter to be checked
+     *
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException::typeNotIterable($arg)
+     *
+     * @return void
+     */
     protected function checkIterable( $arg ): void
     {
-        if(! is_iterable($arg)) {
+        if (! is_iterable($arg)) {
             throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::typeNotIterable($arg);
         }
     }
@@ -77,26 +90,26 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      */
     protected function adjustKey( $key ): string
     {
-        if(! $this->strictType) {
+        if (! $this->strictType) {
             $invalidTypes = array('array', 'object', 'boolean', 'NULL');
             $type = gettype($key);
-            if(! in_array($type, $invalidTypes)) {
+            if (! in_array($type, $invalidTypes)) {
                 $key = (string)$key;
             }
         }
-        if(! is_string($key)) {
+        if (! is_string($key)) {
             throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::keyTypeError($key);
         }
         $key = trim($key);
-        if(strlen($key) === 0) {
+        if (strlen($key) === 0) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::emptyKey();
         }
-        if(strlen($key) > 255) {
+        if (strlen($key) > 255) {
             // key should not be larger
             //  than 255 character
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::keyTooLong($key);
         }
-        if(preg_match('/[\[\]\{\}\(\)\/\@\:\\\]/', $key) !== 0) {
+        if (preg_match('/[\[\]\{\}\(\)\/\@\:\\\]/', $key) !== 0) {
             // PSR-16 says those characters not allowed
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::invalidKeyCharacter($key);
         }
@@ -105,52 +118,52 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     }
 
     /**
-     *  Sets the prefix (namespace) for the internal keys
+     * Sets the prefix (namespace) for the internal keys
      *
-     *  @param string  The string to use as internal key prefix.
+     * @param string $str The string to use as internal key prefix.
      *
-     *  @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
-     *  @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
-     *  @returns void
+     * @return void
      */
     protected function setWebAppPrefix( $str ): void
     {
         $type = gettype($str);
-        if(! is_string($str)) {
+        if (! is_string($str)) {
             throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::cstrTypeError($str, 'WebApp Prefix');
         }
         $str = strtoupper(trim($str));
-        if(strlen($str) < 3) {
+        if (strlen($str) < 3) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::webappPrefixTooShort($str);
         }
-        if(strlen($str) > 32) {
+        if (strlen($str) > 32) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::webappPrefixTooLong($str);
         }
-        if(preg_match('/[^A-Z0-9]/', $str) !== 0) {
+        if (preg_match('/[^A-Z0-9]/', $str) !== 0) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::webappPrefixNotAlphaNumeric($str);
         }
         $this->webappPrefix = $str . '_';
     }
 
     /**
-     *  Sets the salt to use when generating the internal keys
+     * Sets the salt to use when generating the internal keys
      *
-     *  @param string  The string to use as the salt when creating the internal key prefix.
+     * @param string $str The string to use as the salt when creating the internal key prefix.
      *
-     *  @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
-     *  @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+     * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+     * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
-     *  @returns void
+     * @return void
      */
     protected function setHashSalt( $str ): void
     {
         $type = gettype($str);
-        if(! is_string($str)) {
+        if (! is_string($str)) {
             throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::cstrTypeError($str, 'Salt');
         }
         $str = trim($str);
-        if(strlen($str) < 8) {
+        if (strlen($str) < 8) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::saltTooShort($str);
         }
         $this->salt = $str;
@@ -167,7 +180,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * string into a UNIX seconds from Epoch expiration, and it then calculates
      * the corresponding TTL. When fed NULL, it uses the class default TTL.
      *
-     * @param null|int|string $ttl  The length to cache or the expected expiration.
+     * @param null|int|string $ttl The length to cache or the expected expiration.
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
@@ -176,32 +189,32 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      */
     protected function ttlToSeconds( $ttl ): int
     {
-        if(is_null($ttl)) {
+        if (is_null($ttl)) {
             return $this->defaultSeconds;
         }
-        if(! $this->strictType ) {
-            if(is_numeric($ttl)) {
+        if (! $this->strictType ) {
+            if (is_numeric($ttl)) {
                 $ttl = intval($ttl, 10);
             }
         }
         $type = gettype($ttl);
-        if(! in_array($type, array('integer', 'string'))) {
+        if (! in_array($type, array('integer', 'string'))) {
             throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::ttlTypeError($ttl);
         }
         $now = time();
-        if(is_int($ttl)) {
+        if (is_int($ttl)) {
             $seconds = $ttl;
-            if($seconds > $now) {
+            if ($seconds > $now) {
                 return ($seconds - $now);
             } 
-            if($seconds < 0) {
+            if ($seconds < 0) {
                 throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::negativeTTL($seconds);
             }
             return $seconds;
         }
         // hope it is a date string
-        if($seconds = strtotime($ttl, $now)) {
-            if($seconds > $now) {
+        if ($seconds = strtotime($ttl, $now)) {
+            if ($seconds > $now) {
                 return ($seconds - $now);
             } else {
                 throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::dateStringInPast($ttl);
@@ -222,15 +235,15 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      */
     public function setDefaultSeconds( $seconds ): void
     {
-        if(! $this->strictType ) {
-            if(is_numeric($seconds)) {
+        if (! $this->strictType ) {
+            if (is_numeric($seconds)) {
                 $seconds = intval($seconds);
             }
         }
-        if(! is_int($seconds)) {
+        if (! is_int($seconds)) {
             throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::DefaultTTL($seconds);
         }
-        if($seconds < 0) {
+        if ($seconds < 0) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::negativeDefaultTTL($seconds);
         }
         $this->defaultSeconds = $seconds;
@@ -250,9 +263,9 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     public function get( $key, $default = null )
     {
         $key = $this->adjustKey($key);
-        if($this->enabled) {
+        if ($this->enabled) {
             $return = apcu_fetch($key, $success);
-            if($success) {
+            if ($success) {
                 return $return;
             }
         }
@@ -273,7 +286,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     public function set( $key, $value, $ttl = null ): bool
     {
         $key = $this->adjustKey($key);
-        if($this->enabled) {
+        if ($this->enabled) {
             $seconds = $this->ttlToSeconds($ttl);
             return apcu_store($key, $value, $seconds);
         }
@@ -290,7 +303,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     public function delete( $key ): bool
     {
         $key = $this->adjustKey($key);
-        if($this->enabled) {
+        if ($this->enabled) {
             return apcu_delete($key);
         }
         return false;
@@ -304,8 +317,8 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      */
     public function clear(): bool
     {
-        if($this->enabled) {
-            if(class_exists('\APCUIterator', false)) {
+        if ($this->enabled) {
+            if (class_exists('\APCUIterator', false)) {
                 $iterator = new \APCUIterator('#^' . $this->webappPrefix . '#', APC_ITER_KEY);
                 foreach ($iterator as $item) {
                     $key = $item['key'];
@@ -314,13 +327,13 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
                 return true;
             }
             $info = apcu_cache_info();
-            if(isset($info['cache_list'])) {
+            if (isset($info['cache_list'])) {
                 $return = true;
                 $cachelist = $info['cache_list'];
-                foreach($cachelist as $item) {
-                    if(isset($item['info'])) {
+                foreach ($cachelist as $item) {
+                    if (isset($item['info'])) {
                         $key = $item['info'];
-                        if(strpos($key, $this->webappPrefix) === 0) {
+                        if (strpos($key, $this->webappPrefix) === 0) {
                             apcu_delete($key);
                         }
                     }
@@ -339,9 +352,9 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     public function clearAll(): bool
     {
         $return = false;
-        if($this->enabled) {
+        if ($this->enabled) {
             $return = true;
-            if(! apcu_clear_cache()) {
+            if (! apcu_clear_cache()) {
                 return false;
             }
         }
@@ -362,15 +375,15 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     public function getMultiple( $keys, $default = null ): iterable
     {
         $this->checkIterable($keys);
-        foreach($keys as $userKey) {
-            if(! is_string($userKey)) {
+        foreach ($keys as $userKey) {
+            if (! is_string($userKey)) {
                 throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::iterableKeyMustBeString($userKey);
             }
             $value = $default;
-            if($this->enabled) {
+            if ($this->enabled) {
                 $realKey = $this->adjustKey($userKey);
                 $PreValue = apcu_fetch($realKey, $success);
-                if($success) {
+                if ($success) {
                     $value = $PreValue;
                 }
             }
@@ -382,32 +395,34 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      *
-     * @param iterable               $values A list of key => value pairs for a multiple-set operation.
-     * @param null|int|\DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and
-     *                                       the driver supports TTL then the library may set a default value
-     *                                       for it or let the driver take care of that.
+     * @param iterable               $pairs A list of key => value pairs for a
+     *                                      multiple-set operation.
+     * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If
+     *                                      not set or set to NULL the class default
+     *                                      will be used.
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
      * @return bool True on success and false on failure.
      */
-    public function setMultiple( $pairs, $ttl = null ): bool {
-        if(! $this->enabled) {
+    public function setMultiple( $pairs, $ttl = null ): bool
+    {
+        if (! $this->enabled) {
             return false;
         }
         $this->checkIterable($pairs);
         $seconds = $this->ttlToSeconds($ttl);
         $arr = array();
-        foreach($pairs as $kkey => $value) {
-            if(! is_string($kkey)) {
+        foreach ($pairs as $kkey => $value) {
+            if (! is_string($kkey)) {
                 throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::iterableKeyMustBeString($kkey);
             }
             $key = $this->adjustKey($kkey);
             $arr[$key] = $value;
         }
-        foreach($arr as $key => $value) {
-            if(! apcu_store($key, $value, $seconds)) {
+        foreach ($arr as $key => $value) {
+            if (! apcu_store($key, $value, $seconds)) {
                 return false;
             }
         }
@@ -426,17 +441,17 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      */
     public function deleteMultiple( $keys ): bool
     {
-        if(! $this->enabled) {
+        if (! $this->enabled) {
             return false;
         }
         $return = true;
         $this->checkIterable($keys);
-        foreach($keys as $userKey) {
-            if(! is_string($userKey)) {
+        foreach ($keys as $userKey) {
+            if (! is_string($userKey)) {
                 throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::iterableKeyMustBeString($userKey);
             }
             $realKey = $this->adjustKey($userKey);
-            if(! apcu_delete($realKey)) {
+            if (! apcu_delete($realKey)) {
                 $return = false;
             }
         }
@@ -458,7 +473,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     public function has( $key ): bool
     {
         $key = $this->adjustKey($key);
-        if($this->enabled) {
+        if ($this->enabled) {
             return apcu_exists($key);
         }
         return false;
@@ -467,7 +482,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     /**
      * Returns the actual internal key being used with APCu. Needed for unit testing.
      *
-     * @param string $key  The key you wanted translated to the APCu key.
+     * @param string $key The key you wanted translated to the APCu key.
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
@@ -482,35 +497,35 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     /**
      * Class constructor function. Takes three arguments with defaults.
      *
-     * @param string $webappPrefix Sets the prefix to use for internal APCu key assignment. Useful
-     *                               to avoid key collisions between web applications (think of it
-     *                               like a namespace). String between 3 and 32 characters in length
-     *                               containing only letters A-Z (NOT case sensitive) and numbers 0-9.
-     *                               Defaults to "Default".
-     * @param string $salt         A salt to use in the generation of the hash used as the internal
-     *                               APCu key. Must be at least eight characters long. There is a
-     *                               default salt that is used if you do not specify. Note that when
-     *                               you change the salt, all the internal keys change.
-     * @param bool $strictType     When set to true, type are strictly enforced. When set to false
-     *                               (the default) an attempt is made to cast to the expected type.
+     * @param string $webappPrefix (optional) Sets the prefix to use for internal APCu key assignment.
+     *                             Useful to avoid key collisions between web applications (think of
+     *                             it like a namespace). String between 3 and 32 characters in length
+     *                             containing only letters A-Z (NOT case sensitive) and numbers 0-9.
+     *                             Defaults to "Default".
+     * @param string $salt         (optional) A salt to use in the generation of the hash used as the
+     *                             internal APCu key. Must be at least eight characters long. There is
+     *                             a default salt that is used if you do not specify. Note that when
+     *                             you change the salt, all the internal keys change.
+     * @param bool   $strictType   (optional) When set to true, type is strictly enforced. When set to
+     *                             false (the default) an attempt is made to cast to the expected type.
      */
     public function __construct( $webappPrefix=null, $salt=null, bool $strictType=false )
     {
         if (extension_loaded('apcu') && ini_get('apc.enabled')) {
             $invalidTypes = array('array', 'object', 'boolean');
-            if(! is_null($webappPrefix)) {
-                if(! $strictType) {
+            if (! is_null($webappPrefix)) {
+                if (! $strictType) {
                     $type = gettype($webappPrefix);
-                    if(! in_array($type, $invalidTypes)) {
+                    if (! in_array($type, $invalidTypes)) {
                         $webappPrefix = (string)$webappPrefix;
                     }
                 }
                 $this->setWebAppPrefix($webappPrefix);
             }
-            if(! is_null($salt)) {
-                if(! $strictType) {
+            if (! is_null($salt)) {
+                if (! $strictType) {
                     $type = gettype($salt);
-                    if(! in_array($type, $invalidTypes)) {
+                    if (! in_array($type, $invalidTypes)) {
                         $salt = (string)$salt;
                     }
                 }
