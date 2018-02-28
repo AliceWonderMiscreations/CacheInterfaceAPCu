@@ -330,6 +330,18 @@ an exception:
 1. The data type used in a parameter is incorrect
 2. The data used in a parameter is not valid for use
 
+### Data Type Exceptions
+
+Exceptions of this type are thrown under one of the following circumstances:
+
+1. You have set `$strictType` to `TRUE` but supplied a parameter that does not
+match the expected data type.
+
+2. You do *not* have `$strictType` set to `TRUE` but it would not be safe to
+try and recast the data type to what is required.
+
+3. It is not possible to recast the data type to what is required.
+
 
 
 
