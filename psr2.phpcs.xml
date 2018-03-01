@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ruleset name="PHP_CodeSniffer">
   <description>The coding standard for SimpleCacheAPCu</description>
   <file>lib</file>
