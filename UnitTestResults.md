@@ -1,22 +1,10 @@
 SimpleCacheAPCuUnitTest Unit Test Results
 =========================================
 
-__Test Date__         : 2018 February 27 at 09:01:33 AM UTC  
+__Test Date__         : 2018 March 1 at 01:44:54 AM UTC  
 __Test PHP Version__  : 7.1.14  
-__Test APCu Version__ :  
+__Test APCu Version__ : 5.1.9  
 __Test Platform__     : Linux  
-
-
-Implementation Incomplete
--------------------------
-
-Unit Tests for Exceptions are not yet finished.
-
-The following functions need complete rewrite and are not tested:
-
-* `getMultiple( $keys, $default = null )`
-* `setMultiple( $pairs, $ttl = null )`
-* `deleteMultiple( $keys )`
 
 
 Testing Single Key Features
@@ -36,6 +24,16 @@ Testing Single Key Features
 * Test Multibyte Character Key : *PASSED*
 
 12 of 12 Unit Tests Passed.
+
+
+Testing Iterable Argument Features
+----------------------------------
+
+* Test Set Multiple In Iterable    : *PASSED*
+* Test Get Multiple In Iterable    : *PASSED*
+* Test Delete Multiple In Iterable : *PASSED*
+
+3 of 3 Unit Tests Passed.
 
 
 Testing Cache TTL Features
@@ -65,8 +63,8 @@ Testing Webapp Prefix and Salt Features
 Testing Clear Cache Features
 ----------------------------
 
-* Test Clear Specific Webapp Prefix Only  : *PASSED*
-* Test Clear All Cache                    : *PASSED*
+* Test Clear Specific Webapp Prefix Only : *PASSED*
+* Test Clear All Cache                   : *PASSED*
 
 2 of 2 Unit Tests Passed.
 
@@ -74,20 +72,27 @@ Testing Clear Cache Features
 Testing Exceptions
 ------------------
 
+These are exceptions thrown by the class when given bad data. Currently two types of
+exceptions are thrown:
+
 ### Type Error Tests
 
-* Test Type Error Prefix Not String Exception Strict     : *PASSED*
-* Test Type Error Prefix Not String Exception Loose      : *PASSED*
-* Test Type Error Salt Not String Exception Strict       : *PASSED*
-* Test Type Error Salt Not String Exception Loose        : *PASSED*
-* Test Type Error Default TTL Not Int Exception Strict   : *PASSED*
-* Test Type Error Default TTL Not Int Exception Loose    : *PASSED*
-* Test Type Error Key Not String Exception Strict        : *PASSED*
-* Test Type Error Key Not String Exception Loose         : *PASSED*
-* Test Type Error TTL Not Int or String Exception Strict : *PASSED*
-* Test Type Error TTL Not Int or String Exception Loose  : *PASSED*
+* Test Type Error Prefix Not String Exception Strict           : *PASSED*
+* Test Type Error Prefix Not String Exception Loose            : *PASSED*
+* Test Type Error Salt Not String Exception Strict             : *PASSED*
+* Test Type Error Salt Not String Exception Loose              : *PASSED*
+* Test Type Error Default TTL Not Int Exception Strict         : *PASSED*
+* Test Type Error Default TTL Not Int Exception Loose          : *PASSED*
+* Test Type Error Key Not String Exception Strict              : *PASSED*
+* Test Type Error Key Not String Exception Loose               : *PASSED*
+* Test Type Error TTL Not Int or String Exception Strict       : *PASSED*
+* Test Type Error TTL Not Int or String Exception Loose        : *PASSED*
+* Test Type Error Arg Not Iterable in `setMultiple`            : *PASSED*
+* Test Type Error Non String key in Iterable in `setMultiple`  : *PASSED*
+* Test Type Error Arg Not Iterable in `getMultiple`            : *PASSED*
+* Test Type Error Non String key in Iterable in `getMultiple`  : *PASSED*
 
-10 of 10 Unit Tests Passed.
+14 of 14 Unit Tests Passed.
 
 ### Invalid Argument Tests
 
@@ -100,5 +105,16 @@ Testing Exceptions
 * Test Empty Key Exception                             : *PASSED*
 * Test Barely Too Long Key Exception                   : *PASSED*
 * Test PSR-16 Reserved Character In Key Exception      : *PASSED*
+* Test Negative TTL in `set()` Exception               : *PASSED*
+* Test Cache Exp. String in Past `set()` Exception     : *PASSED*
+* Test Cache Date Range in Past `set()` Exception      : *PASSED*
+* Test Bogus TTL String in `set()` Exception           : *PASSED*
+* Test Illegal Key in Iterable Set                     : *PASSED*
 
-9 of 9 Unit Tests Passed.
+14 of 14 Unit Tests Passed.
+
+
+__END OF CURRENT TESTS__
+========================
+
+55 of 55 Total Unit Tests Passed.

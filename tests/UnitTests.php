@@ -51,6 +51,7 @@ if(file_exists('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/Inval
     require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/Test/SimpleCacheAPCuInvalidArgumentTest.php');
 } else {
     require('../lib/InvalidArgumentException.php');
+    require('../lib/StrictTypeException.php');
     require('../lib/SimpleCacheAPCu.php');
     require('../lib/Test/SimpleCacheAPCuUnitTest.php');
     
@@ -58,7 +59,7 @@ if(file_exists('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/Inval
     require('../lib/Test/SimpleCacheAPCuInvalidArgumentTest.php');
 }
 
-use \AliceWonderMiscreations\SimpleCacheAPCu\Test\SimpleCacheAPCuUnitTest as CacheUnitTest;
+use \AWonderPHP\SimpleCacheAPCu\Test\SimpleCacheAPCuUnitTest as CacheUnitTest;
 
 function showTestResults( string $name, bool $result) {
     global $counter;
@@ -72,21 +73,15 @@ function showTestResults( string $name, bool $result) {
     }
 }
 
+$TOTAL_PASSED=0;
+$TOTAL_TESTS=0;
+
 echo "SimpleCacheAPCuUnitTest Unit Test Results\n=========================================\n\n";
 
 echo "__Test Date__         : " . date("Y F j \a\\t h:i:s A e") . "  \n";
 echo "__Test PHP Version__  : " . PHP_VERSION . "  \n";
-echo "__Test APCu Version__ :  \n";
+echo "__Test APCu Version__ : " . phpversion('apcu') . "  \n";
 echo "__Test Platform__     : " . PHP_OS . "  \n";
-
-echo "\n\nImplementation Incomplete\n-------------------------\n\n";
-
-echo "Unit Tests for Exceptions are not yet finished.\n\n";
-echo "The following functions need complete rewrite and are not tested:\n\n";
-
-echo "* `getMultiple( \$keys, \$default = null )`\n";
-echo "* `setMultiple( \$pairs, \$ttl = null )`\n";
-echo "* `deleteMultiple( \$keys )`\n";
 
 echo "\n\nTesting Single Key Features\n---------------------------\n\n";
 
@@ -155,6 +150,34 @@ showTestResults($name, $a);
 
 echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
 
+$TOTAL_PASSED = $TOTAL_PASSED + $passed;
+$TOTAL_TESTS = $TOTAL_TESTS + $counter;
+
+echo "\n\nTesting Iterable Argument Features\n----------------------------------\n\n";
+
+$counter = 0;
+$passed = 0;
+
+$a = false;
+$name = "Set Multiple In Iterable    ";
+$a = CacheUnitTest::testSetMultiplePairs();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Get Multiple In Iterable    ";
+$a = CacheUnitTest::testGetMultiplePairs();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Delete Multiple In Iterable ";
+$a = CacheUnitTest::testDeleteMultiple();
+showTestResults($name, $a);
+
+echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
+
+$TOTAL_PASSED = $TOTAL_PASSED + $passed;
+$TOTAL_TESTS = $TOTAL_TESTS + $counter;
+
 echo "\n\nTesting Cache TTL Features\n--------------------------\n\n";
 
 $counter = 0;
@@ -192,6 +215,9 @@ showTestResults($name, $a);
 
 echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
 
+$TOTAL_PASSED = $TOTAL_PASSED + $passed;
+$TOTAL_TESTS = $TOTAL_TESTS + $counter;
+
 echo "\n\nTesting Webapp Prefix and Salt Features\n---------------------------------------\n\n";
 
 $counter = 0;
@@ -219,37 +245,34 @@ showTestResults($name, $a);
 
 echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
 
+$TOTAL_PASSED = $TOTAL_PASSED + $passed;
+$TOTAL_TESTS = $TOTAL_TESTS + $counter;
+
 echo "\n\nTesting Clear Cache Features\n----------------------------\n\n";
 
 $counter = 0;
 $passed = 0;
 
 $a = false;
-$name = "Clear Specific Webapp Prefix Only  ";
+$name = "Clear Specific Webapp Prefix Only ";
 $a = CacheUnitTest::testClearLocalAppCache();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Clear All Cache                    ";
+$name = "Clear All Cache                   ";
 $a = CacheUnitTest::testClearAllCache();
 showTestResults($name, $a);
 
-
-
-
-
-
-
-
-
-
-
-
 echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
+
+$TOTAL_PASSED = $TOTAL_PASSED + $passed;
+$TOTAL_TESTS = $TOTAL_TESTS + $counter;
 
 echo "\n\nTesting Exceptions\n------------------\n\n";
 
-use \AliceWonderMiscreations\SimpleCacheAPCu\Test\SimpleCacheAPCuTypeErrorTest as TypeTests;
+echo "These are exceptions thrown by the class when given bad data. Currently two types of\nexceptions are thrown:\n\n";
+
+use \AWonderPHP\SimpleCacheAPCu\Test\SimpleCacheAPCuTypeErrorTest as TypeTests;
 
 echo "### Type Error Tests\n\n";
 
@@ -257,58 +280,81 @@ $counter = 0;
 $passed = 0;
 
 $a = false;
-$name = "Type Error Prefix Not String Exception Strict     ";
+$name = "Type Error Prefix Not String Exception Strict           ";
 $a = TypeTests::testTypeErrorPrefixNotStringStrict();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Prefix Not String Exception Loose      ";
+$name = "Type Error Prefix Not String Exception Loose            ";
 $a = TypeTests::testTypeErrorPrefixNotString();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Salt Not String Exception Strict       ";
+$name = "Type Error Salt Not String Exception Strict             ";
 $a = TypeTests::testTypeErrorSaltNotStringStrict();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Salt Not String Exception Loose        ";
+$name = "Type Error Salt Not String Exception Loose              ";
 $a = TypeTests::testTypeErrorSaltNotString();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Default TTL Not Int Exception Strict   ";
+$name = "Type Error Default TTL Not Int Exception Strict         ";
 $a = TypeTests::testTypeErrorDefaultTTLNotIntStrict();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Default TTL Not Int Exception Loose    ";
+$name = "Type Error Default TTL Not Int Exception Loose          ";
 $a = TypeTests::testTypeErrorDefaultTTLNotInt();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Key Not String Exception Strict        ";
+$name = "Type Error Key Not String Exception Strict              ";
 $a = TypeTests::testTypeErrorKeyNotStringStrict();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error Key Not String Exception Loose         ";
+$name = "Type Error Key Not String Exception Loose               ";
 $a = TypeTests::testTypeErrorKeyNotString();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error TTL Not Int or String Exception Strict ";
+$name = "Type Error TTL Not Int or String Exception Strict       ";
 $a = TypeTests::testTypeErrorTTL_Strict();
 showTestResults($name, $a);
 
 $a = false;
-$name = "Type Error TTL Not Int or String Exception Loose  ";
+$name = "Type Error TTL Not Int or String Exception Loose        ";
 $a = TypeTests::testTypeErrorTTL();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Type Error Arg Not Iterable in `setMultiple`            ";
+$a = TypeTests::testNotIterableSet();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Type Error Non String key in Iterable in `setMultiple`  ";
+$a = TypeTests::testIterableSetNonStringIndex();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Type Error Arg Not Iterable in `getMultiple`            ";
+$a = TypeTests::testNotIterableGet();
+showTestResults($name, $a);
+
+$a = false;
+$name = "Type Error Non String key in Iterable in `getMultiple`  ";
+$a = TypeTests::testIterableGetNonStringIndex();
 showTestResults($name, $a);
 
 echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
 
-use \AliceWonderMiscreations\SimpleCacheAPCu\Test\SimpleCacheAPCuInvalidArgumentTest as ArgTests;
+$TOTAL_PASSED = $TOTAL_PASSED + $passed;
+$TOTAL_TESTS = $TOTAL_TESTS + $counter;
+
+use \AWonderPHP\SimpleCacheAPCu\Test\SimpleCacheAPCuInvalidArgumentTest as ArgTests;
 
 echo "\n### Invalid Argument Tests\n\n";
 
@@ -360,14 +406,52 @@ $name = "PSR-16 Reserved Character In Key Exception      ";
 $a = ArgTests::testReservedCharacterInKey();
 showTestResults($name, $a);
 
+$a = false;
+$name = "Negative TTL in `set()` Exception               ";
+$a = ArgTests::testNegativeTTL();
+showTestResults($name, $a);
 
+$a = false;
+$name = "Cache Exp. String in Past `set()` Exception     ";
+$a = ArgTests::testDateStringInPastTTL();
+showTestResults($name, $a);
 
+$a = false;
+$name = "Cache Date Range in Past `set()` Exception      ";
+$a = ArgTests::testDateRangeInPastTTL();
+showTestResults($name, $a);
 
+$a = false;
+$name = "Bogus TTL String in `set()` Exception           ";
+$a = ArgTests::testBogusStringinTTL();
+showTestResults($name, $a);
 
-
-
-
-
+$a = false;
+$name = "Illegal Key in Iterable Set                     ";
+$a = ArgTests::testKeyInIterableSetNotLegal();
+showTestResults($name, $a);
 
 echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
+
+$TOTAL_PASSED = $TOTAL_PASSED + $passed;
+$TOTAL_TESTS = $TOTAL_TESTS + $counter;
+
+echo "\n\n__END OF CURRENT TESTS__\n========================\n";
+
+echo "\n" . $TOTAL_PASSED . " of " . $TOTAL_TESTS . " Total Unit Tests Passed.\n";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
