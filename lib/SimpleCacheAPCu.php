@@ -233,7 +233,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return mixed The value in the cached key => value pair, or $default if a cache miss
      */
-    protected function cacheFetch($realKey, $default): mixed
+    protected function cacheFetch($realKey, $default)
     {
         $return = apcu_fetch($realKey, $success);
         if ($success) {
