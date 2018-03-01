@@ -2,10 +2,12 @@
 declare(strict_types = 1);
 
 /**
+ * An implementation of the PSR-16 SimpleCache Interface for APCu
+ *
  * @package AWonderPHP\SimpleCacheAPCu
- * @author Alice Wonder <paypal@domblogger.net>
+ * @author  Alice Wonder <paypal@domblogger.net>
  * @license https://opensource.org/licenses/MIT MIT
- * @link https://github.com/AliceWonderMiscreations/SimpleCacheAPCu
+ * @link    https://github.com/AliceWonderMiscreations/SimpleCacheAPCu
  +-------------------------------------------------------+
  |                                                       |
  | Copyright (c) 2018 Alice Wonder Miscreations          |
@@ -22,7 +24,7 @@ declare(strict_types = 1);
 namespace AWonderPHP\SimpleCacheAPCu;
 
 /**
- * An APCu implementation of the PSR-16 Simple Cache Interface
+ * An implementation of the PSR-16 SimpleCache Interface for APCu
  *
  * This class implements the [PHP-FIG PSR-16](https://www.php-fig.org/psr/psr-16/)
  *  interface for a cache class.
@@ -48,7 +50,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return void
      */
-    protected function checkIterable( $arg ): void
+    protected function checkIterable($arg): void
     {
         if (! is_iterable($arg)) {
             throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::typeNotIterable($arg);
@@ -66,7 +68,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return string
      */
-    protected function weakHash( $key ): string
+    protected function weakHash($key): string
     {
         $key = $this->salt . $key;
         $key = hash('ripemd160', $key);
@@ -88,7 +90,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return string
      */
-    protected function adjustKey( $key ): string
+    protected function adjustKey($key): string
     {
         if (! $this->strictType) {
             $invalidTypes = array('array', 'object', 'boolean', 'NULL');
@@ -127,7 +129,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return void
      */
-    protected function setWebAppPrefix( $str ): void
+    protected function setWebAppPrefix($str): void
     {
         $type = gettype($str);
         if (! is_string($str)) {
@@ -156,7 +158,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return void
      */
-    protected function setHashSalt( $str ): void
+    protected function setHashSalt($str): void
     {
         $type = gettype($str);
         if (! is_string($str)) {
@@ -187,12 +189,12 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return int
      */
-    protected function ttlToSeconds( $ttl ): int
+    protected function ttlToSeconds($ttl): int
     {
         if (is_null($ttl)) {
             return $this->defaultSeconds;
         }
-        if (! $this->strictType ) {
+        if (! $this->strictType) {
             if (is_numeric($ttl)) {
                 $ttl = intval($ttl, 10);
             }
@@ -206,7 +208,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
             $seconds = $ttl;
             if ($seconds > $now) {
                 return ($seconds - $now);
-            } 
+            }
             if ($seconds < 0) {
                 throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::negativeTTL($seconds);
             }
@@ -233,15 +235,15 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return void
      */
-    public function setDefaultSeconds( $seconds ): void
+    public function setDefaultSeconds($seconds): void
     {
-        if (! $this->strictType ) {
+        if (! $this->strictType) {
             if (is_numeric($seconds)) {
                 $seconds = intval($seconds);
             }
         }
         if (! is_int($seconds)) {
-            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::DefaultTTL($seconds);
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::defaultTTL($seconds);
         }
         if ($seconds < 0) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::negativeDefaultTTL($seconds);
@@ -253,14 +255,14 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * Fetches a value from the cache.
      *
      * @param string $key     The unique key of this item in the cache.
-     * @param mixed  $default Default value to return if the key does not exist.
+     * @param mixed  $default (optional) Default value to return if the key does not exist.
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
      * @return mixed The value of the item from the cache, or $default in case of cache miss.
      */
-    public function get( $key, $default = null )
+    public function get($key, $default = null)
     {
         $key = $this->adjustKey($key);
         if ($this->enabled) {
@@ -283,7 +285,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return bool True on success and false on failure.
      */
-    public function set( $key, $value, $ttl = null ): bool
+    public function set($key, $value, $ttl = null): bool
     {
         $key = $this->adjustKey($key);
         if ($this->enabled) {
@@ -300,7 +302,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      */
-    public function delete( $key ): bool
+    public function delete($key): bool
     {
         $key = $this->adjustKey($key);
         if ($this->enabled) {
@@ -370,9 +372,10 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
-     * @return iterable A list of key => value pairs. Cache keys that do not exist or are stale will have $default as value.
+     * @return iterable A list of key => value pairs. Cache keys that do not exist or are
+     *                                                stale will have $default as value.
      */
-    public function getMultiple( $keys, $default = null ): iterable
+    public function getMultiple($keys, $default = null): iterable
     {
         $this->checkIterable($keys);
         foreach ($keys as $userKey) {
@@ -406,7 +409,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return bool True on success and false on failure.
      */
-    public function setMultiple( $pairs, $ttl = null ): bool
+    public function setMultiple($pairs, $ttl = null): bool
     {
         if (! $this->enabled) {
             return false;
@@ -439,7 +442,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return bool True if the items were successfully removed. False if there was an error.
      */
-    public function deleteMultiple( $keys ): bool
+    public function deleteMultiple($keys): bool
     {
         if (! $this->enabled) {
             return false;
@@ -470,7 +473,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return bool
      */
-    public function has( $key ): bool
+    public function has($key): bool
     {
         $key = $this->adjustKey($key);
         if ($this->enabled) {
@@ -489,7 +492,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return string
      */
-    public function getRealKey( $key ): string
+    public function getRealKey($key): string
     {
         return $this->adjustKey($key);
     }
@@ -509,7 +512,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * @param bool   $strictType   (optional) When set to true, type is strictly enforced. When set to
      *                             false (the default) an attempt is made to cast to the expected type.
      */
-    public function __construct( $webappPrefix=null, $salt=null, bool $strictType=false )
+    public function __construct($webappPrefix = null, $salt = null, bool $strictType = false)
     {
         if (extension_loaded('apcu') && ini_get('apc.enabled')) {
             $invalidTypes = array('array', 'object', 'boolean');
@@ -535,7 +538,6 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
         }
         $this->strictType = $strictType;
     }
-
 }
 
 // Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.
