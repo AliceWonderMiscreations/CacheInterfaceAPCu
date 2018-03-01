@@ -18,23 +18,24 @@ namespace AWonderPHP\SimpleCacheAPCu\Test;
 
 class SimpleCacheAPCuTypeErrorTest
 {
-    public static function testTypeErrorPrefixNotStringStrict(): bool {
+    public static function testTypeErrorPrefixNotStringStrict(): bool
+    {
         $salt = null;
         //integer
         $prefix = 5555;
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type integer.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
@@ -43,34 +44,34 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type double.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
-        }  
+        }
         //boolean
         $prefix = true;
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
@@ -79,16 +80,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
@@ -98,32 +99,33 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
         return true;
     }
 
-    public static function testTypeErrorPrefixNotString(): bool {
+    public static function testTypeErrorPrefixNotString(): bool
+    {
         //integer
         $prefix = 5555;
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $caught = true;
         }
-        if($caught) {
+        if ($caught) {
             var_dump($prefix);
             return false;
         }
@@ -132,34 +134,34 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        } catch(\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             $reference = 'The WebApp Prefix can only contain A-Z letters and 0-9 numbers. You supplied: 55.55';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
-        }  
+        }
         //boolean
         $prefix = true;
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
@@ -168,16 +170,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
@@ -187,39 +189,40 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
         return true;
     }
 
-    public static function testTypeErrorSaltNotStringStrict(): bool {
+    public static function testTypeErrorSaltNotStringStrict(): bool
+    {
         $prefix = null;
         //integer
         $salt = 123456789;
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type integer.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($salt);
             return false;
         }
@@ -228,16 +231,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type double.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($salt);
             return false;
         }
@@ -246,16 +249,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
@@ -264,16 +267,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
@@ -283,33 +286,34 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
         return true;
     }
 
-    public static function testTypeErrorSaltNotString(): bool {
+    public static function testTypeErrorSaltNotString(): bool
+    {
         $prefix = null;
         //integer
         $salt = 123456789;
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $caught = true;
         }
-        if($caught) {
+        if ($caught) {
             var_dump($salt);
             return false;
         }
@@ -318,10 +322,10 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $caught = true;
         }
-        if($caught) {
+        if ($caught) {
             var_dump($salt);
             return false;
         }
@@ -330,16 +334,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
@@ -348,16 +352,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
@@ -367,39 +371,40 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($prefix);
             return false;
         }
         return true;
     }
 
-    public static function testTypeErrorDefaultTTLNotIntStrict(): bool {
+    public static function testTypeErrorDefaultTTLNotIntStrict(): bool
+    {
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
         //null
         $ttl = null;
         $caught = false;
         try {
             $simpleCache->setDefaultSeconds($ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The default cache TTL must be an integer. You supplied type NULL.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -408,16 +413,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->setDefaultSeconds($ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The default cache TTL must be an integer. You supplied type double.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -426,16 +431,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->setDefaultSeconds($ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The default cache TTL must be an integer. You supplied type boolean.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -444,16 +449,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->setDefaultSeconds($ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The default cache TTL must be an integer. You supplied type array.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -463,16 +468,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->setDefaultSeconds($ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The default cache TTL must be an integer. You supplied type object.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -486,34 +491,35 @@ class SimpleCacheAPCuTypeErrorTest
         
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
-        foreach($info['cache_list'] as $cached) {
-            if(strcmp($cached['info'], $realKey) === 0) {
+        foreach ($info['cache_list'] as $cached) {
+            if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
             }
         }
-        if($cacheTTL === 700) {
+        if ($cacheTTL === 700) {
             return true;
         }
         return false;
     }
 
-    public static function testTypeErrorDefaultTTLNotInt(): bool {
+    public static function testTypeErrorDefaultTTLNotInt(): bool
+    {
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         //null
         $ttl = null;
         $caught = false;
         try {
             $simpleCache->setDefaultSeconds($ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The default cache TTL must be an integer. You supplied type NULL.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -522,10 +528,10 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->setDefaultSeconds($ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $caught = true;
         }
-        if($caught) {
+        if ($caught) {
             var_dump($ttl);
             return false;
         }
@@ -534,16 +540,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->setDefaultSeconds($ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The default cache TTL must be an integer. You supplied type boolean.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -552,16 +558,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->setDefaultSeconds($ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The default cache TTL must be an integer. You supplied type array.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -571,16 +577,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->setDefaultSeconds($ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The default cache TTL must be an integer. You supplied type object.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -594,18 +600,19 @@ class SimpleCacheAPCuTypeErrorTest
         
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
-        foreach($info['cache_list'] as $cached) {
-            if(strcmp($cached['info'], $realKey) === 0) {
+        foreach ($info['cache_list'] as $cached) {
+            if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
             }
         }
-        if($cacheTTL === 700) {
+        if ($cacheTTL === 700) {
             return true;
         }
         return false;
     }
 
-    public static function testTypeErrorKeyNotStringStrict(): bool {
+    public static function testTypeErrorKeyNotStringStrict(): bool
+    {
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
         $value = '99 bottles of beer on the wall';
         //null
@@ -613,16 +620,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache key must be a string. You supplied type NULL.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -631,16 +638,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache key must be a string. You supplied type integer.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -649,16 +656,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache key must be a string. You supplied type double.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -667,16 +674,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache key must be a string. You supplied type boolean.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -685,16 +692,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache key must be a string. You supplied type array.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -704,23 +711,24 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache key must be a string. You supplied type object.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
         return true;
     }
 
-    public static function testTypeErrorKeyNotString(): bool {
+    public static function testTypeErrorKeyNotString(): bool
+    {
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $value = '99 bottles of beer on the wall';
         //null
@@ -728,16 +736,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache key must be a string. You supplied type NULL.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -746,10 +754,10 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $caught = true;
         }
-        if($caught) {
+        if ($caught) {
             var_dump($key);
             return false;
         }
@@ -758,10 +766,10 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $caught = true;
         }
-        if($caught) {
+        if ($caught) {
             var_dump($key);
             return false;
         }
@@ -770,16 +778,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache key must be a string. You supplied type boolean.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -788,16 +796,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache key must be a string. You supplied type array.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -807,23 +815,24 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache key must be a string. You supplied type object.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
         return true;
     }
 
-    public static function testTypeErrorTTL_Strict(): bool {
+    public static function testTypeErrorTTL_Strict(): bool
+    {
         $key = 'foo';
         $value = 'bar';
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
@@ -833,16 +842,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value, $ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache TTL argument must be an integer or a string. You supplied type double.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -851,16 +860,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value, $ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache TTL argument must be an integer or a string. You supplied type boolean.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -869,16 +878,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value, $ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache TTL argument must be an integer or a string. You supplied type array.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -888,23 +897,24 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value, $ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache TTL argument must be an integer or a string. You supplied type object.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
         return true;
     }
 
-    public static function testTypeErrorTTL(): bool {
+    public static function testTypeErrorTTL(): bool
+    {
         $key = 'foo';
         $value = 'bar';
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
@@ -914,10 +924,10 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value, $ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $caught = true;
         }
-        if($caught) {
+        if ($caught) {
             var_dump($ttl);
             return false;
         }
@@ -926,16 +936,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value, $ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache TTL argument must be an integer or a string. You supplied type boolean.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -944,16 +954,16 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value, $ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache TTL argument must be an integer or a string. You supplied type array.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
@@ -963,39 +973,40 @@ class SimpleCacheAPCuTypeErrorTest
         $caught = false;
         try {
             $simpleCache->set($key, $value, $ttl);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The cache TTL argument must be an integer or a string. You supplied type object.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($ttl);
             return false;
         }
         return true;
     }
 
-    public static function testNotIterableSet(): bool {
+    public static function testNotIterableSet(): bool
+    {
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         //null
         $caught = false;
         $key = null;
         try {
             $simpleCache->setMultiple($key);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type NULL.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -1004,16 +1015,16 @@ class SimpleCacheAPCuTypeErrorTest
         $key = 7;
         try {
             $simpleCache->setMultiple($key);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type integer.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -1022,16 +1033,16 @@ class SimpleCacheAPCuTypeErrorTest
         $key = 7.6;
         try {
             $simpleCache->setMultiple($key);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type double.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -1040,16 +1051,16 @@ class SimpleCacheAPCuTypeErrorTest
         $key = false;
         try {
             $simpleCache->setMultiple($key);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type boolean.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -1058,23 +1069,24 @@ class SimpleCacheAPCuTypeErrorTest
         $key = 'Hello World!';
         try {
             $simpleCache->setMultiple($key);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type string.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
         return true;
     }
 
-    public static function testIterableSetNonStringIndex(): bool {
+    public static function testIterableSetNonStringIndex(): bool
+    {
         $obj = new \stdClass;
         $obj->animal = "Frog";
         $obj->mineral = "Quartz";
@@ -1084,10 +1096,10 @@ class SimpleCacheAPCuTypeErrorTest
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         try {
             $simpleCache->setMultiple($arr);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The key in an iterable argument must be a string. You supplied type integer.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 return true;
             } else {
                 var_dump($actual);
@@ -1096,23 +1108,24 @@ class SimpleCacheAPCuTypeErrorTest
         return false;
     }
     
-    public static function testNotIterableGet(): bool {
+    public static function testNotIterableGet(): bool
+    {
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         //null
         $caught = false;
         $key = null;
         try {
             $simpleCache->getMultiple($key);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type NULL.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -1121,16 +1134,16 @@ class SimpleCacheAPCuTypeErrorTest
         $key = 7;
         try {
             $simpleCache->getMultiple($key);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type integer.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -1139,16 +1152,16 @@ class SimpleCacheAPCuTypeErrorTest
         $key = 7.6;
         try {
             $simpleCache->getMultiple($key);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type double.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -1157,16 +1170,16 @@ class SimpleCacheAPCuTypeErrorTest
         $key = false;
         try {
             $simpleCache->getMultiple($key);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type boolean.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
@@ -1175,23 +1188,24 @@ class SimpleCacheAPCuTypeErrorTest
         $key = 'Hello World!';
         try {
             $simpleCache->getMultiple($key);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "Caching functions for multiple cache operations require an iterable argument. You supplied type string.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 $caught = true;
             } else {
                 var_dump($actual);
             }
         }
-        if(! $caught) {
+        if (! $caught) {
             var_dump($key);
             return false;
         }
         return true;
     }
     
-    public static function testIterableGetNonStringIndex(): bool {
+    public static function testIterableGetNonStringIndex(): bool
+    {
         $obj = new \stdClass;
         $obj->animal = "Frog";
         $obj->mineral = "Quartz";
@@ -1201,10 +1215,10 @@ class SimpleCacheAPCuTypeErrorTest
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         try {
             $simpleCache->getMultiple($arr);
-        } catch(\TypeError $e) {
+        } catch (\TypeError $e) {
             $reference = "The key in an iterable argument must be a string. You supplied type integer.";
             $actual = $e->getMessage();
-            if($reference === $actual) {
+            if ($reference === $actual) {
                 return true;
             } else {
                 var_dump($actual);
@@ -1212,7 +1226,6 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return false;
     }
-
 }
 
 // Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.

@@ -18,94 +18,101 @@ namespace AWonderPHP\SimpleCacheAPCu\Test;
 
 class SimpleCacheAPCuUnitTest
 {
-    public static function testCacheMissReturnsNull(): bool {
+    public static function testCacheMissReturnsNull(): bool
+    {
         apcu_clear_cache();
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $a = $simpleCache->get("testKey");
-        if(is_null($a)) {
+        if (is_null($a)) {
             return true;
         }
         return false;
     }
 
-    public static function testSetAndGetString(): bool {
+    public static function testSetAndGetString(): bool
+    {
         $testString = "Test String";
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $simpleCache->set("testKey", $testString);
         $a = $simpleCache->get("testKey");
-        if($a === $testString) {
+        if ($a === $testString) {
             return true;
         }
         return false;
     }
 
-    public static function testSetAndGetInteger(): bool {
+    public static function testSetAndGetInteger(): bool
+    {
         $testInt = 5;
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $simpleCache->set("testKey", $testInt);
         $a = $simpleCache->get("testKey");
-        if($a === $testInt) {
+        if ($a === $testInt) {
             return true;
         }
         return false;
     }
 
-    public static function testSetAndGetFloats(): bool {
+    public static function testSetAndGetFloats(): bool
+    {
         $testFloat = 7.234;
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $simpleCache->set("testKey", $testFloat);
         $a = $simpleCache->get("testKey");
-        if($a === $testFloat) {
+        if ($a === $testFloat) {
             return true;
         }
         return false;
     }
 
-    public static function testSetAndGetBoolean(): bool {
+    public static function testSetAndGetBoolean(): bool
+    {
         $pass = 0;
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $simpleCache->set("testKey", true);
         $a = $simpleCache->get("testKey");
-        if(is_bool($a)) {
-            if($a) {
+        if (is_bool($a)) {
+            if ($a) {
                 $pass++;
             }
         }
         $simpleCache->set("testKey", false);
         $a = $simpleCache->get("testKey");
-        if(is_bool($a)) {
-            if(! $a) {
+        if (is_bool($a)) {
+            if (! $a) {
                 $pass++;
             }
         }
-        if($pass === 2) {
+        if ($pass === 2) {
             return true;
         }
         return false;
     }
 
-    public static function testSetAndGetNull(): bool {
+    public static function testSetAndGetNull(): bool
+    {
         $pass = 0;
         $key = "NullTestKey";
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $simpleCache->set($key, null);
         $a = $simpleCache->get($key);
-        if(is_null($a)) {
+        if (is_null($a)) {
             $pass++;
         }
-        if($simpleCache->has($key)) {
+        if ($simpleCache->has($key)) {
             $pass++;
         }
-        if(! $simpleCache->has('kdyjifrsderyuioojhde00')) {
+        if (! $simpleCache->has('kdyjifrsderyuioojhde00')) {
             $pass++;
         }
-        if($pass === 3) {
+        if ($pass === 3) {
             return true;
         }
         return false;
     }
 
-    public static function testSetAndGetArray(): bool {
+    public static function testSetAndGetArray(): bool
+    {
         $obj = new \stdClass;
         $obj->animal = "Frog";
         $obj->mineral = "Quartz";
@@ -115,34 +122,35 @@ class SimpleCacheAPCuUnitTest
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $simpleCache->set($key, $arr);
         $a = $simpleCache->get($key);
-        if(! is_array($a)) {
+        if (! is_array($a)) {
             return false;
         }
-        if(! $arr["testInt"] === $a["testInt"]) {
+        if (! $arr["testInt"] === $a["testInt"]) {
             return false;
         }
-        if(! $arr["testFloat"] === $a["testFloat"]) {
+        if (! $arr["testFloat"] === $a["testFloat"]) {
             return false;
         }
-        if(! $arr["testString"] === $a["testString"]) {
+        if (! $arr["testString"] === $a["testString"]) {
             return false;
         }
-        if(! $arr["testBoolean"] === $a["testBoolean"]) {
+        if (! $arr["testBoolean"] === $a["testBoolean"]) {
             return false;
         }
-        if(! is_null($a["testNull"])) {
+        if (! is_null($a["testNull"])) {
             return false;
         }
-        if(! $arr["testArray"] === $a["testArray"]) {
+        if (! $arr["testArray"] === $a["testArray"]) {
             return false;
         }
-        if(! $arr["testObject"] === $a["testObject"]) {
+        if (! $arr["testObject"] === $a["testObject"]) {
             return false;
         }
         return true;
     }
 
-    public static function testSetAndGetObject(): bool {
+    public static function testSetAndGetObject(): bool
+    {
         $obj = new \stdClass;
         $obj->animal = "Frog";
         $obj->mineral = "Quartz";
@@ -160,93 +168,97 @@ class SimpleCacheAPCuUnitTest
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $simpleCache->set($key, $testObj);
         $a = $simpleCache->get($key);
-        if(! is_object($a)) {
+        if (! is_object($a)) {
             return false;
         }
-        if(! $testObj->testInt === $a->testInt) {
+        if (! $testObj->testInt === $a->testInt) {
             return false;
         }
-        if(! $testObj->testFloat === $a->testFloat) {
+        if (! $testObj->testFloat === $a->testFloat) {
             return false;
         }
-        if(! $testObj->testString === $a->testString) {
+        if (! $testObj->testString === $a->testString) {
             return false;
         }
-        if(! $testObj->testBoolean === $a->testBoolean) {
+        if (! $testObj->testBoolean === $a->testBoolean) {
             return false;
         }
-        if(! is_null($a->testNull)) {
+        if (! is_null($a->testNull)) {
             return false;
         }
-        if(! $testObj->testArray === $a->testArray) {
+        if (! $testObj->testArray === $a->testArray) {
             return false;
         }
-        if(! $testObj->testObject === $a->testObject) {
+        if (! $testObj->testObject === $a->testObject) {
             return false;
         }
         return true;
     }
 
-    public static function testDeleteKey(): bool {
+    public static function testDeleteKey(): bool
+    {
         // using keys we already set
         $pass = 0;
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $a = "testKey";
-        if($simpleCache->has($a)) {
+        if ($simpleCache->has($a)) {
             $pass++;
             $simpleCache->delete($a);
-            if(! $simpleCache->has($a)) {
+            if (! $simpleCache->has($a)) {
                 $pass++;
             }
         }
-        if($pass === 2) {
+        if ($pass === 2) {
             return true;
         }
         return false;
     }
 
-    public static function testOneCharacterKey(): bool {
+    public static function testOneCharacterKey(): bool
+    {
         $key = 'j';
         $value = 'foo';
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $simpleCache->set($key, $value);
         $a = $simpleCache->get($key);
-        if($a === $value) {
+        if ($a === $value) {
             return true;
         }
         return false;
     }
 
-    public static function test255CharacterKey(): bool {
+    public static function test255CharacterKey(): bool
+    {
         $a='AAAAABB';
         $b='BBBBBBBB';
         $key = '';
 
-        for($i=0; $i<=30; $i++) {
+        for ($i=0; $i<=30; $i++) {
             $key .= $b;
         }
 
         $key .= $a;
-        if(strlen($key) !== 255) {
+        if (strlen($key) !== 255) {
             return false;
         }
         $value = 'foobar';
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $simpleCache->set($key, $value);
         $a = $simpleCache->get($key);
-        if($a === $value) {
+        if ($a === $value) {
             return true;
         }
         return false;
     }
 
-    public static function testMultibyteCharacterKey(): bool {
+    public static function testMultibyteCharacterKey(): bool
+    {
         $key = 'いい知らせ';
         $value = 'חדשות טובות';
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
         $simpleCache->set($key, $value);
         $a = $simpleCache->get($key);
-        if($a === $value) {
+        if ($a === $value) {
             return true;
         }
         return false;
@@ -254,7 +266,8 @@ class SimpleCacheAPCuUnitTest
 
     // cache TTL tests
 
-    public static function testExplicitIntegerTTL(): bool {
+    public static function testExplicitIntegerTTL(): bool
+    {
         $key = 'testTTL';
         $value = 'TTL Time Test';
         $ttl = 37;
@@ -262,18 +275,19 @@ class SimpleCacheAPCuUnitTest
         $simpleCache->set($key, $value, $ttl);
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
-        foreach($info['cache_list'] as $cached) {
-            if(strcmp($cached['info'], $realKey) === 0) {
+        foreach ($info['cache_list'] as $cached) {
+            if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
             }
         }
-        if($cacheTTL === $ttl) {
+        if ($cacheTTL === $ttl) {
             return true;
         }
         return false;
     }
 
-    public static function testUnixTimeStamp(): bool {
+    public static function testUnixTimeStamp(): bool
+    {
         $key = 'testTTL';
         $value = 'TTL Time Test';
         $rnd = rand(34, 99);
@@ -282,21 +296,22 @@ class SimpleCacheAPCuUnitTest
         $simpleCache->set($key, $value, $ttl);
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
-        foreach($info['cache_list'] as $cached) {
-            if(strcmp($cached['info'], $realKey) === 0) {
+        foreach ($info['cache_list'] as $cached) {
+            if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
             }
         }
-        if($cacheTTL === $rnd) {
+        if ($cacheTTL === $rnd) {
             return true;
-        } elseif($cacheTTL === ($rnd - 1)) {
+        } elseif ($cacheTTL === ($rnd - 1)) {
             // rare race condition
             return true;
         }
         return false;
     }
 
-    public static function testDateRangeTTL(): bool {
+    public static function testDateRangeTTL(): bool
+    {
         $key = 'TestDateRange';
         $value = 'one week';
         $ttl = '+1 week';
@@ -304,21 +319,22 @@ class SimpleCacheAPCuUnitTest
         $simpleCache->set($key, $value, $ttl);
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
-        foreach($info['cache_list'] as $cached) {
-            if(strcmp($cached['info'], $realKey) === 0) {
+        foreach ($info['cache_list'] as $cached) {
+            if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
             }
         }
-        if($cacheTTL === 0) {
+        if ($cacheTTL === 0) {
             return false;
         }
-        if($cacheTTL <= 604800) {
+        if ($cacheTTL <= 604800) {
             return true;
         }
         return false;
     }
 
-    public static function testDateString(): bool {
+    public static function testDateString(): bool
+    {
         $key = 'TestDateString';
         $value = 'Testing Expiration Date as String';
         $a = (24 * 60 * 60);
@@ -330,21 +346,22 @@ class SimpleCacheAPCuUnitTest
         $simpleCache->set($key, $value, $dateString);
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
-        foreach($info['cache_list'] as $cached) {
-            if(strcmp($cached['info'], $realKey) === 0) {
+        foreach ($info['cache_list'] as $cached) {
+            if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
             }
         }
-        if($cacheTTL < $a) {
+        if ($cacheTTL < $a) {
             return false;
         }
-        if($cacheTTL <= $b) {
+        if ($cacheTTL <= $b) {
             return true;
         }
         return false;
     }
 
-    public static function testVeryVeryLargeTTL(): bool {
+    public static function testVeryVeryLargeTTL(): bool
+    {
         $key = 'Large Integer';
         $value = "Some Value";
         $testTime = time() - 7;
@@ -353,21 +370,22 @@ class SimpleCacheAPCuUnitTest
         $simpleCache->set($key, $value, $testTime);
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
-        foreach($info['cache_list'] as $cached) {
-            if(strcmp($cached['info'], $realKey) === 0) {
+        foreach ($info['cache_list'] as $cached) {
+            if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
             }
         }
-        if($cacheTTL === $testTime) {
+        if ($cacheTTL === $testTime) {
             return true;
-        } elseif($cacheTTL === ($testTime - 1)) {
+        } elseif ($cacheTTL === ($testTime - 1)) {
             // rare race condition
             return true;
         }
         return false;
     }
 
-    public static function testSettingDefaultTTL(): bool {
+    public static function testSettingDefaultTTL(): bool
+    {
         $key = 'Setting Default';
         $value = 'Pie in the Sky';
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
@@ -376,19 +394,20 @@ class SimpleCacheAPCuUnitTest
         
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
-        foreach($info['cache_list'] as $cached) {
-            if(strcmp($cached['info'], $realKey) === 0) {
+        foreach ($info['cache_list'] as $cached) {
+            if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
             }
         }
-        if($cacheTTL === 300) {
+        if ($cacheTTL === 300) {
             return true;
         }
         return false;
     }
 
     // Webapp Prefix and Salt tests
-    public static function testSmallestWebappPrefix(): bool {
+    public static function testSmallestWebappPrefix(): bool
+    {
         $prefix = 'AAA';
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         $key = 'Some Key';
@@ -398,13 +417,14 @@ class SimpleCacheAPCuUnitTest
         $realKey = $simpleCache->getRealKey($key);
         $setPrefix = substr($realKey, 0, 4);
         $prefix .= '_';
-        if($prefix === $setPrefix) {
+        if ($prefix === $setPrefix) {
             return true;
         }
         return false;
     }
 
-    public static function testLargestWebappPrefix(): bool {
+    public static function testLargestWebappPrefix(): bool
+    {
         $prefix = 'AAAAAAAABBBBBBBBCCCCCCCCDDDDDDDD';
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         $key = 'Some Key';
@@ -414,13 +434,14 @@ class SimpleCacheAPCuUnitTest
         $realKey = $simpleCache->getRealKey($key);
         $setPrefix = substr($realKey, 0, 33);
         $prefix .= '_';
-        if($prefix === $setPrefix) {
+        if ($prefix === $setPrefix) {
             return true;
         }
         return false;
     }
 
-    public static function testSmallestSalt(): bool {
+    public static function testSmallestSalt(): bool
+    {
         $prefix = 'FFFFF';
         $salt = 'ldr##sdr';
         $key = 'Salt Test Key';
@@ -438,20 +459,21 @@ class SimpleCacheAPCuUnitTest
         $realKeyA = $simpleCache->getRealKey($key);
         $realKeyB = $test->getRealKey($key);
         
-        if($realKeyA === $realKeyB) {
+        if ($realKeyA === $realKeyB) {
             return false;
         }
-        if($a === $b) {
+        if ($a === $b) {
             return true;
         }
         return false;
     }
 
-    public static function testReallyLargeSalt(): bool {
+    public static function testReallyLargeSalt(): bool
+    {
         $prefix = 'JJJJJGGyyJJJ';
         $presalt = 'zJpn1hit9u%%yn8hN#ODco$$3w8rp}Hv1bsnADDYrmLjeG';
         $salt = '';
-        for($i=0; $i<=200; $i++) {
+        for ($i=0; $i<=200; $i++) {
             $salt .= str_shuffle($presalt);
         }
         $key = 'Salt Test Key';
@@ -469,10 +491,10 @@ class SimpleCacheAPCuUnitTest
         $realKeyA = $simpleCache->getRealKey($key);
         $realKeyB = $test->getRealKey($key);
         
-        if($realKeyA === $realKeyB) {
+        if ($realKeyA === $realKeyB) {
             return false;
         }
-        if($a === $b) {
+        if ($a === $b) {
             return true;
         }
         return false;
@@ -489,34 +511,34 @@ class SimpleCacheAPCuUnitTest
         $arr['Goodbye'] = null;
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu('TESTITERABLE');
         $simpleCache->setMultiple($arr);
-        foreach(array('testInt', 'testFloat', 'testString', 'testBoolean', 'testArray', 'testObject') as $key) {
+        foreach (array('testInt', 'testFloat', 'testString', 'testBoolean', 'testArray', 'testObject') as $key) {
             $a = $simpleCache->get($key);
-            switch($key) {
+            switch ($key) {
                 case "testObject":
-                    if($a->animal !== $obj->animal) {
+                    if ($a->animal !== $obj->animal) {
                         return false;
                     }
-                    if($a->mineral !== $obj->mineral) {
+                    if ($a->mineral !== $obj->mineral) {
                         return false;
                     }
-                    if($a->vegetable !== $obj->vegetable) {
+                    if ($a->vegetable !== $obj->vegetable) {
                         return false;
                     }
                     break;
                 default:
-                    if($arr[$key] !== $a) {
+                    if ($arr[$key] !== $a) {
                         return false;
                     }
             }
         }
         // test the three that should be null
-        foreach(array('testNull', 'Hello', 'Goodbye') as $key) {
+        foreach (array('testNull', 'Hello', 'Goodbye') as $key) {
             $a = $simpleCache->get($key);
-            if(! is_null($a)) {
+            if (! is_null($a)) {
                 echo "failed NULL value test with key " . $key . "\n";
                 return false;
             }
-            if(! $simpleCache->has($key)) {
+            if (! $simpleCache->has($key)) {
                 echo "failed NULL has test with key " . $key . "\n";
                 return false;
             }
@@ -524,7 +546,8 @@ class SimpleCacheAPCuUnitTest
         return true;
     }
     
-    public static function testGetMultiplePairs():bool {
+    public static function testGetMultiplePairs():bool
+    {
         // depends upon previous test
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu('TESTITERABLE');
         $arr = array();
@@ -533,48 +556,48 @@ class SimpleCacheAPCuUnitTest
         $arr[] = 'testCacheMiss';
         $arr[] = 'testString';
         $result = $simpleCache->getMultiple($arr);
-        if(! array_key_exists('testBoolean', $result)) {
+        if (! array_key_exists('testBoolean', $result)) {
             return false;
         }
-        if(! array_key_exists('testFloat', $result)) {
+        if (! array_key_exists('testFloat', $result)) {
             return false;
         }
-        if(! array_key_exists('testCacheMiss', $result)) {
+        if (! array_key_exists('testCacheMiss', $result)) {
             return false;
         }
-        if(! array_key_exists('testString', $result)) {
+        if (! array_key_exists('testString', $result)) {
             return false;
         }
         // boolean
-        if(! is_bool($result['testBoolean'])) {
+        if (! is_bool($result['testBoolean'])) {
             echo "Fetch of Boolean failed type\n";
             return false;
         }
-        if(! $result['testBoolean']) {
+        if (! $result['testBoolean']) {
             echo "Fetch of Boolean failed value\n";
             return false;
         }
         // float
-        if(! is_float($result['testFloat'])) {
+        if (! is_float($result['testFloat'])) {
             echo "Fetch of Float failed type\n";
             return false;
         }
-        if($result['testFloat'] !== 3.278 ) {
+        if ($result['testFloat'] !== 3.278) {
             echo "Fetch of Float failed value\n";
             return false;
         }
         // string
-        if(! is_string($result['testString'])) {
+        if (! is_string($result['testString'])) {
             echo "Fetch of String failed type\n";
             return false;
         }
-        if($result['testString'] !== "WooHoo" ) {
+        if ($result['testString'] !== "WooHoo") {
             echo "Fetch of String failed value\n";
             return false;
         }
         // cache miss
-        if(is_null($result['testCacheMiss'])) {
-            if(! $simpleCache->has('testCacheMiss')) {
+        if (is_null($result['testCacheMiss'])) {
+            if (! $simpleCache->has('testCacheMiss')) {
                 return true;
             }
         }
@@ -582,11 +605,12 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
-    public static function testDeleteMultiple(): bool {
+    public static function testDeleteMultiple(): bool
+    {
         $prefix = 'DELETEMANY';
         $arr = array();
-        $records = rand(220,370);
-        for($i=0; $i <= $records; $i++) {
+        $records = rand(220, 370);
+        for ($i=0; $i <= $records; $i++) {
             $key = 'KeyNumber-' . $i;
             $val = 'ValueNumber-' . $i;
             $arr[$key] = $val;
@@ -598,9 +622,9 @@ class SimpleCacheAPCuUnitTest
         $del = array();
         $n = rand(75, 167);
         $max = $records - 5;
-        for($i=0; $i<$n; $i++) {
+        for ($i=0; $i<$n; $i++) {
             $key = 'KeyNumber-' . rand(5, $max);
-            if(! in_array($key, $del)) {
+            if (! in_array($key, $del)) {
                 $del[] = $key;
             }
         }
@@ -608,20 +632,21 @@ class SimpleCacheAPCuUnitTest
         $expected = $start - $delcount;
         $simpleCache->deleteMultiple($del);
         $hits = 0;
-        for($i=0; $i<= $records; $i++) {
+        for ($i=0; $i<= $records; $i++) {
             $key = 'KeyNumber-' . $i;
-            if($simpleCache->has($key)) {
+            if ($simpleCache->has($key)) {
                 $hits++;
             }
         }
-        if($expected === $hits) {
+        if ($expected === $hits) {
             return true;
         }
         return false;
     }
 
     // cache clearing operations
-    public static function testClearLocalAppCache(): bool {
+    public static function testClearLocalAppCache(): bool
+    {
         $prefix = 'LOLIAMUNIQUE';
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         $simpleCache->set('key1', 'value1');
@@ -637,37 +662,38 @@ class SimpleCacheAPCuUnitTest
         $simpleCache->set('key5', 'value5');
         $info = apcu_cache_info();
         $count = count($info['cache_list']);
-        if(($count - $start) !== 5) {
+        if (($count - $start) !== 5) {
             return false;
         }
         $simpleCache->clear();
         $info = apcu_cache_info();
         $count = count($info['cache_list']);
-        if($count === $start) {
+        if ($count === $start) {
             return true;
         }
         return false;
     }
 
-    public static function testClearAllCache(): bool {
+    public static function testClearAllCache(): bool
+    {
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu('fofofo');
         $simpleCache->set('key1', 'value1');
         $info = apcu_cache_info();
         $start = count($info['cache_list']);
-        if($start === 0) {
+        if ($start === 0) {
             return false;
         }
         $test = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu('tststststs');
         $test->set('key1', 'value1');
         $info = apcu_cache_info();
         $count = count($info['cache_list']);
-        if($count <= $start) {
+        if ($count <= $start) {
             return false;
         }
         $test->clearAll();
         $info = apcu_cache_info();
         $count = count($info['cache_list']);
-        if($count === 0) {
+        if ($count === 0) {
             return true;
         }
         return false;
