@@ -4,5 +4,8 @@
   <file>lib</file>
   <arg name="basepath" value="."/>
   <arg name="colors" />
-  <rule ref="PSR2" />
+  <rule ref="PSR2">
+    <exclude name="PSR2.Files.ClosingTag" />
+    <exclude name="PSR2.Files.EndFileNewline" />
+  </rule>
 </ruleset>
