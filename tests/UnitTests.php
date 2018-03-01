@@ -27,11 +27,11 @@ $continue = false;
 if (extension_loaded('apcu') && ini_get('apc.enabled')) {
     $continue = true;
 }
-if(! $continue) {
+if (! $continue) {
     die("I must have APCu loaded and enabled.");
 }
 
-if(file_exists('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.php')) {
+if (file_exists('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.php')) {
     require('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.php');
     require('/usr/share/ccm/stable/libraries/psr/simplecache/InvalidArgumentException.php');
     require('/usr/share/ccm/stable/libraries/psr/simplecache/CacheInterface.php');
@@ -41,7 +41,7 @@ if(file_exists('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.p
     require('../vendor/psr/simple-cache/src/CacheInterface.php');
 }
 
-if(file_exists('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/InvalidArgumentException.php')) {
+if (file_exists('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/InvalidArgumentException.php')) {
     require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/InvalidArgumentException.php');
     require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/StrictTypeException.php');
     require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/SimpleCacheAPCu.php');
@@ -61,11 +61,12 @@ if(file_exists('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/Inval
 
 use \AWonderPHP\SimpleCacheAPCu\Test\SimpleCacheAPCuUnitTest as CacheUnitTest;
 
-function showTestResults( string $name, bool $result) {
+function showTestResults(string $name, bool $result)
+{
     global $counter;
     global $passed;
     $counter++;
-    if($result) {
+    if ($result) {
         $passed ++;
         print("* Test " . $name . ": *PASSED*\n");
     } else {
@@ -439,19 +440,5 @@ $TOTAL_TESTS = $TOTAL_TESTS + $counter;
 echo "\n\n__END OF CURRENT TESTS__\n========================\n";
 
 echo "\n" . $TOTAL_PASSED . " of " . $TOTAL_TESTS . " Total Unit Tests Passed.\n";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>
