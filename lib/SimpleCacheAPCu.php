@@ -226,6 +226,53 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     }
 
     /**
+     * A wrapper for the actual fetch from the cache
+     *
+     * @param string $realKey The internal key used with APCu
+     * @param mixed  $default The value to return if a cache miss
+     *
+     * @return mixed The value in the cached key => value pair, or $default if a cache miss
+     */
+    protected function cacheFetch($realKey, $default): mixed
+    {
+        $return = apcu_fetch($realKey, $success);
+        if ($success) {
+            return $return;
+        }
+        return $default;
+    }
+
+    /**
+     * A wrapper for the actual store of key => value pair in the cache
+     *
+     * @param string                 $realKey The internal key used with APCu
+     * @param mixed                  $value   The value to be stored
+     * @param null|int|\DateInterval $ttl     The TTL value of this item. If no value is sent
+     *                                        and the driver supports TTL then the library may
+     *                                        set a default value for it or let the driver
+     *                                        take care of that.
+     *
+     * @return bool Returns True on success, False on failure
+     */
+    protected function cacheStore($realKey, $value, $ttl): bool
+    {
+        $seconds = $this->ttlToSeconds($ttl);
+        return apcu_store($realKey, $value, $seconds);
+    }
+
+    /**
+     * A wrapper for the actual delete of a key => value pair in the cache
+     *
+     * @param string $realKey The key for the key => value pair to be removed from the cache
+     *
+     * @return bool Returns True on success, False on failure
+     */
+    protected function cacheDelete($realKey): bool
+    {
+        return apcu_delete($realKey);
+    }
+
+    /**
      * Sets the default cache TTL in seconds.
      *
      * @param int $seconds The default seconds to cache entries
@@ -264,12 +311,9 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      */
     public function get($key, $default = null)
     {
-        $key = $this->adjustKey($key);
+        $realKey = $this->adjustKey($key);
         if ($this->enabled) {
-            $return = apcu_fetch($key, $success);
-            if ($success) {
-                return $return;
-            }
+            return $this->cacheFetch($realKey, $default);
         }
         return $default;
     }
@@ -279,7 +323,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @param string                 $key   The key of the item to store.
      * @param mixed                  $value The value of the item to store, must be serializable.
-     * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
+     * @param null|int|\DateInterval $ttl   (optional) The TTL value of this item. If no value is sent and
      *                                      the driver supports TTL then the library may set a default value
      *                                      for it or let the driver take care of that.
      *
@@ -287,10 +331,9 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      */
     public function set($key, $value, $ttl = null): bool
     {
-        $key = $this->adjustKey($key);
+        $realKey = $this->adjustKey($key);
         if ($this->enabled) {
-            $seconds = $this->ttlToSeconds($ttl);
-            return apcu_store($key, $value, $seconds);
+            return $this->cacheStore($realKey, $value, $ttl);
         }
         return false;
     }
@@ -304,9 +347,9 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      */
     public function delete($key): bool
     {
-        $key = $this->adjustKey($key);
         if ($this->enabled) {
-            return apcu_delete($key);
+            $realKey = $this->adjustKey($key);
+            return $this->cacheDelete($realKey);
         }
         return false;
     }
@@ -385,10 +428,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
             $value = $default;
             if ($this->enabled) {
                 $realKey = $this->adjustKey($userKey);
-                $PreValue = apcu_fetch($realKey, $success);
-                if ($success) {
-                    $value = $PreValue;
-                }
+                $value = $this->cacheFetch($realKey, $default);
             }
             $return[$userKey] = $value;
         }
@@ -415,17 +455,16 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
             return false;
         }
         $this->checkIterable($pairs);
-        $seconds = $this->ttlToSeconds($ttl);
         $arr = array();
-        foreach ($pairs as $kkey => $value) {
-            if (! is_string($kkey)) {
-                throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::iterableKeyMustBeString($kkey);
+        foreach ($pairs as $key => $value) {
+            if (! is_string($key)) {
+                throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::iterableKeyMustBeString($key);
             }
-            $key = $this->adjustKey($kkey);
-            $arr[$key] = $value;
+            $realKey = $this->adjustKey($key);
+            $arr[$realKey] = $value;
         }
-        foreach ($arr as $key => $value) {
-            if (! apcu_store($key, $value, $seconds)) {
+        foreach ($arr as $realKey => $value) {
+            if (! $this->cacheStore($realKey, $value, $ttl)) {
                 return false;
             }
         }
@@ -454,7 +493,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
                 throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::iterableKeyMustBeString($userKey);
             }
             $realKey = $this->adjustKey($userKey);
-            if (! apcu_delete($realKey)) {
+            if (! $this->cacheDelete($realKey)) {
                 $return = false;
             }
         }
