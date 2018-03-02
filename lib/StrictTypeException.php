@@ -117,6 +117,11 @@ class StrictTypeException extends \TypeError implements \Psr\SimpleCache\Invalid
         $type = gettype($var);
         return new self(sprintf('The key in an iterable argument must be a string. You supplied type %s.', $type));
     }
+
+    public static function cryptoKeyNotString($var) {
+        $type = gettype($var);
+        return new self(sprintf('The cipher key MUST be a string. You supplied a %s.', $type));
+    }
 }
 
 // Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.

@@ -24,13 +24,6 @@ declare(strict_types = 1);
 namespace AWonderPHP\SimpleCacheAPCu;
 
 /**
- * Extends `\InvalidArgumentException` class and implements `\Psr\SimpleCache\InvalidArgumentException`
- *
- * This class is used to throw an exception when the argument supplied to a SimpleCacheAPCu method is
- *  of the correct argument type but does not meet the conditions required by the method.
- */
-
-/**
  * Throws a \InvalidArgumentException exception
  *
  * This class throws an exception when the data type provided to a class function
@@ -184,6 +177,11 @@ class InvalidArgumentException extends \InvalidArgumentException implements \Psr
     public static function webappPrefixNotAlphaNumeric(string $str)
     {
         return new self(sprintf('The WebApp Prefix can only contain A-Z letters and 0-9 numbers. You supplied: %s', $str));
+    }
+
+    public static function serializeFailed(string $str)
+    {
+        return new self(sprintf('Serialization failed with following message: %s', $str));
     }
 }
 

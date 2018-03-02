@@ -29,6 +29,28 @@ namespace AWonderPHP\SimpleCacheAPCu;
 
 class SimpleCacheAPCuSodium extends SimpleCacheAPCu
 {
+    protected cryptokey;
+
+    protected function setCryptoKey($cryptokey) {
+        if(! function_exists('sodium_crypto_secretbox') {
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidSetup::noLibSodium();
+        }
+        if(! is_string($cryptokey)) {
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::cryptoKeyNotString($cryptokey);
+        }
+        //test that what is supplied works
+        $string = 'ABC test 123 test xyz';
+        $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+        $cyphertext = sodium_crypto_secretbox($string, $nonce, $cryptokey);
+        $test = sodium_crypto_secretbox_open($ciphertext, $nonce, $cryptokey);
+        if ($string === $test) {
+            $this->cryptokey = $cryptokey;
+            $this->enabled = true;
+            return;
+        }
+        return false;
+    }
+
     protected function weakHash($key): string
     {
         // we need to generate a different hash for encrypted
@@ -42,20 +64,49 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
   
     protected function encryptData($value)
     {
-        $serialized = serialize($value);
+        try {
+            $serialized = serialize($value);
+        } catch(\Error $e) {
+            throw \AWonderPHP\SimpleCacheAPCu::serializeFailed($e->getMessage());
+        }
         $obj = new \stdClass;
         $obj->nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
         $obj->ciphertext = sodium_crypto_secretbox($serialized, $obj->nonce, $this->cryptokey);
         return $obj;
     }
     
-    protected function decryptData($obj)
+    /**
+     * Returns the decrypted data retried from the APCu cache
+     *
+     * @param object $obj     The object containing the nonce and cyphertext
+     * @param mixed  $default Always return the default if there is a problem decrypting the
+     *                        the cyphertext so failure acts like a cache miss
+     *
+     * @return mixed The decrypted data, or the default if decrypt failed
+     */
+    protected function decryptData($obj, $default = null)
     {
-        $serialized = sodium_crypto_secretbox_open($obj->ciphertext, $obj->nonce, $this->cryptokey);
-        if($serialized === false) {
-            return null;
+        if (! isset($obj->nonce) {
+            return $default;
         }
-        $value = unserialize($serialized);
+        if (! isset($obj->ciphertext) {
+            return $default;
+        }
+        try {
+            $serialized = sodium_crypto_secretbox_open($obj->ciphertext, $obj->nonce, $this->cryptokey);
+        } catch(\Error $e) {
+            error_log($e->getMessage());
+            return $default;
+        }
+        if ($serialized === false) {
+            return $default;
+        }
+        try {
+            $value = unserialize($serialized);
+        } catch(\Error $e) {
+            error_log($e->getMessage());
+            return $default;
+        }
         return $value;
     }
 
@@ -63,7 +114,7 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
     {
         $obj = apcu_fetch($realKey, $success);
         if ($success) {
-            $return = $this->decryptData($obj);
+            return = $this->decryptData($obj, $default);
         }
         return $default;
     }
@@ -71,8 +122,23 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
     protected function cacheStore($realKey, $value, $ttl): bool
     {
         $seconds = $this->ttlToSeconds($ttl);
-        $obj = $this->encryptData($value);
+        try {
+            $obj = $this->encryptData($value);
+        } catch(\AWonderPHP\SimpleCacheAPCu\InvalidArgumentException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
         return apcu_store($realKey, $obj, $seconds);
+    }
+    
+    public function __construct($cryptokey = null, $webappPrefix = null, $salt = null, bool $strictType = false)
+    {
+        parent::__construct($webappPrefix, $salt, $strictType);
+        if ($this->enabled) {
+            // will be re-enabled with valid cryptokey
+            $this->enabled = false;
+            $this->setCryptoKey($cryptokey);
+        }
     }
 
 }
