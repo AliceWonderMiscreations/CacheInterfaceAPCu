@@ -29,10 +29,10 @@ namespace AWonderPHP\SimpleCacheAPCu;
 
 class SimpleCacheAPCuSodium extends SimpleCacheAPCu
 {
-    protected cryptokey;
+    protected $cryptokey;
 
     protected function setCryptoKey($cryptokey) {
-        if(! function_exists('sodium_crypto_secretbox') {
+        if(! function_exists('sodium_crypto_secretbox')) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidSetup::noLibSodium();
         }
         if(! is_string($cryptokey)) {
@@ -41,7 +41,7 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         //test that what is supplied works
         $string = 'ABC test 123 test xyz';
         $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
-        $cyphertext = sodium_crypto_secretbox($string, $nonce, $cryptokey);
+        $ciphertext = sodium_crypto_secretbox($string, $nonce, $cryptokey);
         $test = sodium_crypto_secretbox_open($ciphertext, $nonce, $cryptokey);
         if ($string === $test) {
             $this->cryptokey = $cryptokey;
@@ -86,10 +86,10 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
      */
     protected function decryptData($obj, $default = null)
     {
-        if (! isset($obj->nonce) {
+        if (! isset($obj->nonce)) {
             return $default;
         }
-        if (! isset($obj->ciphertext) {
+        if (! isset($obj->ciphertext)) {
             return $default;
         }
         try {
@@ -114,7 +114,7 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
     {
         $obj = apcu_fetch($realKey, $success);
         if ($success) {
-            return = $this->decryptData($obj, $default);
+            return $this->decryptData($obj, $default);
         }
         return $default;
     }
@@ -129,6 +129,12 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
             return false;
         }
         return apcu_store($realKey, $obj, $seconds);
+    }
+    
+    public function __debugInfo() {
+        $result = get_object_vars($this);
+        unset($result['cryptokey']);
+        return $result;
     }
     
     public function __construct($cryptokey = null, $webappPrefix = null, $salt = null, bool $strictType = false)

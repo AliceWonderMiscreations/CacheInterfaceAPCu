@@ -20,7 +20,7 @@
         "squizlabs/php_codesniffer": "3.*"
     },
     "suggest": {
-        "ext-libsodium": "~1.0.6 || 2.*"
+        "ext-sodium": "2.*"
     },
     "provide": {
         "psr/simple-cache-implementation": "1.0"
