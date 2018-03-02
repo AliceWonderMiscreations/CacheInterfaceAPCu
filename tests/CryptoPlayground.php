@@ -47,68 +47,33 @@ var_dump([
     SODIUM_LIBRARY_VERSION
 ]);
 
-$key = random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
+//$key = "f42f663e72f74b9e852b172df7f57ff4ab42e505167116e13dacd0d1daf00e77";
 
-$obj = new \stdClass;
-
-$obj->foo = 'bar';
-$obj->fubar = 37;
-$obj->nutcase = (2.37 * 5.3267);
-$obj->screwyou = null;
-$obj->cutcrap = array('7', 7, 'hello');
-
-$ser = serialize($obj);
-
-var_dump($ser);
-
-echo "\n\n\n";
-
-//var_dump($key);
-
-$nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
-$ciphertext = sodium_crypto_secretbox($ser, $nonce, $key);
-
-var_dump($ciphertext);
-
-echo "\n\n\n";
-
-$plaintext = sodium_crypto_secretbox_open($ciphertext, $nonce, $key);
-
-var_dump($plaintext);
-
-$foo = unserialize($plaintext);
-
-var_dump($foo);
-
-echo "\n\nTEST ONE\n\n";
+$key = "/srv/DEFAULT.json";
 
 $mystring = "This here be a string that I am going to try to crypto-cache";
 
 use \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium as CryptoCache;
 
-$fubar = new CryptoCache($key);
+$fubar = new CryptoCache($key, null, null, 'garbage');
 
 var_dump($fubar);
 
 $fubar->set('testkey', $mystring);
 
-$real = $fubar->getRealKey('testkey');
-
-var_dump($real);
-
-$foo = apcu_fetch($real);
-
-var_dump($foo);
-
-$serialized = sodium_crypto_secretbox_open($foo->ciphertext, $foo->nonce, $key);
-
-$test = unserialize($serialized);
-
-var_dump($test);
-
 $testTwo = $fubar->get('testkey');
 
 var_dump($testTwo);
+
+$fubar->set('another test', $mystring);
+
+var_dump($fubar);
+
+$aaa = SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES;
+var_dump($aaa);
+
+$bbb = SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_NPUBBYTES;
+var_dump($bbb);
 
 
 

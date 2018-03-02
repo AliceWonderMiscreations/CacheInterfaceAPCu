@@ -31,6 +31,26 @@ class InvalidSetupException extends \ErrorException implements \Psr\SimpleCache\
     {
         return new self(sprintf('This class requires functions from the PECL libsodium extension.'));
     }
+
+    public static function confNotFound(string $file)
+    {
+        return new self(sprintf('The specified configuration file %s could not be found.'), $file);
+    }
+
+    public static function confNotReadable(string $file)
+    {
+        return new self(sprintf('The specified configuration file %s could not be read.'), $file);
+    }
+
+    public static function confNotJson(string $file)
+    {
+        return new self(sprintf('The file %s did not contain valid JSON data.'), $file);
+    }
+
+    public static function nonceIncrementError()
+    {
+        return new self(sprintf('The class nonce failed to increment. This should not have happened, something is broken'));
+    }
 }
 
 ?>
