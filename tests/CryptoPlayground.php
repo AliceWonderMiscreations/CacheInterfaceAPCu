@@ -69,12 +69,8 @@ $fubar->set('another test', $mystring);
 
 var_dump($fubar);
 
-$aaa = SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES;
+$aaa = SODIUM_CRYPTO_GENERICHASH_KEYBYTES_MAX;
 var_dump($aaa);
-
-$bbb = SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_NPUBBYTES;
-var_dump($bbb);
-
 
 
 

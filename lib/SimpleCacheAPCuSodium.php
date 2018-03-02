@@ -2,7 +2,8 @@
 declare(strict_types = 1);
 
 /**
- * An implementation of the PSR-16 SimpleCache Interface for APCu
+ * An implementation of the PSR-16 SimpleCache Interface for APCu that uses AEAD
+ * cipher to encrypt the value in the cached key => value pair.
  *
  * @package AWonderPHP\SimpleCacheAPCu
  * @author  Alice Wonder <paypal@domblogger.net>
@@ -15,11 +16,8 @@ declare(strict_types = 1);
  | Copyright (c) 2018 Alice Wonder Miscreations          |
  |  May be used under terms of MIT license               |
  |                                                       |
- | When implementation of PSR-16 is finished I will port |
- |  coding style to PSR-2 except I will keep trailing ?> |
- |                                                       |
  +-------------------------------------------------------+
- | Purpose: PSR-16 APCu Interface                        |
+ | Purpose: PSR-16 APCu Encrypted Interface              |
  +-------------------------------------------------------+
 */
 
@@ -27,6 +25,16 @@ declare(strict_types = 1);
 
 namespace AWonderPHP\SimpleCacheAPCu;
 
+/**
+ * An implementation of the PSR-16 SimpleCache Interface for APCu that uses AEAD
+ * cipher to encrypt the value in the cached key => value pair.
+ *
+ * This class implements the [PHP-FIG PSR-16](https://www.php-fig.org/psr/psr-16/)
+ *  interface for a cache class.
+ *
+ * It needs PHP 7.1 or newer and obviously the [APCu PECL](https://pecl.php.net/package/APCu) extension.
+ * In PHP 7.1 It needs the PECL libsodium (sodium) extension. The extension is built-in to PHP 7.2.
+ */
 class SimpleCacheAPCuSodium extends SimpleCacheAPCu
 {
     /* The key to use */
@@ -38,7 +46,10 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
     protected $nonce;
 
     /**
-     * Checks to make sure sodium extension is available
+     * Checks to make sure sodium extension is available.
+     *
+     * Libsodium is part of PHP 7.2 but in earlier versions of PHP it needs to be installed
+     * via the PECL libsodium (aka sodium) extension.
      *
      * @throws \ErrorException if no libsodium support
      *
@@ -54,7 +65,7 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
     /**
      * Sets the cryptokey property used by the class to encrypt/decrypt
      *
-     * @param $cryptokey the key to use
+     * @param string $cryptokey the key to use
      *
      * @throws \TypeError
      *
@@ -66,11 +77,17 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
             throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::cryptoKeyNotString($cryptokey);
         }
         if (ctype_xdigit($cryptokey)) {
-            if (function_exists('sodium_hex2bin')) {
-                $cryptokey = sodium_hex2bin($cryptokey);
-            } else {
-                $cryptokey = hex2bin($cryptokey);
-            }
+            $len = strlen($cryptokey);
+            $cryptokey = sodium_hex2bin($cryptokey);
+        }
+        // insert check here to make sure is binary integer
+        if (! isset($len)) {
+            $hex = sodium_bin2hex($cryptokey);
+            $len = strlen($hex);
+            sodium_memzero($hex);
+        }
+        if ($len !== 64) {
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::wrongByteSizeKey($len);
         }
         //test that what is supplied works
         $string = 'ABC test 123 test xyz';
@@ -114,17 +131,45 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         return $config;
     }
 
+    /**
+     * Creates hash substring to use in internal cache key.
+     *
+     * This class obfuscates the user supplied cache keys by using a substring
+     * of the hex representation of a hash of that key. This function creates
+     * the hex representation of the hash and grabs a 20 character substring.
+     *
+     * The hashing algorithm differs from the parent class so that if the same
+     * salt is used for both, the hash will be completely different.
+     *
+     * The substr() size also differs to make it easy to see which values are
+     * encrypted when looking at a dump of the stored APCu keys.
+     *
+     * @param string $key The user defined cache key (from key => value pair)
+     *                    to hash
+     *
+     * @return string
+     */
     protected function weakHash($key): string
     {
-        // we need to generate a different hash for encrypted
-        //  data so we append salt to end of key as well
-        $key = $this->salt . $key . $this->salt;
-        $key = hash('ripemd160', $key);
-        // 16^16 should be enough of the hash to avoid collisions
-        //  but 16^20 to tell encrypted from non-encrypted
-        return substr($key, 19, 20);
+        $key = $key . $this->salt;
+        $hash = sodium_crypto_generichash($key, $this->cryptokey, 16);
+        $hexhash = sodium_bin2hex($hash);
+        return substr($hexhash, 6, 20);
     }
-  
+
+    /**
+     * Serializes the value to be cached and encrypts it.
+     *
+     * A specification of this function is it MUST increment the nonce BEFORE encryption and
+     * verify it has incremented the nonce, throwing exception if increment failed.
+     *
+     * @param mixed $value The value to be serialized and encrypted
+     *
+     * @throws \InvalidArgumentException
+     * @throws \ErrorException
+     *
+     * @return \stdClass object containing nonce and encrypted value
+     */
     protected function encryptData($value)
     {
         try {
@@ -141,9 +186,19 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         $obj = new \stdClass;
         $obj->nonce = $this->nonce;
         if ($this->aesgcm) {
-            $obj->ciphertext = sodium_crypto_aead_aes256gcm_encrypt($serialized, $obj->nonce, $obj->nonce, $this->cryptokey);
+            $obj->ciphertext = sodium_crypto_aead_aes256gcm_encrypt(
+                $serialized,
+                $obj->nonce,
+                $obj->nonce,
+                $this->cryptokey
+            );
         } else {
-            $obj->ciphertext = sodium_crypto_aead_chacha20poly1305_ietf_encrypt($serialized, $obj->nonce, $obj->nonce, $this->cryptokey);
+            $obj->ciphertext = sodium_crypto_aead_chacha20poly1305_ietf_encrypt(
+                $serialized,
+                $obj->nonce,
+                $obj->nonce,
+                $this->cryptokey
+            );
         }
         sodium_memzero($serialized);
         sodium_memzero($value);
@@ -169,14 +224,24 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         }
         if ($this->aesgcm) {
             try {
-                $serialized = sodium_crypto_aead_aes256gcm_decrypt($obj->ciphertext, $obj->nonce, $obj->nonce, $this->cryptokey);
+                $serialized = sodium_crypto_aead_aes256gcm_decrypt(
+                    $obj->ciphertext,
+                    $obj->nonce,
+                    $obj->nonce,
+                    $this->cryptokey
+                );
             } catch (\Error $e) {
                 error_log($e->getMessage());
                 return $default;
             }
         } else {
             try {
-                $serialized = sodium_crypto_aead_chacha20poly1305_ietf_decrypt($obj->ciphertext, $obj->nonce, $obj->nonce, $this->cryptokey);
+                $serialized = sodium_crypto_aead_chacha20poly1305_ietf_decrypt(
+                    $obj->ciphertext,
+                    $obj->nonce,
+                    $obj->nonce,
+                    $this->cryptokey
+                );
             } catch (\Error $e) {
                 error_log($e->getMessage());
                 return $default;
@@ -195,6 +260,14 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         return $value;
     }
 
+    /**
+     * A wrapper for the actual fetch from the cache
+     *
+     * @param string $realKey The internal key used with APCu
+     * @param mixed  $default The value to return if a cache miss
+     *
+     * @return mixed The value in the cached key => value pair, or $default if a cache miss
+     */
     protected function cacheFetch($realKey, $default)
     {
         $obj = apcu_fetch($realKey, $success);
@@ -204,6 +277,18 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         return $default;
     }
 
+    /**
+     * A wrapper for the actual store of key => value pair in the cache
+     *
+     * @param string                 $realKey The internal key used with APCu
+     * @param mixed                  $value   The value to be stored
+     * @param null|int|\DateInterval $ttl     The TTL value of this item. If no value is sent
+     *                                        and the driver supports TTL then the library may
+     *                                        set a default value for it or let the driver
+     *                                        take care of that.
+     *
+     * @return bool Returns True on success, False on failure
+     */
     protected function cacheStore($realKey, $value, $ttl): bool
     {
         $seconds = $this->ttlToSeconds($ttl);
@@ -217,20 +302,53 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         sodium_memzero($value);
         return apcu_store($realKey, $obj, $seconds);
     }
-    
+
+    /**
+     * Zeros and then removes the cryptokey from a var_dump of the object
+     * also removes nonce from var_dump
+     *
+     * @return array The array for var_dump()
+     */
     public function __debugInfo()
     {
         $result = get_object_vars($this);
         sodium_memzero($result['cryptokey']);
         unset($result['cryptokey']);
+        unset($result['nonce']);
         return $result;
     }
 
+    /**
+     * Zeros the cryptokey property on class destruction
+     *
+     * @return void
+     */
     public function __destruct()
     {
         sodium_memzero($this->cryptokey);
     }
-    
+
+    /**
+     * The class constructor function
+     *
+     * @param string $cryptokey    This can be the 32-byte key used for encrypting the value,
+     *                             a hex representation of that key, or a path to to a
+     *                             configuration file that contains the key.
+     * @param string $webappPrefix (optional) Sets the prefix to use for internal APCu key
+     *                             assignment. Useful to avoid key collisions between web
+     *                             applications (think of it like a namespace). String between
+     *                             3 and 32 characters in length containing only letters A-Z
+     *                             (NOT case sensitive) and numbers 0-9. Defaults to
+     *                             "Default".
+     * @param string $salt         (optional) A salt to use in the generation of the hash used
+     *                             as the internal APCu key. Must be at least eight characters
+     *                             long. There is a default salt that is used if you do not
+     *                             specify. Note that when you change the salt, all the
+     *                             internal keys change.
+     * @param bool   $strictType   (optional) When set to true, type is strictly enforced.
+     *                             When set to false (the default) an attempt is made to cast
+     *                             to the expected type.
+     */
     public function __construct($cryptokey = null, $webappPrefix = null, $salt = null, $strictType = null)
     {
         $this->checkForSodium();

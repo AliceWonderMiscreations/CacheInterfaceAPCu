@@ -15,9 +15,6 @@ declare(strict_types = 1);
  | Copyright (c) 2018 Alice Wonder Miscreations          |
  |  May be used under terms of MIT license               |
  |                                                       |
- | When implementation of PSR-16 is finished I will port |
- |  coding style to PSR-2 except I will keep trailing ?> |
- |                                                       |
  +-------------------------------------------------------+
  | Purpose: PSR-16 APCu Interface                        |
  +-------------------------------------------------------+

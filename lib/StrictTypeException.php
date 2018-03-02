@@ -15,9 +15,6 @@ declare(strict_types = 1);
  | Copyright (c) 2018 Alice Wonder Miscreations          |
  |  May be used under terms of MIT license               |
  |                                                       |
- | When implementation of PSR-16 is finished I will port |
- |  coding style to PSR-2 except I will keep trailing ?> |
- |                                                       |
  +-------------------------------------------------------+
  | Purpose: PSR-16 APCu Interface                        |
  +-------------------------------------------------------+
@@ -120,7 +117,15 @@ class StrictTypeException extends \TypeError implements \Psr\SimpleCache\Invalid
         return new self(sprintf('The key in an iterable argument must be a string. You supplied type %s.', $type));
     }
 
-    public static function cryptoKeyNotString($var) {
+    /**
+     * Exception message when the supplied crypto key is not of the type string.
+     *
+     * @param mixed $var The supplied encryption key.
+     *
+     * @return \TypeError
+     */
+    public static function cryptoKeyNotString($var)
+    {
         $type = gettype($var);
         return new self(sprintf('The cipher key MUST be a string. You supplied a %s.', $type));
     }

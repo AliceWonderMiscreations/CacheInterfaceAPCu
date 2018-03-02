@@ -15,9 +15,6 @@ declare(strict_types = 1);
  | Copyright (c) 2018 Alice Wonder Miscreations          |
  |  May be used under terms of MIT license               |
  |                                                       |
- | When implementation of PSR-16 is finished I will port |
- |  coding style to PSR-2 except I will keep trailing ?> |
- |                                                       |
  +-------------------------------------------------------+
  | Purpose: PSR-16 APCu Interface                        |
  +-------------------------------------------------------+
@@ -181,6 +178,26 @@ class InvalidArgumentException extends \InvalidArgumentException implements \Psr
         return new self(sprintf('The WebApp Prefix can only contain A-Z letters and 0-9 numbers. You supplied: %s', $str));
     }
 
+    /**
+     * The exception message when the supplied encryption key is not 32 bytes
+     *
+     * @param int $len The number of bytes in supplied encryption key
+     *
+     * @return \InvalidArgumentException
+     */
+    public static function wrongByteSizeKey(int $len)
+    {
+        $bytes = intdiv($len, 2);
+        return new self(sprintf('The private key must be 32 bytes. You provided a %s byte key.', $bytes));
+    }
+
+    /**
+     * The exception message when pre-encryption serialization has failed.
+     *
+     * @param string $str The captured exception from the failed serialization attempt.
+     *
+     * @return \InvalidArgumentException
+     */
     public static function serializeFailed(string $str)
     {
         return new self(sprintf('Serialization failed with following message: %s', $str));
