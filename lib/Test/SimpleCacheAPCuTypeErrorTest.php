@@ -787,6 +787,7 @@ class SimpleCacheAPCuTypeErrorTest
         
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
+        $cacheTTL = null;
         foreach ($info['cache_list'] as $cached) {
             if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
@@ -906,6 +907,7 @@ class SimpleCacheAPCuTypeErrorTest
         
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
+        $cacheTTL = null;
         foreach ($info['cache_list'] as $cached) {
             if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];

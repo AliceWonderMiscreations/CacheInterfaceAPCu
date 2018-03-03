@@ -37,7 +37,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 if ($reference === $actual) {
                     return true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -49,7 +49,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 if ($reference === $actual) {
                     return true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -75,7 +75,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 if ($reference === $actual) {
                     return true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -87,7 +87,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 if ($reference === $actual) {
                     return true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -113,7 +113,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 if ($reference === $actual) {
                     return true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -125,7 +125,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 if ($reference === $actual) {
                     return true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -154,7 +154,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 if ($reference === $actual) {
                     return true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -166,7 +166,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 if ($reference === $actual) {
                     return true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -193,7 +193,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 if ($reference === $actual) {
                     return true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -205,7 +205,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 if ($reference === $actual) {
                     return true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -237,7 +237,7 @@ class SimpleCacheAPCuInvalidArgumentTest
             if ($reference === $actual) {
                 return true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         return false;
@@ -269,7 +269,7 @@ class SimpleCacheAPCuInvalidArgumentTest
             if ($reference === $actual) {
                 return true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         return false;
@@ -310,7 +310,7 @@ class SimpleCacheAPCuInvalidArgumentTest
             if ($reference === $actual) {
                 return true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         return false;
@@ -341,7 +341,7 @@ class SimpleCacheAPCuInvalidArgumentTest
                 $err = $e->getMessage();
                 $actual = substr($err, 0, 87);
                 if ($reference !== $actual) {
-                    var_dump($actual);
+                    print($actual . "\n");
                     return false;
                 }
             }
@@ -374,7 +374,7 @@ class SimpleCacheAPCuInvalidArgumentTest
             if ($reference === $actual) {
                 return true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         return false;
@@ -405,7 +405,7 @@ class SimpleCacheAPCuInvalidArgumentTest
             if ($reference === $actual) {
                 return true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         return false;
@@ -436,7 +436,7 @@ class SimpleCacheAPCuInvalidArgumentTest
             if ($reference === $actual) {
                 return true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         return false;
@@ -467,7 +467,7 @@ class SimpleCacheAPCuInvalidArgumentTest
             if ($reference === $actual) {
                 return true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         return false;
@@ -496,7 +496,7 @@ class SimpleCacheAPCuInvalidArgumentTest
             if ($reference === $actual) {
                 return true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         return false;
