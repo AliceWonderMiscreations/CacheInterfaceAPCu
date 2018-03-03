@@ -201,7 +201,11 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
             );
         }
         sodium_memzero($serialized);
-        sodium_memzero($value);
+        // RESEARCH - How to zero out non-string? I don't believe recast
+        //  will do it it properly
+        if (is_string($value)) {
+            sodium_memzero($value);
+        }
         return $obj;
     }
     
@@ -299,7 +303,11 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
             sodium_memzero($value);
             return false;
         }
-        sodium_memzero($value);
+        // RESEARCH - How to zero out non-string? I don't believe recast
+        //  will do it it properly
+        if (is_string($value)) {
+            sodium_memzero($value);
+        }
         return apcu_store($realKey, $obj, $seconds);
     }
 

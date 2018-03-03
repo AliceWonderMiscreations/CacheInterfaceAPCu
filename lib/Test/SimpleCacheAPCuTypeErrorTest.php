@@ -18,21 +18,35 @@ namespace AWonderPHP\SimpleCacheAPCu\Test;
 
 class SimpleCacheAPCuTypeErrorTest
 {
-    public static function testTypeErrorPrefixNotStringStrict(): bool
+    public static function testTypeErrorPrefixNotStringStrict($hexkey = null): bool
     {
         $salt = null;
         //integer
         $prefix = 5555;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch (\TypeError $e) {
-            $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type integer.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type integer.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type integer.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -42,15 +56,29 @@ class SimpleCacheAPCuTypeErrorTest
         //float
         $prefix = 55.55;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch (\TypeError $e) {
-            $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type double.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type double.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type double.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -60,15 +88,29 @@ class SimpleCacheAPCuTypeErrorTest
         //boolean
         $prefix = true;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch (\TypeError $e) {
-            $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -78,15 +120,29 @@ class SimpleCacheAPCuTypeErrorTest
         //array
         $prefix = array(1,2,3,4,5);
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch (\TypeError $e) {
-            $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -97,15 +153,29 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix = new \stdClass;
         $prefix->foobar = "fubar";
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch (\TypeError $e) {
-            $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -115,15 +185,23 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
-    public static function testTypeErrorPrefixNotString(): bool
+    public static function testTypeErrorPrefixNotString($hexkey = null): bool
     {
         //integer
         $prefix = 5555;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        } catch (\TypeError $e) {
-            $caught = true;
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            } catch (\TypeError $e) {
+                $caught = true;
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix);
+            } catch (\TypeError $e) {
+                $caught = true;
+            }
         }
         if ($caught) {
             var_dump($prefix);
@@ -132,15 +210,29 @@ class SimpleCacheAPCuTypeErrorTest
         //float
         $prefix = 55.55;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        } catch (\InvalidArgumentException $e) {
-            $reference = 'The WebApp Prefix can only contain A-Z letters and 0-9 numbers. You supplied: 55.55';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            } catch (\InvalidArgumentException $e) {
+                $reference = 'The WebApp Prefix can only contain A-Z letters and 0-9 numbers. You supplied: 55.55';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix);
+            } catch (\InvalidArgumentException $e) {
+                $reference = 'The WebApp Prefix can only contain A-Z letters and 0-9 numbers. You supplied: 55.55';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -150,15 +242,29 @@ class SimpleCacheAPCuTypeErrorTest
         //boolean
         $prefix = true;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        } catch (\TypeError $e) {
-            $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -168,15 +274,29 @@ class SimpleCacheAPCuTypeErrorTest
         //array
         $prefix = array(1,2,3,4,5);
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        } catch (\TypeError $e) {
-            $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -187,15 +307,29 @@ class SimpleCacheAPCuTypeErrorTest
         $prefix = new \stdClass;
         $prefix->foobar = "fubar";
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        } catch (\TypeError $e) {
-            $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix);
+            } catch (\TypeError $e) {
+                $reference = 'The WebApp Prefix argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -205,21 +339,35 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
-    public static function testTypeErrorSaltNotStringStrict(): bool
+    public static function testTypeErrorSaltNotStringStrict($hexkey = null): bool
     {
         $prefix = null;
         //integer
         $salt = 123456789;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch (\TypeError $e) {
-            $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type integer.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type integer.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type integer.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -229,15 +377,29 @@ class SimpleCacheAPCuTypeErrorTest
         //float
         $salt = 1234.56789;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch (\TypeError $e) {
-            $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type double.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type double.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type double.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -247,15 +409,29 @@ class SimpleCacheAPCuTypeErrorTest
         //boolean
         $salt = true;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch (\TypeError $e) {
-            $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -265,15 +441,29 @@ class SimpleCacheAPCuTypeErrorTest
         //array
         $salt = array(1,2,3,4,5,6,7,8,9);
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch (\TypeError $e) {
-            $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -284,15 +474,29 @@ class SimpleCacheAPCuTypeErrorTest
         $salt = new \stdClass;
         $salt->foobar = "fubar98765";
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
-        } catch (\TypeError $e) {
-            $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt, true);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -302,16 +506,24 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
-    public static function testTypeErrorSaltNotString(): bool
+    public static function testTypeErrorSaltNotString($hexkey = null): bool
     {
         $prefix = null;
         //integer
         $salt = 123456789;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
-        } catch (\TypeError $e) {
-            $caught = true;
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            } catch (\TypeError $e) {
+                $caught = true;
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt);
+            } catch (\TypeError $e) {
+                $caught = true;
+            }
         }
         if ($caught) {
             var_dump($salt);
@@ -320,10 +532,18 @@ class SimpleCacheAPCuTypeErrorTest
         //float
         $salt = 1234.56789;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
-        } catch (\TypeError $e) {
-            $caught = true;
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            } catch (\TypeError $e) {
+                $caught = true;
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt);
+            } catch (\TypeError $e) {
+                $caught = true;
+            }
         }
         if ($caught) {
             var_dump($salt);
@@ -332,15 +552,29 @@ class SimpleCacheAPCuTypeErrorTest
         //boolean
         $salt = true;
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
-        } catch (\TypeError $e) {
-            $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type boolean.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -350,15 +584,29 @@ class SimpleCacheAPCuTypeErrorTest
         //array
         $salt = array(1,2,3,4,5,6,7,8,9);
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
-        } catch (\TypeError $e) {
-            $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type array.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -369,15 +617,29 @@ class SimpleCacheAPCuTypeErrorTest
         $salt = new \stdClass;
         $salt->foobar = "fubar98765";
         $caught = false;
-        try {
-            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
-        } catch (\TypeError $e) {
-            $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
-            $actual = $e->getMessage();
-            if ($reference === $actual) {
-                $caught = true;
-            } else {
-                var_dump($actual);
+        if (is_null($hexkey)) {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, $salt);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
+            }
+        } else {
+            try {
+                $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, $prefix, $salt);
+            } catch (\TypeError $e) {
+                $reference = 'The Salt argument to the SimpleCacheAPCu constructor must be a string. You supplied type object.';
+                $actual = $e->getMessage();
+                if ($reference === $actual) {
+                    $caught = true;
+                } else {
+                    var_dump($actual);
+                }
             }
         }
         if (! $caught) {
@@ -387,9 +649,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
-    public static function testTypeErrorDefaultTTLNotIntStrict(): bool
+    public static function testTypeErrorDefaultTTLNotIntStrict($hexkey = null): bool
     {
-        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, null, null, true);
+        }
         //null
         $ttl = null;
         $caught = false;
@@ -502,9 +768,13 @@ class SimpleCacheAPCuTypeErrorTest
         return false;
     }
 
-    public static function testTypeErrorDefaultTTLNotInt(): bool
+    public static function testTypeErrorDefaultTTLNotInt($hexkey = null): bool
     {
-        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
         //null
         $ttl = null;
         $caught = false;
@@ -611,9 +881,13 @@ class SimpleCacheAPCuTypeErrorTest
         return false;
     }
 
-    public static function testTypeErrorKeyNotStringStrict(): bool
+    public static function testTypeErrorKeyNotStringStrict($hexkey = null): bool
     {
-        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, null, null, true);
+        }
         $value = '99 bottles of beer on the wall';
         //null
         $key = null;
@@ -727,9 +1001,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
-    public static function testTypeErrorKeyNotString(): bool
+    public static function testTypeErrorKeyNotString($hexkey = null): bool
     {
-        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
         $value = '99 bottles of beer on the wall';
         //null
         $key = null;
@@ -831,11 +1109,15 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
-    public static function testTypeErrorTTL_Strict(): bool
+    public static function testTypeErrorTTL_Strict($hexkey = null): bool
     {
         $key = 'foo';
         $value = 'bar';
-        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey, null, null, true);
+        }
         
         // float
         $ttl = 65.83;
@@ -913,11 +1195,15 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
-    public static function testTypeErrorTTL(): bool
+    public static function testTypeErrorTTL($hexkey = null): bool
     {
         $key = 'foo';
         $value = 'bar';
-        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
         
         // float
         $ttl = 65.83;
@@ -989,9 +1275,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
-    public static function testNotIterableSet(): bool
+    public static function testNotIterableSet($hexkey = null): bool
     {
-        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
         //null
         $caught = false;
         $key = null;
@@ -1085,7 +1375,7 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
-    public static function testIterableSetNonStringIndex(): bool
+    public static function testIterableSetNonStringIndex($hexkey = null): bool
     {
         $obj = new \stdClass;
         $obj->animal = "Frog";
@@ -1093,7 +1383,11 @@ class SimpleCacheAPCuTypeErrorTest
         $obj->vegetable = "Spinach";
         $arr = array("testInt" => 5, "testFloat" => 3.278, "testString" => "WooHoo", "testBoolean" => true, "testNull" => null, "testArray" => array(1, 2, 3, 4, 5), "testObject" => $obj);
         $arr[] = 'Hello';
-        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
         try {
             $simpleCache->setMultiple($arr);
         } catch (\TypeError $e) {
@@ -1108,9 +1402,13 @@ class SimpleCacheAPCuTypeErrorTest
         return false;
     }
     
-    public static function testNotIterableGet(): bool
+    public static function testNotIterableGet($hexkey = null): bool
     {
-        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
         //null
         $caught = false;
         $key = null;
@@ -1204,7 +1502,7 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
     
-    public static function testIterableGetNonStringIndex(): bool
+    public static function testIterableGetNonStringIndex($hexkey = null): bool
     {
         $obj = new \stdClass;
         $obj->animal = "Frog";
@@ -1212,7 +1510,11 @@ class SimpleCacheAPCuTypeErrorTest
         $obj->vegetable = "Spinach";
         $arr = array("testInt" => 5, "testFloat" => 3.278, "testString" => "WooHoo", "testBoolean" => true, "testNull" => null, "testArray" => array(1, 2, 3, 4, 5), "testObject" => $obj);
         $arr[] = 'Hello';
-        $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
         try {
             $simpleCache->getMultiple($arr);
         } catch (\TypeError $e) {
