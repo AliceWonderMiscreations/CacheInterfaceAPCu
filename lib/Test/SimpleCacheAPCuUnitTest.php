@@ -18,6 +18,13 @@ namespace AWonderPHP\SimpleCacheAPCu\Test;
 
 class SimpleCacheAPCuUnitTest
 {
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testCacheMissReturnsNull($hexkey = null): bool
     {
         apcu_clear_cache();
@@ -33,6 +40,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSetAndGetString($hexkey = null): bool
     {
         $testString = "Test String";
@@ -49,6 +63,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSetAndGetInteger($hexkey = null): bool
     {
         $testInt = 5;
@@ -65,6 +86,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSetAndGetFloats($hexkey = null): bool
     {
         $testFloat = 7.234;
@@ -81,6 +109,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSetAndGetBoolean($hexkey = null): bool
     {
         $pass = 0;
@@ -109,6 +144,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSetAndGetNull($hexkey = null): bool
     {
         $pass = 0;
@@ -135,6 +177,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSetAndGetArray($hexkey = null): bool
     {
         $obj = new \stdClass;
@@ -177,6 +226,13 @@ class SimpleCacheAPCuUnitTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSetAndGetObject($hexkey = null): bool
     {
         $obj = new \stdClass;
@@ -227,6 +283,13 @@ class SimpleCacheAPCuUnitTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testDeleteKey($hexkey = null): bool
     {
         // using keys we already set
@@ -250,6 +313,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testOneCharacterKey($hexkey = null): bool
     {
         $key = 'j';
@@ -267,6 +337,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function test255CharacterKey($hexkey = null): bool
     {
         $a='AAAAABB';
@@ -295,6 +372,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testMultibyteCharacterKey($hexkey = null): bool
     {
         $key = 'いい知らせ';
@@ -314,6 +398,13 @@ class SimpleCacheAPCuUnitTest
 
     // cache TTL tests
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testExplicitIntegerTTL($hexkey = null): bool
     {
         $key = 'testTTL';
@@ -339,6 +430,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testUnixTimeStamp($hexkey = null): bool
     {
         $key = 'testTTL';
@@ -368,6 +466,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testDateRangeTTL($hexkey = null): bool
     {
         $key = 'TestDateRange';
@@ -396,6 +501,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testDateString($hexkey = null): bool
     {
         $key = 'TestDateString';
@@ -428,6 +540,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testVeryVeryLargeTTL($hexkey = null): bool
     {
         $key = 'Large Integer';
@@ -457,6 +576,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSettingDefaultTTL($hexkey = null): bool
     {
         $key = 'Setting Default';
@@ -484,6 +610,14 @@ class SimpleCacheAPCuUnitTest
     }
 
     // Webapp Prefix and Salt tests
+    
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSmallestWebappPrefix($hexkey = null): bool
     {
         $prefix = 'AAA';
@@ -505,6 +639,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testLargestWebappPrefix($hexkey = null): bool
     {
         $prefix = 'AAAAAAAABBBBBBBBCCCCCCCCDDDDDDDD';
@@ -526,6 +667,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSmallestSalt($hexkey = null): bool
     {
         $prefix = 'FFFFF';
@@ -562,6 +710,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testReallyLargeSalt($hexkey = null): bool
     {
         $prefix = 'JJJJJGGyyJJJ';
@@ -602,6 +757,14 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
     // iterable arguments
+    
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSetMultiplePairs($hexkey = null):bool
     {
         $obj = new \stdClass;
@@ -651,7 +814,14 @@ class SimpleCacheAPCuUnitTest
         }
         return true;
     }
-    
+
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testGetMultiplePairs($hexkey = null):bool
     {
         // depends upon previous test
@@ -714,6 +884,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testDeleteMultiple($hexkey = null): bool
     {
         $prefix = 'DELETEMANY';
@@ -757,6 +934,14 @@ class SimpleCacheAPCuUnitTest
     }
 
     // cache clearing operations
+    
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testClearLocalAppCache($hexkey = null): bool
     {
         $prefix = 'LOLIAMUNIQUE';
@@ -794,6 +979,13 @@ class SimpleCacheAPCuUnitTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testClearAllCache($hexkey = null): bool
     {
         if (is_null($hexkey)) {

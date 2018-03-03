@@ -414,7 +414,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
-     * @return iterable A list of key => value pairs. Cache keys that do not exist or are
+     * @return array A list of key => value pairs. Cache keys that do not exist or are
      *                                                stale will have $default as value.
      */
     public function getMultiple($keys, $default = null): array
