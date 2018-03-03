@@ -106,8 +106,8 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
             $ciphertext = sodium_crypto_aead_aes256gcm_encrypt($string, $TEST_NONCE, $TEST_NONCE, $cryptokey);
             $test = sodium_crypto_aead_aes256gcm_decrypt($ciphertext, $TEST_NONCE, $TEST_NONCE, $cryptokey);
         } else {
-            $ciphertext = sodium_crypto_aead_chacha20poly1305_encrypt($string, $this->nonce, $this->nonce, $cryptokey);
-            $test = sodium_crypto_aead_chacha20poly1305_decrypt($ciphertext, $this->nonce, $this->nonce, $cryptokey);
+            $ciphertext = sodium_crypto_aead_chacha20poly1305_encrypt($string, $TEST_NONCE, $TEST_NONCE, $cryptokey);
+            $test = sodium_crypto_aead_chacha20poly1305_decrypt($ciphertext, $TEST_NONCE, $TEST_NONCE, $cryptokey);
         }
         if ($string === $test) {
             $this->cryptokey = $cryptokey;
