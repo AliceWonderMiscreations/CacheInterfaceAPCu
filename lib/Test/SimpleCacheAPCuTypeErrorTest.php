@@ -25,7 +25,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -198,7 +198,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -358,7 +358,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -531,7 +531,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -680,7 +680,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -805,7 +805,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -924,7 +924,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -1049,7 +1049,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -1162,7 +1162,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -1255,7 +1255,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -1342,7 +1342,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -1448,7 +1448,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -1486,7 +1486,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
@@ -1592,7 +1592,7 @@ class SimpleCacheAPCuTypeErrorTest
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
-     * @psalm-suppress InvalidScalar
+     * @psalm-suppress InvalidScalarArgument
      *
      * @return bool
      */
