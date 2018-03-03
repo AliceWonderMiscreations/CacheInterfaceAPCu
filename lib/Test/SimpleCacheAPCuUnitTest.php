@@ -19,7 +19,7 @@ namespace AWonderPHP\SimpleCacheAPCu\Test;
 class SimpleCacheAPCuUnitTest
 {
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -41,7 +41,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -64,7 +64,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -87,7 +87,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -110,7 +110,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -145,7 +145,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -178,7 +178,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -227,7 +227,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -284,7 +284,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -314,7 +314,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -338,7 +338,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -373,7 +373,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -399,7 +399,7 @@ class SimpleCacheAPCuUnitTest
     // cache TTL tests
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -431,7 +431,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -467,7 +467,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -502,7 +502,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -541,7 +541,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -577,7 +577,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -612,7 +612,7 @@ class SimpleCacheAPCuUnitTest
     // Webapp Prefix and Salt tests
     
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -640,7 +640,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -668,7 +668,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -711,7 +711,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -759,7 +759,7 @@ class SimpleCacheAPCuUnitTest
     // iterable arguments
     
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -816,7 +816,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -885,7 +885,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -936,7 +936,7 @@ class SimpleCacheAPCuUnitTest
     // cache clearing operations
     
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -980,7 +980,7 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *

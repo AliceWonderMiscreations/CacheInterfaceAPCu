@@ -19,7 +19,7 @@ namespace AWonderPHP\SimpleCacheAPCu\Test;
 class SimpleCacheAPCuInvalidArgumentTest
 {
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -57,7 +57,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -95,7 +95,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -135,7 +135,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     // salt tests
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -174,7 +174,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -215,7 +215,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     // TTL tests
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -246,7 +246,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     // key set tests
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -276,7 +276,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -317,7 +317,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -350,7 +350,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -381,7 +381,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -412,7 +412,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -443,7 +443,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *
@@ -474,7 +474,7 @@ class SimpleCacheAPCuInvalidArgumentTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
      *

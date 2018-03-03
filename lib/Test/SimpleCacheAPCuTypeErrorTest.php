@@ -19,9 +19,10 @@ namespace AWonderPHP\SimpleCacheAPCu\Test;
 class SimpleCacheAPCuTypeErrorTest
 {
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -192,9 +193,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -352,9 +354,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -525,9 +528,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -674,9 +678,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -800,9 +805,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -920,9 +926,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -1045,9 +1052,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -1158,9 +1166,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -1251,9 +1260,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -1338,9 +1348,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -1444,9 +1455,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -1482,9 +1494,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
@@ -1588,9 +1601,10 @@ class SimpleCacheAPCuTypeErrorTest
     }
 
     /**
-     * error test
+     * Error test
      *
      * @param null|string $hexkey A hex key
+     *
      * @psalm-suppress InvalidArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress NullArgument
