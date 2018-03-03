@@ -69,6 +69,8 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
      *
      * @throws \TypeError
      *
+     * @psalm-suppress RedundantConditionGivenDocblockType
+     *
      * @return void
      */
     protected function setCryptoKey($cryptokey): void
@@ -361,6 +363,8 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
      * @param bool   $strictType   (optional) When set to true, type is strictly enforced.
      *                             When set to false (the default) an attempt is made to cast
      *                             to the expected type.
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
      */
     public function __construct($cryptokey = null, $webappPrefix = null, $salt = null, $strictType = null)
     {

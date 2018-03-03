@@ -33,11 +33,15 @@ namespace AWonderPHP\SimpleCacheAPCu;
  */
 class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
 {
+    /** @var bool */
     protected $enabled = false;
+    /** @var bool */
     protected $strictType = false;
+    /** @var string */
     protected $salt = '6Dxypt3ePw2SM2zYzEVAFkDBQpxbk16z1';
+    /** @var string */
     protected $webappPrefix = 'DEFAULT_';
-    // 0 tells APCu to store it as long as it can
+    /** @var int */
     protected $defaultSeconds = 0;
 
     /**
