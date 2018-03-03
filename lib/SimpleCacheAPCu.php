@@ -87,6 +87,8 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
+     * @psalm-suppress RedundantConditionGivenDocblockType
+     *
      * @return string
      */
     protected function adjustKey($key): string
@@ -126,6 +128,8 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
+     * @psalm-suppress RedundantConditionGivenDocblockType
+     *
      * @return void
      */
     protected function setWebAppPrefix($str): void
@@ -154,6 +158,8 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
      *
      * @return void
      */
@@ -278,6 +284,8 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
      *
      * @return void
      */
@@ -420,6 +428,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     public function getMultiple($keys, $default = null): array
     {
         $this->checkIterable($keys);
+        $return = array();
         foreach ($keys as $userKey) {
             if (! is_string($userKey)) {
                 throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::iterableKeyMustBeString($userKey);
