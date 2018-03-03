@@ -23,6 +23,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -193,6 +195,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -350,6 +354,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -520,6 +526,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -666,6 +674,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -788,6 +798,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -904,6 +916,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -1026,6 +1040,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -1136,6 +1152,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -1226,6 +1244,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -1310,6 +1330,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -1413,6 +1435,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -1448,6 +1472,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
@@ -1551,6 +1577,8 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @param null|string $hexkey A hex key
      * @psalm-suppress InvalidArgument
+     * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress NullArgument
      *
      * @return bool
      */
