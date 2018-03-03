@@ -230,7 +230,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //boolean
@@ -262,7 +261,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //array
@@ -294,7 +292,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //object
@@ -327,7 +324,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         return true;
@@ -365,7 +361,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($salt);
             return false;
         }
         //float
@@ -397,7 +392,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($salt);
             return false;
         }
         //boolean
@@ -429,7 +423,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //array
@@ -461,7 +454,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //object
@@ -494,7 +486,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         return true;
@@ -520,7 +511,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if ($caught) {
-            var_dump($salt);
             return false;
         }
         //float
@@ -540,7 +530,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if ($caught) {
-            var_dump($salt);
             return false;
         }
         //boolean
@@ -572,7 +561,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //array
@@ -604,7 +592,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //object
@@ -637,7 +624,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         return true;
@@ -665,7 +651,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         //float
@@ -683,7 +668,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         //boolean
@@ -701,7 +685,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         //array
@@ -719,7 +702,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         //object
@@ -738,7 +720,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         //make sure we can still set one to a positive integer
@@ -784,7 +765,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         //float
@@ -796,7 +776,6 @@ class SimpleCacheAPCuTypeErrorTest
             $caught = true;
         }
         if ($caught) {
-            var_dump($ttl);
             return false;
         }
         //boolean
@@ -814,7 +793,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         //array
@@ -832,7 +810,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         //object
@@ -851,7 +828,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         //make sure we can still set one to a positive integer
@@ -898,7 +874,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //integer
@@ -916,7 +891,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //float
@@ -934,7 +908,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //boolean
@@ -952,7 +925,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //array
@@ -970,7 +942,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //object
@@ -989,7 +960,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         return true;
@@ -1018,7 +988,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //integer
@@ -1030,7 +999,6 @@ class SimpleCacheAPCuTypeErrorTest
             $caught = true;
         }
         if ($caught) {
-            var_dump($key);
             return false;
         }
         //float
@@ -1042,7 +1010,6 @@ class SimpleCacheAPCuTypeErrorTest
             $caught = true;
         }
         if ($caught) {
-            var_dump($key);
             return false;
         }
         //boolean
@@ -1060,7 +1027,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //array
@@ -1078,7 +1044,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //object
@@ -1097,7 +1062,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         return true;
@@ -1128,7 +1092,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         // boolean
@@ -1146,7 +1109,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         // array
@@ -1164,7 +1126,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         // object
@@ -1183,7 +1144,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         return true;
@@ -1208,7 +1168,6 @@ class SimpleCacheAPCuTypeErrorTest
             $caught = true;
         }
         if ($caught) {
-            var_dump($ttl);
             return false;
         }
         // boolean
@@ -1226,7 +1185,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         // array
@@ -1244,7 +1202,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         // object
@@ -1263,7 +1220,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         return true;
@@ -1291,7 +1247,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //integer
@@ -1309,7 +1264,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //float
@@ -1327,7 +1281,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //boolean
@@ -1345,7 +1298,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //string
@@ -1363,7 +1315,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         return true;
@@ -1418,7 +1369,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //integer
@@ -1436,7 +1386,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //float
@@ -1454,7 +1403,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //boolean
@@ -1472,7 +1420,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //string
@@ -1490,7 +1437,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         return true;

@@ -181,7 +181,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * string into a UNIX seconds from Epoch expiration, and it then calculates
      * the corresponding TTL. When fed NULL, it uses the class default TTL.
      *
-     * @param null|int|\DateInterval $ttl The length to cache or the expected expiration.
+     * @param null|int|string $ttl The length to cache or the expected expiration.
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
@@ -244,12 +244,12 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     /**
      * A wrapper for the actual store of key => value pair in the cache
      *
-     * @param string                 $realKey The internal key used with APCu
-     * @param mixed                  $value   The value to be stored
-     * @param null|int|\DateInterval $ttl     The TTL value of this item. If no value is sent
-     *                                        and the driver supports TTL then the library may
-     *                                        set a default value for it or let the driver
-     *                                        take care of that.
+     * @param string          $realKey The internal key used with APCu
+     * @param mixed           $value   The value to be stored
+     * @param null|int|string $ttl     The TTL value of this item. If no value is sent
+     *                                 and the driver supports TTL then the library may
+     *                                 set a default value for it or let the driver
+     *                                 take care of that.
      *
      * @return bool Returns True on success, False on failure
      */
@@ -320,11 +320,11 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     /**
      * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      *
-     * @param string                 $key   The key of the item to store.
-     * @param mixed                  $value The value of the item to store, must be serializable.
-     * @param null|int|\DateInterval $ttl   (optional) The TTL value of this item. If no value is sent and
-     *                                      the driver supports TTL then the library may set a default value
-     *                                      for it or let the driver take care of that.
+     * @param string          $key   The key of the item to store.
+     * @param mixed           $value The value of the item to store, must be serializable.
+     * @param null|int|string $ttl   (optional) The TTL value of this item. If no value is sent and
+     *                               the driver supports TTL then the library may set a default value
+     *                               for it or let the driver take care of that.
      *
      * @return bool True on success and false on failure.
      */
@@ -437,11 +437,9 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      *
-     * @param iterable               $pairs A list of key => value pairs for a
-     *                                      multiple-set operation.
-     * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If
-     *                                      not set or set to NULL the class default
-     *                                      will be used.
+     * @param iterable        $pairs A list of key => value pairs for multiple-set operation.
+     * @param null|int|string $ttl   (optional) The TTL value of this item. If not set or set
+     *                               to NULL the class default will be used.
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
