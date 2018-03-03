@@ -90,7 +90,7 @@ echo "SimpleCacheAPCuUnitTest Unit Test Results\n===============================
 echo "__Test Date__           : " . date("Y F j \a\\t h:i:s A e") . "  \n";
 echo "__Test PHP Version__    : " . PHP_VERSION . "  \n";
 echo "__Test APCu Version__   : " . phpversion('apcu') . "  \n";
-echo "__TEST Sodium Version__ : " . phpversion('sodium') . "  \n";
+echo "__Test Sodium Version__ : " . phpversion('sodium') . "  \n";
 echo "__Test Platform__       : " . PHP_OS . "  \n";
 
 echo "\n\nTesting Single Key Features\n---------------------------\n\n";

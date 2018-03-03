@@ -1,10 +1,10 @@
 SimpleCacheAPCuUnitTest Unit Test Results
 =========================================
 
-__Test Date__           : 2018 March 3 at 06:59:25 AM UTC  
+__Test Date__           : 2018 March 3 at 07:02:36 AM UTC  
 __Test PHP Version__    : 7.1.14  
 __Test APCu Version__   : 5.1.9  
-__TEST Sodium Version__ : 2.0.10  
+__Test Sodium Version__ : 2.0.10  
 __Test Platform__       : Linux  
 
 
