@@ -18,6 +18,13 @@ namespace AWonderPHP\SimpleCacheAPCu\Test;
 
 class SimpleCacheAPCuInvalidArgumentTest
 {
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testEmptyWebappPrefixException($hexkey = null): bool
     {
         $prefix = '   ';
@@ -49,6 +56,13 @@ class SimpleCacheAPCuInvalidArgumentTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testBarelyTooShortPrefixException($hexkey = null): bool
     {
         $prefix = '  aa ';
@@ -80,6 +94,13 @@ class SimpleCacheAPCuInvalidArgumentTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testNonAlphaNumericPrefix($hexkey = null): bool
     {
         $prefix = '  aa_bb ';
@@ -113,6 +134,13 @@ class SimpleCacheAPCuInvalidArgumentTest
 
     // salt tests
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testEmptySalt($hexkey = null): bool
     {
         $prefix = '  aabb ';
@@ -145,6 +173,13 @@ class SimpleCacheAPCuInvalidArgumentTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testSaltBarelyTooShort($hexkey = null): bool
     {
         $prefix = '  aabb ';
@@ -179,6 +214,13 @@ class SimpleCacheAPCuInvalidArgumentTest
 
     // TTL tests
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testExceptionNegativeDefaultTTL($hexkey = null): bool
     {
         $ttl = -7;
@@ -203,6 +245,13 @@ class SimpleCacheAPCuInvalidArgumentTest
 
     // key set tests
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testEmptyKey($hexkey = null): bool
     {
         $key = '    ';
@@ -226,6 +275,13 @@ class SimpleCacheAPCuInvalidArgumentTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testBarelyTooLongKey($hexkey = null): bool
     {
         $a='AAAAABB';
@@ -260,6 +316,13 @@ class SimpleCacheAPCuInvalidArgumentTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testReservedCharacterInKey($hexkey = null): bool
     {
         $reserved = array('key{key', 'key}key', 'key(key', 'key)key', 'key/key', 'key\\key',  'key@key', 'key:key');
@@ -285,7 +348,14 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return true;
     }
-    
+
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testNegativeTTL($hexkey = null): bool
     {
         $key = "foo";
@@ -309,7 +379,14 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testDateStringInPastTTL($hexkey = null): bool
     {
         $key = "foo";
@@ -333,7 +410,14 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testDateRangeInPastTTL($hexkey = null): bool
     {
         $key = "foo";
@@ -357,7 +441,14 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testBogusStringinTTL($hexkey = null): bool
     {
         $key = "foo";
@@ -381,7 +472,14 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
-    
+
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testKeyInIterableSetNotLegal($hexkey = null): bool
     {
         $arr = array('key1' => 'value1', 'key2' => 'value2', 'ke}y3' => 'value3', 'key4' => 'value4', 'key5' => 'value5');

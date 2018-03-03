@@ -18,6 +18,13 @@ namespace AWonderPHP\SimpleCacheAPCu\Test;
 
 class SimpleCacheAPCuTypeErrorTest
 {
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testTypeErrorPrefixNotStringStrict($hexkey = null): bool
     {
         $salt = null;
@@ -180,6 +187,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testTypeErrorPrefixNotString($hexkey = null): bool
     {
         //integer
@@ -329,6 +343,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testTypeErrorSaltNotStringStrict($hexkey = null): bool
     {
         $prefix = null;
@@ -491,6 +512,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testTypeErrorSaltNotString($hexkey = null): bool
     {
         $prefix = null;
@@ -629,6 +657,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testTypeErrorDefaultTTLNotIntStrict($hexkey = null): bool
     {
         if (is_null($hexkey)) {
@@ -743,6 +778,13 @@ class SimpleCacheAPCuTypeErrorTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testTypeErrorDefaultTTLNotInt($hexkey = null): bool
     {
         if (is_null($hexkey)) {
@@ -851,6 +893,13 @@ class SimpleCacheAPCuTypeErrorTest
         return false;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testTypeErrorKeyNotStringStrict($hexkey = null): bool
     {
         if (is_null($hexkey)) {
@@ -965,6 +1014,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testTypeErrorKeyNotString($hexkey = null): bool
     {
         if (is_null($hexkey)) {
@@ -1067,6 +1123,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testTypeErrorTTL_Strict($hexkey = null): bool
     {
         $key = 'foo';
@@ -1149,6 +1212,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testTypeErrorTTL($hexkey = null): bool
     {
         $key = 'foo';
@@ -1225,6 +1295,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testNotIterableSet($hexkey = null): bool
     {
         if (is_null($hexkey)) {
@@ -1320,6 +1397,13 @@ class SimpleCacheAPCuTypeErrorTest
         return true;
     }
 
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testIterableSetNonStringIndex($hexkey = null): bool
     {
         $obj = new \stdClass;
@@ -1346,7 +1430,14 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return false;
     }
-    
+
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testNotIterableGet($hexkey = null): bool
     {
         if (is_null($hexkey)) {
@@ -1441,7 +1532,14 @@ class SimpleCacheAPCuTypeErrorTest
         }
         return true;
     }
-    
+
+    /**
+     * error test
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
     public static function testIterableGetNonStringIndex($hexkey = null): bool
     {
         $obj = new \stdClass;

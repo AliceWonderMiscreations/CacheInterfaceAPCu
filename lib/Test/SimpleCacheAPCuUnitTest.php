@@ -381,6 +381,7 @@ class SimpleCacheAPCuUnitTest
         $simpleCache->set($key, $value, $ttl);
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
+        $cacheTTL = null;
         foreach ($info['cache_list'] as $cached) {
             if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
@@ -412,6 +413,7 @@ class SimpleCacheAPCuUnitTest
         $simpleCache->set($key, $value, $dateString);
         $realKey = $simpleCache->getRealKey($key);
         $info = apcu_cache_info();
+        $cacheTTL = null;
         foreach ($info['cache_list'] as $cached) {
             if (strcmp($cached['info'], $realKey) === 0) {
                 $cacheTTL = $cached['ttl'];
