@@ -1185,7 +1185,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         // array
@@ -1221,7 +1220,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($ttl);
             return false;
         }
         return true;
@@ -1249,7 +1247,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //integer
@@ -1267,7 +1264,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //float
@@ -1285,7 +1281,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //boolean
@@ -1303,7 +1298,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //string
@@ -1321,7 +1315,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         return true;
@@ -1376,7 +1369,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //integer
@@ -1394,7 +1386,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //float
@@ -1412,7 +1403,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //boolean
@@ -1430,7 +1420,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         //string
@@ -1448,7 +1437,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if (! $caught) {
-            var_dump($key);
             return false;
         }
         return true;
