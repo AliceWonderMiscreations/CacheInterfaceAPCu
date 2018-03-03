@@ -39,6 +39,8 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
 {
     /** The secret key to use
      * @var string
+     *
+     * @psalm-suppress PropertyNotSetInConstructor
      */
     protected $cryptokey;
 
