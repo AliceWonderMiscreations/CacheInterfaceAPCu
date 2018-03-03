@@ -181,7 +181,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * string into a UNIX seconds from Epoch expiration, and it then calculates
      * the corresponding TTL. When fed NULL, it uses the class default TTL.
      *
-     * @param null|int|string $ttl The length to cache or the expected expiration.
+     * @param null|int|\DateInterval $ttl The length to cache or the expected expiration.
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException

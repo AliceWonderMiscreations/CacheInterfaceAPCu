@@ -55,7 +55,7 @@ class InvalidSetupException extends \ErrorException implements \Psr\SimpleCache\
      */
     public static function confNotFound(string $file)
     {
-        return new self(sprintf('The specified configuration file %s could not be found.'), $file);
+        return new self(sprintf('The specified configuration file %s could not be found.', $file));
     }
 
     /**
@@ -67,7 +67,7 @@ class InvalidSetupException extends \ErrorException implements \Psr\SimpleCache\
      */
     public static function confNotReadable(string $file)
     {
-        return new self(sprintf('The specified configuration file %s could not be read.'), $file);
+        return new self(sprintf('The specified configuration file %s could not be read.', $file));
     }
 
     /**
@@ -79,7 +79,7 @@ class InvalidSetupException extends \ErrorException implements \Psr\SimpleCache\
      */
     public static function confNotJson(string $file)
     {
-        return new self(sprintf('The file %s did not contain valid JSON data.'), $file);
+        return new self(sprintf('The file %s did not contain valid JSON data.', $file));
     }
 
     /**

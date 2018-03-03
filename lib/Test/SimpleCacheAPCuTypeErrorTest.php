@@ -33,7 +33,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -45,12 +45,11 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //float
@@ -65,7 +64,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -77,12 +76,11 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //boolean
@@ -97,7 +95,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -109,12 +107,11 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //array
@@ -129,7 +126,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -141,12 +138,11 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         //object
@@ -162,7 +158,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -174,12 +170,11 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
         if (! $caught) {
-            var_dump($prefix);
             return false;
         }
         return true;
@@ -204,7 +199,6 @@ class SimpleCacheAPCuTypeErrorTest
             }
         }
         if ($caught) {
-            var_dump($prefix);
             return false;
         }
         //float
@@ -219,7 +213,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -231,7 +225,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -251,7 +245,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -263,7 +257,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -283,7 +277,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -295,7 +289,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -316,7 +310,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -328,7 +322,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -354,7 +348,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -366,7 +360,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -386,7 +380,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -398,7 +392,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -418,7 +412,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -430,7 +424,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -450,7 +444,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -462,7 +456,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -483,7 +477,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -495,7 +489,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -561,7 +555,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -573,7 +567,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -593,7 +587,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -605,7 +599,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -626,7 +620,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         } else {
@@ -638,7 +632,7 @@ class SimpleCacheAPCuTypeErrorTest
                 if ($reference === $actual) {
                     $caught = true;
                 } else {
-                    var_dump($actual);
+                    print($actual . "\n");
                 }
             }
         }
@@ -667,7 +661,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -685,7 +679,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -703,7 +697,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -721,7 +715,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -740,7 +734,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -786,7 +780,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -816,7 +810,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -834,7 +828,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -853,7 +847,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -900,7 +894,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -918,7 +912,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -936,7 +930,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -954,7 +948,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -972,7 +966,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -991,7 +985,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1020,7 +1014,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1062,7 +1056,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1080,7 +1074,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1099,7 +1093,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1130,7 +1124,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1148,7 +1142,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1166,7 +1160,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1185,7 +1179,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1228,7 +1222,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1246,7 +1240,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1265,7 +1259,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1293,7 +1287,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1311,7 +1305,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1329,7 +1323,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1347,7 +1341,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1365,7 +1359,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1396,7 +1390,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 return true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         return false;
@@ -1420,7 +1414,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1438,7 +1432,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1456,7 +1450,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1474,7 +1468,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1492,7 +1486,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 $caught = true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         if (! $caught) {
@@ -1523,7 +1517,7 @@ class SimpleCacheAPCuTypeErrorTest
             if ($reference === $actual) {
                 return true;
             } else {
-                var_dump($actual);
+                print($actual . "\n");
             }
         }
         return false;

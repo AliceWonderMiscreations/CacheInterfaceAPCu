@@ -705,7 +705,6 @@ class SimpleCacheAPCuUnitTest
                 return true;
             }
         }
-        var_dump($result['testCacheMiss']);
         return false;
     }
 
@@ -719,7 +718,6 @@ class SimpleCacheAPCuUnitTest
             $val = 'ValueNumber-' . $i;
             $arr[$key] = $val;
         }
-        //var_dump($arr);
         $start = count($arr);
         if (is_null($hexkey)) {
             $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
