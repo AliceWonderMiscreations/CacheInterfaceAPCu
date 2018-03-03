@@ -89,10 +89,9 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         if ($len !== 64) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::wrongByteSizeKey($len);
         }
-        //test that what is supplied works
+        //test that the key supplied works
         $string = 'ABC test 123 test xyz';
-        $T = str_shuffle("74b9e852b172df7f57ff4ab4");
-        $TEST_NONCE = sodium_hex2bin($T);
+        $TEST_NONCE = sodium_hex2bin('74b9e852b172df7f57ff4ab4');
         if ($this->aesgcm) {
             $ciphertext = sodium_crypto_aead_aes256gcm_encrypt($string, $TEST_NONCE, $TEST_NONCE, $cryptokey);
             $test = sodium_crypto_aead_aes256gcm_decrypt($ciphertext, $TEST_NONCE, $TEST_NONCE, $cryptokey);
@@ -179,12 +178,13 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         } catch (\Error $e) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::serializeFailed($e->getMessage());
         }
-        if(is_null($this->nonce)) {
+        $oldnonce = $this->nonce;
+        if (is_null($this->nonce)) {
             // both IETF ChaCha20 and AES256GCM use 12 bytes for nonce
             $this->nonce = random_bytes(12);
+        } else {
+            sodium_increment($this->nonce);
         }
-        $oldnonce = $this->nonce;
-        sodium_increment($this->nonce);
         if ($oldnonce === $this->nonce) {
             // This should never ever happen
             throw \AWonderPHP\SimpleCacheAPCu\InvalidSetupException::nonceIncrementError();
