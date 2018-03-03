@@ -54,14 +54,14 @@ at this point in time do), AES-256-GCM will be used as it is the faster of the
 two *when AES-NI is supported by the CPU*. Otherwise ChaCha20+Poly1305 is used.
 
 Both of those ciphers use a 32-byte secret key and a 12-byte
-nonce(https://en.wikipedia.org/wiki/Cryptographic_nonce).
+[nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce).
 
 Both of those ciphers are very high quality ciphers and are part of the soon to
 be finalized TLS 1.3 specification. They are also very fast. The class will
 decide which one to use automatically based upon processor support.
 
 With respect to the nonce, a too common mistake (e.g. the Sony Playstation 3
-mistake) is reusing the same nonce for more than one encryption.
+mistake) is reusing the same nonce for more than one encryption session.
 
 The SimpleCacheAPCuSodium class makes sure the nonce has been incremented
 before encrypting a value, and if something is seriously broken resulting in
@@ -69,7 +69,7 @@ failure to increment the nonce, an exception is thrown rather than having a
 potentially dangerous encryption take place.
 
 The only thing the system administrator needs to worry about is generating the
-secret in such a way that it can reused each time the class is instantiated.
+secret in such a way that it can be reused each time the class is instantiated.
 
 
 The Constructor

@@ -43,7 +43,7 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
     /* constructor sets to true if CPU supports it */
     protected $aesgcm = false;
     /* ALWAYS gets increments before encryption */
-    protected $nonce;
+    protected $nonce = null;
 
     /**
      * Checks to make sure sodium extension is available.
@@ -91,9 +91,11 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         }
         //test that what is supplied works
         $string = 'ABC test 123 test xyz';
+        $T = str_shuffle("74b9e852b172df7f57ff4ab4");
+        $TEST_NONCE = sodium_hex2bin($T);
         if ($this->aesgcm) {
-            $ciphertext = sodium_crypto_aead_aes256gcm_encrypt($string, $this->nonce, $this->nonce, $cryptokey);
-            $test = sodium_crypto_aead_aes256gcm_decrypt($ciphertext, $this->nonce, $this->nonce, $cryptokey);
+            $ciphertext = sodium_crypto_aead_aes256gcm_encrypt($string, $TEST_NONCE, $TEST_NONCE, $cryptokey);
+            $test = sodium_crypto_aead_aes256gcm_decrypt($ciphertext, $TEST_NONCE, $TEST_NONCE, $cryptokey);
         } else {
             $ciphertext = sodium_crypto_aead_chacha20poly1305_encrypt($string, $this->nonce, $this->nonce, $cryptokey);
             $test = sodium_crypto_aead_chacha20poly1305_decrypt($ciphertext, $this->nonce, $this->nonce, $cryptokey);
@@ -176,6 +178,10 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
             $serialized = serialize($value);
         } catch (\Error $e) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::serializeFailed($e->getMessage());
+        }
+        if(is_null($this->nonce)) {
+            // both IETF ChaCha20 and AES256GCM use 12 bytes for nonce
+            $this->nonce = random_bytes(12);
         }
         $oldnonce = $this->nonce;
         sodium_increment($this->nonce);
@@ -360,8 +366,6 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
     public function __construct($cryptokey = null, $webappPrefix = null, $salt = null, $strictType = null)
     {
         $this->checkForSodium();
-        // both IETF ChaCha20 and AES256GCM use 12 bytes for nonce
-        $this->nonce = random_bytes(12);
         if (sodium_crypto_aead_aes256gcm_is_available()) {
             $this->aesgcm = true;
         }
