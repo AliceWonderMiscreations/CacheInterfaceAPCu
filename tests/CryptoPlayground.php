@@ -1,6 +1,6 @@
 <?php
 
-// just me playing with the new class file
+// testing stuff
 
 ob_end_flush();
 // tests should not take more than fraction of second
@@ -49,28 +49,15 @@ var_dump([
 
 //$key = "f42f663e72f74b9e852b172df7f57ff4ab42e505167116e13dacd0d1daf00e77";
 
-$key = "/srv/DEFAULT.json";
+$foo = new \DateInterval('P3DT4H');
 
-$mystring = "This here be a string that I am going to try to crypto-cache";
+$now = new \DateTime();
+$future = $now->add($foo);
 
-use \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium as CryptoCache;
+var_dump($future);
 
-$fubar = new CryptoCache($key, null, null, 'garbage');
+var_dump($foo);
 
-var_dump($fubar);
-
-$fubar->set('testkey', $mystring);
-
-$testTwo = $fubar->get('testkey');
-
-var_dump($testTwo);
-
-$fubar->set('another test', $mystring);
-
-var_dump($fubar);
-
-$aaa = SODIUM_CRYPTO_GENERICHASH_KEYBYTES_MAX;
-var_dump($aaa);
 
 
 

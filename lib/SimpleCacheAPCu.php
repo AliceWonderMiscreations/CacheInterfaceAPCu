@@ -345,15 +345,23 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      */
     public function setDefaultSeconds($ttl): void
     {
-        if (is_object($ttl)) {
+        $type = gettype($ttl);
+        switch($type) {
+          case "integer":
+            $seconds = $ttl;
+            break;
+          case "object":
             if ($ttl instanceof DateInterval) {
                 $seconds = $this->dateIntervalToSeconds($ttl);
             } else {
                 throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::defaultTTL($ttl);
             }
-        } elseif (! $this->strictType) {
-            if (is_numeric($ttl)) {
+            break;
+          default:
+            if (! $this->strictType) {
+              if (is_numeric($ttl)) {
                 $seconds = intval($ttl);
+              }
             }
         }
         if (! isset($seconds)) {
