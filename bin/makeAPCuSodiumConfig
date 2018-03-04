@@ -4,6 +4,7 @@
 $PREFIX="DEFAULT";
 $STRICT_TYPE=false;
 
+/* part of my silly amusement described below */
 function fancy_strtoupper($s)
 {
     switch ($s) {
@@ -67,12 +68,49 @@ if (isset($argv[2])) {
 }
 
 $arr = array();
+
+// The secret - 32 byte int - valid for both chacha20poly1305 and aes256gcm
+$secret = random_bytes(32);
+
+if (function_exists('sodium_bin2hex')) {
+    $arr['hexkey'] = sodium_bin2hex($secret);
+} else {
+    $arr['hexkey'] = bin2hex($secret);
+}
+if (function_exists('sodium_memzero')) {
+    sodium_memzero($secret);
+}
+
+// The prefix
 $arr['prefix'] = $PREFIX;
 
-//generate ourselves a salt
-// what I do here amuses me more than has actual
-// benefit - but the salt isn't used for cryto, so...
-// it doesn't hurt to be amused.
+// generate ourselves a salt
+
+//  what I do here amuses me more than has actual
+//  benefit - The salt isn't used for cryto.
+//
+// Something psychological, it always is so
+//   tempting to play with random output and
+//   make it "more random" but I constantly have
+//   to remind myself no algorithm can make
+//   something have more genuine entropy than
+//   the input.
+// I worked on a site once where the code quite
+//  literal read data from /dev/random and then
+//  processed it further "in case /dev/ransom
+//  has a bug" is what the comment said - but
+//  the programmers code actually gave bias to
+//  integers at the top and bottom of the range
+//  and he didn't even realize it.
+// Anyway it is always tempting for some
+//  psychological reason I do not understand.
+// Since this salt is NOT used for cryptographic
+//  purposes, it is safe to give in to my
+//  temptation and amuse myself. So I did.
+// But the fancy looking salt that is generated
+//  isn't any better than random_bytes(64)
+//  would have produced. And may be worse.
+// But hey, it amused me.
 $rand = random_bytes(32);
 if (function_exists('sodium_bin2hex')) {
     $salt = sodium_bin2hex($rand);
@@ -92,20 +130,11 @@ for ($i=0; $i<64; $i++) {
     }
 }
 $arr['salt'] = $salt;
-// okay end of silliness.
+// okay end of silly amusement.
+
 $arr['strict'] = $STRICT_TYPE;
 
-// 32 bytes - valid for both chacha20poly1305 and aes256gcm
-$secret = random_bytes(32);
 
-if (function_exists('sodium_bin2hex')) {
-    $arr['hexkey'] = sodium_bin2hex($secret);
-} else {
-    $arr['hexkey'] = bin2hex($secret);
-}
-if (function_exists('sodium_memzero')) {
-    sodium_memzero($secret);
-}
 
 $file = $CWD . '/' . $PREFIX . '.json';
 

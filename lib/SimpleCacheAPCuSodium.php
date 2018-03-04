@@ -376,7 +376,7 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
      *
      * @psalm-suppress RedundantConditionGivenDocblockType
      */
-    public function __construct($cryptokey = null, $webappPrefix = null, $salt = null, $strictType = null)
+    public function __construct($cryptokey, $webappPrefix = null, $salt = null, $strictType = null)
     {
         $this->checkForSodium();
         if (sodium_crypto_aead_aes256gcm_is_available()) {

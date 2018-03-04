@@ -5,12 +5,6 @@ The `SimpleCacheAPCuSodium` class extends the `SimpleCacheAPCuSodium` class to
 provide AEAD encryption/decryption of the `value` portion of the `key => value`
 pairs cached in APCu.
 
-If you are running PHP 7.1 you will need to install the
-[PECL libsodium](https://pecl.php.net/package/libsodium) extension. If you are
-running PHP 7.2, the libsodium functions are now a standard part of PHP
-starting with 7.2, you do not need to do anything. Theoretically, I am still
-running 7.1.
-
 The problem I am trying to solve, APCu does not require any authentication to
 query or create cached records. It also runs directly in server memory, which
 means a bug in the web server or any web server modules, whether PHP related or
@@ -28,6 +22,154 @@ cache class would treat it like a cache miss.
 
 The problem is not completely resolved, please see the Security section of this
 document.
+
+
+Basic Requirements
+------------------
+
+If you are running PHP 7.1 you will need to install the
+[PECL libsodium](https://pecl.php.net/package/libsodium) extension. If you are
+running PHP 7.2, the libsodium functions are now a standard part of PHP
+starting with 7.2, you do not need to do anything. Theoretically, I am still
+running 7.1.
+
+
+The Constructor
+---------------
+
+The constructor is the only part of using SimpleCacheAPCuSodium that differs
+from using SimpleCacheAPCu.
+
+The SimpleCacheAPCu constructor takes three optional arguements:
+
+* `@param string $webappPrefix`
+* `@param string $salt`
+* `@param bool   $strictType`
+
+For an explanation of those paramaters, see the `USAGE.md` documentation.
+
+SimpleCacheAPCuSodium adds a fourth at the beginning, and it is requires:
+
+* `@param string $cryptokey`
+* `@param string $webappPrefix`
+* `@param string $salt`
+* `@param bool   $strictType`
+
+The `$cryptokey` parameter can be one of three things:
+
+1. Binary string representation of a 32 byte integer (not screen printable)
+2. Hex string representation of a 32 byte integer (64 characters [0-9][a-f])
+3. Full path on the filesystem to a JSON encoded configuration file that
+contains a Hex string representing a 32 byte integer.
+
+This is the encryption key, so it needs to be properly generated:
+
+    $secret = random_bytes(32);
+
+That will generate a binary representation of the 32 byte integer.
+
+    $hexkey = sodium_bin2hex($secret);
+    sodium_memzero($secret);
+
+That turn the binary representation of the 32 byte integer into a hexadecimal
+representation of the integer, and then completely overwrite the reference to
+`$secret` in memory with zeros.
+
+`sodium_bin2hex` is used instead of `bin2hex` because of some possible side
+channel attacks on the `bin2hex` command that could leak information.
+
+
+### JSON Encoded Configuration File
+
+This is a configuration file that contains the hex representation of the secret
+and optionally the other options to the constructor. An example:
+
+    {
+        "hexkey": "f42f663e72f74b9e852b172df7f57ff4ab42e505167116e13dacd0d1daf00e77"
+        "prefix": "WEBMAIL",
+        "salt": "C%76462%f5AQ0D(9B656#4Df591d?#A4(1A1#D#0;Dc3FF6FF85AE@3#(46@7C!C",
+        "strict": true,
+    }
+
+In the configuration file, the keyword `hexkey` is used to reference the
+hexadecimal representation of the secret.
+
+The optional keyword `prefix` is used to define the `$webappPrefix` parameter
+to the constructor. If defined both here *and* in your call to the class
+constructor, the call to the constructor takes precendence. If present at all
+it must be string containing at least three alphanumeric characters but not
+more than 32.
+
+The optional keyword `salt` is used to define the `$salt` paramater to the
+constructor. If defined both here *and* in your call to the class
+constructor, the call to the constructor takes precendence. If present at all
+it must be a string containing at least eight characters.
+
+The optional keyword `strict` is used to define the `$strictType` parameter to
+the constructor. If defined both here *and* in your call to the class
+constructor, the call to the constructor takes precendence. If present at all
+it must be a boolean, which is JSON is *always* lower case `true` or lower case
+`false`.
+
+
+### `makeAPCuSodiumConfig` utility
+
+A PHP shell script is provided that will create the configuration file for you.
+This is the `makeAPCuSodiumConfig` utility. It does use some functions that
+require PHP 7 (e.g. `random_int`) so if the first `php` executable in your
+`PATH` environment is not at least PHP 7, then you will need to change:
+
+    #!/usr/bin/env php
+
+to the full path to your PHP 7 install. For most people, it should just work.
+For people using enterprise server distributions who have PHP 7 installed in a
+custom location and/or have an older PHP install earlier in the path, the above
+shebang may not find the right PHP version.
+
+The script takes two optional arguments:
+
+* `$argv[1] string setting for $webappPrefix`
+* `$argv[2] bool   setting for $strictType`
+
+It uses defaults if not supplied (`DEFAULT` for `$argv[1]` and `false` for
+`$argv[2]`)
+
+The utility will generate the secret key and the salt itself.
+
+The output of the command will be named `${webappPrefix}.json` if you supplied
+one and `DEFAULT.json` if you did not.
+
+The output of the command will be in the same directory you called the command
+from. If a file already exists with the needed file name, it will use the
+current unix timestamp to back up the existing file, e.g. `DEFAULT.json` would
+be renamed to something like `DEFAULT-1520150241.json` and then `DEFAULT.json`
+will be recreated.
+
+You can edit the file to change what the values in it or name the file whatever
+you want. Just makes sure it *always* has a `hexkey` entry that contains 64
+hex characters (`[0-9][a-f]`) from a random generated source.
+
+The file needs to be readable by the web server but should not be readable by
+other users on the system. On CentOS/RHEL systems which Apache:
+
+    chown apache:apache DEFAULT.json && chmod 0400 DEFAULT.json
+
+should accomplish that task.
+
+The file should also not be in a directory served by the web server.
+
+
+### Changing the Secret Key
+
+Like any secret key used for validation or encryption, it is a good idea to
+periodically change the secret. Changing the secret will *effectively* clear
+the APCu cache of all previous `key => value` pairs that were encrypted with
+the old secret, requests for them will result in a cache miss.
+
+The best time to change the Secret is thus when you are doing maintenance that
+requires restarting the web server daemon anyway as restarting the web server
+daemon clears the cache anyway and is usually done several times a year to
+apply patches and update software.
 
 
 Encryption Dirty Work
@@ -72,37 +214,59 @@ The only thing the system administrator needs to worry about is generating the
 secret in such a way that it can be reused each time the class is instantiated.
 
 
-The Constructor
----------------
+Performance
+-----------
 
-The constructor is the only part of using SimpleCacheAPCuSodium that differs
-from using SimpleCacheAPCu.
-
-
---------------------------------
-Will write moar tomorrow, I'm zoned. Goodnight.
+I have not performed any kind of benchmarks, but it will be slower than APCu
+without encrypting the data first. How much slower, I do not know, but most
+servers run on modern Intel Xeon processors with the AES-NI instruction set
+that give hardware acceleration to the AES-256-GCM cipher.
 
 
+Security Appendix
+=================
 
 
+Secret Key Security
+-------------------
 
+The purpose of caching data is to be able to allow your web application to
+retrieve it on demand. In order to accomplish this, the same secret key used to
+encrypt the data *must* be available to the web application to decrypt the data
+when it has retrieved it from the cache.
 
+You could hard code the secret key into your web application, like is often
+done with SQL passwords, but I recommend against it.
 
+PHP caches an opcode compiled version of scripts that it loads. This means your
+secret key would be retrievable from that opcode cache if an exploit exists
+that allows the attacker to retrieve it.
 
+I do not *believe* PHP caches the contents of files read with
+`file_get_contents()` (I could be wrong about that) so storing the secret key
+in a configuration file is safer.
 
+The class reads the file into a JSON string and then converts it an object.
+The JSON string is then zerod out using `sodium_memzero()` function.
 
+Once they key has been verified as an actual working key, the key is set as a
+class property and the copy of the key in the object is zerod out.
 
+A copy of the key however continues to live as a property of the object.
 
+The class `__destruct` method will zero it out when the class is destroyed, but
+as long as the class is active, a copy of the secret key exists in memory and
+thus is potentially vulnerable to key theft. With multiple instances of the
+class instantiated at the same time, there will be multiple copies of the
+secret in memory.
 
+Point is, do not use this class to store things like bank account numbers in
+the APCu cache because it is possible that if an attacker manages to get a dump
+of the server memory, it will contain not only the encrypted cache entries but
+also the key needed to decrypt them.
 
+This class makes it harder for someone who gets a dump of the server memory to
+obtain the decrypted information, but it is still possible.
 
-
-
-
-
-
-
-
-
-
-
+Things like bank account numbers should not even be store on servers with a
+public IP address anyway.

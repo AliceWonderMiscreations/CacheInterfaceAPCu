@@ -32,6 +32,11 @@ The easiest way to create an object of this class:
 I personally recommend your web application *extend* the class, see the
 appendix for how to do that and why.
 
+__**NOTE:**__ To use the encrytion enabled version of this class, use the class
+`SimpleCacheAPCuSodium` instead of `SimpleCacheAPCu`. Also, that variant of
+this class has one required argument when creating an instance of the class,
+see the `SODIUM.md` file.
+
 
 The Class Constructor
 ---------------------
@@ -41,6 +46,9 @@ The class constructor takes three parameters:
 1. `$webappPrefix` -- defaults to `NULL`
 2. `$salt` -- defaults to `NULL`
 3. `$strictType` -- defaults to `FALSE`
+
+__**NOTE:**__ To use the encryption enabled version of the class, see the
+`SODIUM.md` file for the constructor instructions.
 
 
 ### The Web Application Prefix
