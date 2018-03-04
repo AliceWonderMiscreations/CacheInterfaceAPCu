@@ -401,6 +401,8 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *                                             serializable.
      * @param null|int|string|\DateInterval $ttl   (optional) The TTL value of this item.
      *
+     * @psalm-suppress RedundantConditionGivenDocblockType
+     *
      * @return bool True on success and false on failure.
      */
     public function set($key, $value, $ttl = null): bool
@@ -519,6 +521,8 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
      *
      * @return bool True on success and false on failure.
      */
