@@ -238,6 +238,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
+     * @psalm-suppress RedundantConditionGivenDocblockType
      * @psalm-suppress RedundantCondition
      *
      * @return int
