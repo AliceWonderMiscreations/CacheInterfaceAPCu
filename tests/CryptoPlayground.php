@@ -54,10 +54,11 @@ $foo = new \DateInterval('P3DT4H');
 $now = new \DateTime();
 $future = $now->add($foo);
 
-var_dump($future);
+$testMe = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
 
-var_dump($foo);
+$testMe->setDefaultSeconds($foo);
 
+var_dump($testMe);
 
 
 

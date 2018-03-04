@@ -246,7 +246,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
             return $this->defaultSeconds;
         }
         if (is_object($ttl)) {
-            if ($ttl instanceof DateInterval) {
+            if ($ttl instanceof \DateInterval) {
                 $seconds = $this->dateIntervalToSeconds($ttl);
                 if ($seconds < 0) {
                     throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::dateIntervalInPast();
@@ -346,23 +346,23 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     public function setDefaultSeconds($ttl): void
     {
         $type = gettype($ttl);
-        switch($type) {
-          case "integer":
-            $seconds = $ttl;
-            break;
-          case "object":
-            if ($ttl instanceof DateInterval) {
-                $seconds = $this->dateIntervalToSeconds($ttl);
-            } else {
-                throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::defaultTTL($ttl);
-            }
-            break;
-          default:
-            if (! $this->strictType) {
-              if (is_numeric($ttl)) {
-                $seconds = intval($ttl);
-              }
-            }
+        switch ($type) {
+            case "integer":
+                $seconds = $ttl;
+                break;
+            case "object":
+                if ($ttl instanceof \DateInterval) {
+                    $seconds = $this->dateIntervalToSeconds($ttl);
+                } else {
+                    throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::defaultTTL($ttl);
+                }
+                break;
+            default:
+                if (! $this->strictType) {
+                    if (is_numeric($ttl)) {
+                        $seconds = intval($ttl);
+                    }
+                }
         }
         if (! isset($seconds)) {
             throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::defaultTTL($ttl);
@@ -396,11 +396,10 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     /**
      * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      *
-     * @param string          $key   The key of the item to store.
-     * @param mixed           $value The value of the item to store, must be serializable.
-     * @param null|int|string $ttl   (optional) The TTL value of this item. If no value is sent and
-     *                               the driver supports TTL then the library may set a default value
-     *                               for it or let the driver take care of that.
+     * @param string                        $key   The key of the item to store.
+     * @param mixed                         $value The value of the item to store, must be
+     *                                             serializable.
+     * @param null|int|string|\DateInterval $ttl   (optional) The TTL value of this item.
      *
      * @return bool True on success and false on failure.
      */
@@ -514,9 +513,9 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      *
-     * @param iterable        $pairs A list of key => value pairs for multiple-set operation.
-     * @param null|int|string $ttl   (optional) The TTL value of this item. If not set or set
-     *                               to NULL the class default will be used.
+     * @param iterable                      $pairs A list of key => value pairs for multiple
+     *                                             set operation.
+     * @param null|int|string|\DateInterval $ttl   (optional) The TTL value of this item.
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
