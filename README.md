@@ -48,7 +48,7 @@ fetch the needed information from the cache.
 
 If it is there, the web application can then immediately use it resulting in
 fast response times. When the information is not there (what is called a
-‘miss’) the web application then fetches theinformation by another means (e.g.
+‘miss’) the web application then fetches the information by another means (e.g.
 database query with processing of the data) and then store it in the cache so
 it is highly *likely* to be there the next time it is queried from the cache.
 
@@ -63,7 +63,7 @@ About PHP-FIG and PSR-16
 PHP-FIG is the [PHP Framework Interop Group](https://www.php-fig.org/). They
 exist largely to create standards that make it easier for different developers
 around the world to create different projects that will work well with each
-other. PHP-FIG was a driving force behind the PSR-0 and PSR-4 autoload
+other. PHP-FIG was a driving force behind the PSR-0 and PSR-4 auto-load
 standards for example that make it *much much* easier to integrate PHP class
 libraries written by other people into your web applications.
 
@@ -143,7 +143,7 @@ ultimately ditched PowerPC hardware for Red Hat 8 and then Fedora and now then
 being End of Life as soon as the bugs were worked out and they started to feel
 somewhat stable.
 
-Currently I run CentOS 7, both on [Linode]() servers and on my desktop and my
+Currently I run CentOS 7, both on Linode] VM servers and on my desktop and my
 laptop (a Thinkpad T410 that is begging me to let it die, but I can not afford
 a replacement.)
 

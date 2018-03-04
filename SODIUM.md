@@ -47,13 +47,13 @@ The Constructor
 The constructor is the only part of using SimpleCacheAPCuSodium that differs
 from using SimpleCacheAPCu.
 
-The SimpleCacheAPCu constructor takes three optional arguements:
+The SimpleCacheAPCu constructor takes three optional arguments:
 
 * `@param string $webappPrefix`
 * `@param string $salt`
 * `@param bool   $strictType`
 
-For an explanation of those paramaters, see the [`USAGE.md`](USAGE.md)
+For an explanation of those parameters, see the [`USAGE.md`](USAGE.md)
 documentation.
 
 SimpleCacheAPCuSodium adds a fourth at the beginning, and it is required:
@@ -76,7 +76,7 @@ generated:
     $secret = random_bytes(32);
 
 The `random_bytes()` function is available in PHP 7 and newer, and uses a
-cryptographically secure randon generator. See
+cryptographically secure random generator. See
 [random_bytes](https://php.net/manual/en/function.random-bytes.php) for
 more information on the security of that function.
 
@@ -110,19 +110,19 @@ hexadecimal representation of the secret.
 
 The optional keyword `prefix` is used to define the `$webappPrefix` parameter
 to the constructor. If defined both here *and* in your call to the class
-constructor, the call to the constructor takes precendence. If present at all
+constructor, the call to the constructor takes precedence. If present at all
 it must be string containing at least three alphanumeric characters but not
 more than 32.
 
-The optional keyword `salt` is used to define the `$salt` paramater to the
+The optional keyword `salt` is used to define the `$salt` parameter to the
 constructor. If defined both here *and* in your call to the class
-constructor, the call to the constructor takes precendence. If present at all
+constructor, the call to the constructor takes precedence. If present at all
 it must be a string containing at least eight characters.
 
 The optional keyword `strict` is used to define the `$strictType` parameter to
 the constructor. If defined both here *and* in your call to the class
-constructor, the call to the constructor takes precendence. If present at all
-it must be a boolean, which in JSON is *always* lower case `true` or lower case
+constructor, the call to the constructor takes precedence. If present at all
+it must be a Boolean, which in JSON is *always* lower case `true` or lower case
 `false`.
 
 
@@ -155,7 +155,7 @@ an argument to the script and `DEFAULT.json` if you did not.
 
 The output of the command will be in the same directory you called the command
 from. If a file already exists with the needed file name, it will use the
-current unix timestamp to back up the existing file, e.g. `DEFAULT.json` would
+current UNIX timestamp to back up the existing file, e.g. `DEFAULT.json` would
 be renamed to something like `DEFAULT-1520150241.json` and then `DEFAULT.json`
 will be recreated.
 
@@ -271,10 +271,10 @@ I do not *believe* PHP caches the contents of files read with
 in a configuration file is safer.
 
 The class reads the file into a JSON string and then converts it an object.
-The JSON string is then zerod out using `sodium_memzero()` function.
+The JSON string is then zeroed out using `sodium_memzero()` function.
 
 Once they key has been verified as an actual working key, the key is set as a
-class property and the copy of the key in the object is zerod out.
+class property and the copy of the key in the object is zeros out.
 
 A copy of the key however continues to live as a property of the object.
 

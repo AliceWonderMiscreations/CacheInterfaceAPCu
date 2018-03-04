@@ -37,20 +37,23 @@ namespace AWonderPHP\SimpleCacheAPCu;
  */
 class SimpleCacheAPCuSodium extends SimpleCacheAPCu
 {
-    /** The secret key to use
-     * @var string
+    /**
+     * The secret key to use
      *
-     * @psalm-suppress PropertyNotSetInConstructor
+     * @var string
      */
-    protected $cryptokey;
+    protected $cryptokey = '';
 
-    /** constructor sets to true if CPU supports it
+    /**
+     * Constructor sets to true if CPU supports it
+     *
      * @var bool
      */
     protected $aesgcm = false;
 
     /**
      * ALWAYS gets increments before encryption
+     *
      * @var null|string
      */
     protected $nonce = null;

@@ -22,15 +22,22 @@ Manual Installation
 -------------------
 
 For manual installation, there are three class libraries you need to have where
-your autoloader can find them:
+your auto-loader can find them:
 
 1. `SimpleCacheAPCu.php` -- This is the class library.
-2. `InvalidArgumentException.php` -- This is a catchable exception library,
+2. `InvalidArgumentException.php` -- This is a catch-able exception library,
 needed when things go wrong and part of the PSR-16 compliance.
-3. `StrictTypeException.php` -- This is a catchable expection library, needed
+3. `StrictTypeException.php` -- This is a catch-able exception library, needed
 when things go wrong and part of the PSR-16 compliance.
 
-They will need to be put where your autoloader can find them. All three classes
+If you want the encrypted cache feature, you will also need these two files:
+
+1. `SimpleCacheAPCuSodium.php` -- Extended class that uses the PHP wrapper to the
+libsodium cryptography library.
+2. `InvalidSetupException.php` -- This is a catch-able exception library, needed
+when your setup is not suitable for encryption to work.
+
+They will need to be put where your auto-loader can find them. All three classes
 use the namespace `AWonderPHP\SimpleCacheAPCu`.
 
 Additionally you will need the three interface libraries from the PHP-FIG (or
@@ -47,7 +54,7 @@ Those three files are available at the PHP-FIG github:
 [https://github.com/php-fig/simple-cache/tree/master/src](https://github.com/php-fig/simple-cache/tree/master/src)
 
 All three classes use the namespace `\Psr\SimpleCache`. Put them where your
-autoloader can find them.
+auto-loader can find them.
 
 
 RPM Installation
@@ -62,4 +69,4 @@ will likely be awhile.
 Class Usage
 -----------
 
-Please see the file `USAGE.md` for class usage.
+Please see the file [`USAGE.md`](USAGE.md) for class usage.

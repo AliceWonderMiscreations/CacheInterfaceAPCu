@@ -33,15 +33,40 @@ namespace AWonderPHP\SimpleCacheAPCu;
  */
 class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
 {
-    /** @var bool */
+    /** 
+     * When false, the class does not attempt to write/read from cache
+     *
+     * @var bool
+     */
     protected $enabled = false;
-    /** @var bool */
+
+    /**
+     * When false, the class is somewhat tolerant of incorrect parameter type
+     * and will recast if safe to do so.
+     *
+     * @var bool
+     */
     protected $strictType = false;
-    /** @var string */
+
+    /**
+     * The salt to use when generating internal key used with APCu
+     *
+     * @var string
+     */
     protected $salt = '6Dxypt3ePw2SM2zYzEVAFkDBQpxbk16z1';
-    /** @var string */
+
+    /**
+     * The prefix to use with the internal key used with APCu
+     *
+     * @var string
+     */
     protected $webappPrefix = 'DEFAULT_';
-    /** @var int */
+
+    /**
+     * The default TTL in seconds. 0 means as long as possible to APCu
+     *
+     * @var int
+     */
     protected $defaultSeconds = 0;
 
     /**
