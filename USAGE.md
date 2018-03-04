@@ -8,7 +8,7 @@ This documentation has the following sections:
 3. [PSR-16 Parameters](#psr-16-parameters)
 4. [PSR-16 Methods](#psr-16-methods)
 5. [SimpleCacheAPCu Specific Methods](#simplecacheapcu-specific-methods)
-6. [Exceptions](exceptions)
+6. [Exceptions](#exceptions)
 
 Please note the PSR-16 related notes here are only partial. To read the full
 interface specification, please see the PHP-FIG website:
@@ -419,9 +419,11 @@ interfaces for exceptions before the more generic Exception classes.
 APPENDIX
 ========
 
+* [Extending This Class](#extending-this-class)
+* [Unit Testing](#unit-testing)
 
 Extending This Class
-====================
+--------------------
 
 It is my *opinion* that when a web application implements a third party library
 such as this one that is an implementation of a standardized interface such as
@@ -452,7 +454,7 @@ your extended class and continues to work.
 In your web application code where you need an instance of a PSR-16 compliant
 cache handler:
 
-    use \YourCompany/YourProducted/ThirdPartyExtended\CustomCacheWrapper as SimpleCache;
+    use \YourCompany\YourProducted\ThirdPartyExtended\CustomCacheWrapper as SimpleCache;
     
     $CacheObj = new SimpleCache;
 
@@ -465,7 +467,7 @@ You can also of course add custom methods of your own.
 
 
 UNIT TESTING
-============
+------------
 
 Unit Tests are __NOT__ being done with [PHPUnit](https://phpunit.de/) because
 APCu stores its cache in the server daemon memory and PHPUnit uses the php-cli

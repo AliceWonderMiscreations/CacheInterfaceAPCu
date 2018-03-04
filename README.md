@@ -7,13 +7,15 @@ the APCu caching engine.
 Two different classes are provided, a standard class and an extension of that
 class that allows for AEAD encryption of the cached data.
 
-Please refer to the files `INSTALL.md`, `USAGE.md`, and `SURVIVAL.md` for more
-information specific to SimpleCacheAPCu.
+Please refer to the files [`INSTALL.md`](INSTALL.md), [`USAGE.md`](USAGE.md),
+and [`SURVIVAL.md`](SURVIVAL.md) for more information specific to
+SimpleCacheAPCu.
 
-For instructions specific to the encryption option. see the file `SODIUM.md`.
+For instructions specific to the encryption option. see the file
+[`SODIUM.md`](SODIUM.md).
 
-Please refer to the file `LICENSE.md` for the terms of the MIT License this
-software is released under.
+Please refer to the file [`LICENSE.md`](LICENSE.md) for the terms of the MIT
+License this software is released under.
 
 
 About APCu Caching
