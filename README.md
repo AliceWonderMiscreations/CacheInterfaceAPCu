@@ -20,8 +20,8 @@ License this software is released under.
 * [About APCu Caching](#about-apcu-caching)
 * [About PHP-FIG and PSR-16](#about-php-fig-and-psr-16)
 * [Coding Standard](#coding-standard)
-* [Vimeo/Psalm](#vimeo/psalm)
-* [About Alice Wonder Miscreations and GNU/Linux](#about-alice-wonder-miscreations-and-gnu/linux)
+* [Vimeo/Psalm](#vimeo-psalm)
+* [About Alice Wonder Miscreations and GNU/Linux](#about-alice-wonder-miscreations-and-gnu-linux)
 
 About APCu Caching
 ------------------
