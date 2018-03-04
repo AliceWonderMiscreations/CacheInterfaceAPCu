@@ -33,7 +33,7 @@ namespace AWonderPHP\SimpleCacheAPCu;
  */
 class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
 {
-    /** 
+    /**
      * When false, the class does not attempt to write/read from cache
      *
      * @var bool

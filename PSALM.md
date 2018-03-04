@@ -1,6 +1,9 @@
 Vimeo/Psalm Notes
 =================
 
+In the interest of developer transparency, this file is where I will detail
+currently unfixed errors and warnings from the `psalm` utility as well as
+warnings that are intentionally suppressed, and why they are suppressed.
 
 Unfixed Errors
 --------------
