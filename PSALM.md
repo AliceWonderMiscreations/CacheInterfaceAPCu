@@ -69,6 +69,14 @@ itself handle it.
 It is right for `psalm` to point it out, but it is a meaningless warning for
 me, the violation is intentional.
 
+### `RedundantCondition`
+
+Similar to the above, this is suppressed because the dock block specifies the
+`\DateInterval` type and the function itself where the suppression is used
+verifies the parameter is an instance of `\DateInterval`. The `psalm` utility
+sees that as redundant but it is necessary since I do not type hint to have
+PHP take care of it for me.
+
 ### `lib/Tests/`
 
 Lots of psalm suppressions there, because of intentional violations in the
