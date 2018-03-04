@@ -238,6 +238,8 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
+     * @psalm-suppress RedundantCondition
+     *
      * @return int
      */
     protected function ttlToSeconds($ttl): int
@@ -340,6 +342,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
      *
      * @psalm-suppress RedundantConditionGivenDocblockType
+     * @psalm-suppress RedundantCondition
      *
      * @return void
      */
@@ -400,8 +403,6 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * @param mixed                         $value The value of the item to store, must be
      *                                             serializable.
      * @param null|int|string|\DateInterval $ttl   (optional) The TTL value of this item.
-     *
-     * @psalm-suppress RedundantConditionGivenDocblockType
      *
      * @return bool True on success and false on failure.
      */
@@ -521,8 +522,6 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
-     *
-     * @psalm-suppress RedundantConditionGivenDocblockType
      *
      * @return bool True on success and false on failure.
      */
