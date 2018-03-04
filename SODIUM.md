@@ -20,8 +20,8 @@ to obtain the encryption key in order to create fraudulent values they use to
 poison your cache, or the decryption would not validate on fetch and the web
 cache class would treat it like a cache miss.
 
-The problem is not completely resolved, please see the Security section of this
-document.
+The problem is not completely resolved, please see the [Security](#security-appendix) section
+of this document.
 
 
 Basic Requirements
@@ -29,9 +29,8 @@ Basic Requirements
 
 If you are running PHP 7.1 you will need to install the
 [PECL libsodium](https://pecl.php.net/package/libsodium) extension. If you are
-running PHP 7.2, the libsodium functions are now a standard part of PHP
-starting with 7.2, you do not need to do anything. Theoretically, I am still
-running 7.1.
+running PHP 7.2, the libsodium functions are now a standard part of PHP.
+Starting with 7.2, you should not need to do anything.
 
 
 The Constructor
@@ -46,25 +45,32 @@ The SimpleCacheAPCu constructor takes three optional arguements:
 * `@param string $salt`
 * `@param bool   $strictType`
 
-For an explanation of those paramaters, see the `USAGE.md` documentation.
+For an explanation of those paramaters, see the [`USAGE.md`](USAGE.md)
+documentation.
 
-SimpleCacheAPCuSodium adds a fourth at the beginning, and it is requires:
+SimpleCacheAPCuSodium adds a fourth at the beginning, and it is required:
 
 * `@param string $cryptokey`
 * `@param string $webappPrefix`
 * `@param string $salt`
 * `@param bool   $strictType`
 
-The `$cryptokey` parameter can be one of three things:
+The required `$cryptokey` parameter can be one of three things:
 
 1. Binary string representation of a 32 byte integer (not screen printable)
-2. Hex string representation of a 32 byte integer (64 characters [0-9][a-f])
+2. Hex string representation of a 32 byte integer (64 characters `[0-9][a-f]`)
 3. Full path on the filesystem to a JSON encoded configuration file that
-contains a Hex string representing a 32 byte integer.
+contains a hex string representing the 32 byte integer.
 
-This is the encryption key, so it needs to be properly generated:
+The 32 byte integer is the encryption key, so it needs to be properly
+generated:
 
     $secret = random_bytes(32);
+
+The `random_bytes()` function is available in PHP 7 and newer, and uses a
+cryptographically secure randon generator. See
+[random_bytes](https://php.net/manual/en/function.random-bytes.php) for
+more information on the security of that function.
 
 That will generate a binary representation of the 32 byte integer.
 
@@ -108,11 +114,11 @@ it must be a string containing at least eight characters.
 The optional keyword `strict` is used to define the `$strictType` parameter to
 the constructor. If defined both here *and* in your call to the class
 constructor, the call to the constructor takes precendence. If present at all
-it must be a boolean, which is JSON is *always* lower case `true` or lower case
+it must be a boolean, which in JSON is *always* lower case `true` or lower case
 `false`.
 
 
-### `makeAPCuSodiumConfig` utility
+### `makeAPCuSodiumConfig` Utility
 
 A PHP shell script is provided that will create the configuration file for you.
 This is the `makeAPCuSodiumConfig` utility. It does use some functions that
@@ -121,7 +127,7 @@ require PHP 7 (e.g. `random_int`) so if the first `php` executable in your
 
     #!/usr/bin/env php
 
-to the full path to your PHP 7 install. For most people, it should just work.
+to the full path of your PHP 7 install. For most people, it should just work.
 For people using enterprise server distributions who have PHP 7 installed in a
 custom location and/or have an older PHP install earlier in the path, the above
 shebang may not find the right PHP version.
@@ -134,10 +140,10 @@ The script takes two optional arguments:
 It uses defaults if not supplied (`DEFAULT` for `$argv[1]` and `false` for
 `$argv[2]`)
 
-The utility will generate the secret key and the salt itself.
+The utility script will generate the secret key and the salt itself.
 
 The output of the command will be named `${webappPrefix}.json` if you supplied
-one and `DEFAULT.json` if you did not.
+an argument to the script and `DEFAULT.json` if you did not.
 
 The output of the command will be in the same directory you called the command
 from. If a file already exists with the needed file name, it will use the
@@ -145,14 +151,20 @@ current unix timestamp to back up the existing file, e.g. `DEFAULT.json` would
 be renamed to something like `DEFAULT-1520150241.json` and then `DEFAULT.json`
 will be recreated.
 
-You can edit the file to change what the values in it or name the file whatever
-you want. Just makes sure it *always* has a `hexkey` entry that contains 64
-hex characters (`[0-9][a-f]`) from a random generated source.
+You can edit the resulting configuration file to change what the values in it
+or name the file whatever you want. Just makes sure it *always* has a `hexkey`
+entry that contains 64 hex characters (`[0-9][a-f]`) from a cryptographically
+secure pseudo-random number generator.
+
+You can then call the constructor in your web application like this:
+
+    use \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium as SimpleCache;
+    $CacheObj = new SimpleCache('/path/to/WEBMAIL.json');
 
 The file needs to be readable by the web server but should not be readable by
 other users on the system. On CentOS/RHEL systems which Apache:
 
-    chown apache:apache DEFAULT.json && chmod 0400 DEFAULT.json
+    chown apache:apache WEBMAIL.json && chmod 0400 WEBMAIL.json
 
 should accomplish that task.
 
@@ -168,8 +180,8 @@ the old secret, requests for them will result in a cache miss.
 
 The best time to change the Secret is thus when you are doing maintenance that
 requires restarting the web server daemon anyway as restarting the web server
-daemon clears the cache anyway and is usually done several times a year to
-apply patches and update software.
+daemon will clears the cache and is usually done several times a year to apply
+patches and update software.
 
 
 Encryption Dirty Work
@@ -222,10 +234,14 @@ without encrypting the data first. How much slower, I do not know, but most
 servers run on modern Intel Xeon processors with the AES-NI instruction set
 that give hardware acceleration to the AES-256-GCM cipher.
 
+I do *not* believe the encryption and decryption of cached data will be the
+performance bottleneck in your web application, not on relatively modern
+hardware anyway.
+
+
 
 Security Appendix
 =================
-
 
 Secret Key Security
 -------------------
