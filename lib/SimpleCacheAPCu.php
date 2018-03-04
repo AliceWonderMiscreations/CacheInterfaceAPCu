@@ -245,16 +245,16 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
         if (is_null($ttl)) {
             return $this->defaultSeconds;
         }
-        if(is_object($ttl)) {
-          if($ttl instanceof DateInterval) {
-            $seconds = $this->dateIntervalToSeconds($ttl);
-            if ($seconds < 0) {
-                throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::dateIntervalInPast();
+        if (is_object($ttl)) {
+            if ($ttl instanceof DateInterval) {
+                $seconds = $this->dateIntervalToSeconds($ttl);
+                if ($seconds < 0) {
+                    throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::dateIntervalInPast();
+                }
+                return $seconds;
+            } else {
+                throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::ttlTypeError($ttl);
             }
-            return $seconds;
-          } else {
-            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::ttlTypeError($ttl);
-          }
         }
         if (! $this->strictType) {
             if (is_numeric($ttl)) {
@@ -345,12 +345,12 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      */
     public function setDefaultSeconds($ttl): void
     {
-        if(is_object($ttl)) {
-          if($ttl instanceof DateInterval) {
-            $seconds = $this->dateIntervalToSeconds($ttl);
-          } else {
-            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::defaultTTL($ttl);
-          }
+        if (is_object($ttl)) {
+            if ($ttl instanceof DateInterval) {
+                $seconds = $this->dateIntervalToSeconds($ttl);
+            } else {
+                throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::defaultTTL($ttl);
+            }
         } elseif (! $this->strictType) {
             if (is_numeric($ttl)) {
                 $seconds = intval($ttl);
