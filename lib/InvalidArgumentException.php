@@ -106,6 +106,16 @@ class InvalidArgumentException extends \InvalidArgumentException implements \Psr
     {
         return new self(sprintf('The cache expiration can not be in the past. You supplied %s.', $str));
     }
+    
+    /**
+     * Exception message when a \DateInterval is in the past
+     *
+     * @return \InvalidArgumentException
+     */
+    public static function dateIntervalInPast()
+    {
+        return new self(sprintf('The cache expiration can not be in the past.'));
+    }
 
     /**
      * Exception message when a date string can not be evaluated.

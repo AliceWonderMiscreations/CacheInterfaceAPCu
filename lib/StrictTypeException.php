@@ -61,7 +61,7 @@ class StrictTypeException extends \TypeError implements \Psr\SimpleCache\Invalid
     public static function defaultTTL($var)
     {
         $type = gettype($var);
-        return new self(sprintf('The default cache TTL must be an integer. You supplied type %s.', $type));
+        return new self(sprintf('The default cache TTL must be a \DateInterval or integer. You supplied type %s.', $type));
     }
 
     /**
@@ -88,7 +88,7 @@ class StrictTypeException extends \TypeError implements \Psr\SimpleCache\Invalid
     public static function ttlTypeError($var)
     {
         $type = gettype($var);
-        return new self(sprintf('The cache TTL argument must be an integer or a string. You supplied type %s.', $type));
+        return new self(sprintf('The cache TTL argument must be a \DateInterval, integer, or a string. You supplied type %s.', $type));
     }
 
     /**

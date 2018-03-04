@@ -206,6 +206,23 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     }
 
     /**
+     * Converts a \DateInterval object to seconds
+     *
+     * @param \DateInterval $interval The date interval to be converted into seconds
+     *
+     * @return int The number of seconds corresponding to the DateInterval
+     */
+    protected function dateIntervalToSeconds($interval): int
+    {
+        $now = time();
+        $dt = new \DateTime();
+        $dt->add($interval);
+        $ts = $dt->getTimestamp();
+        $diff = $ts - $now;
+        return $diff;
+    }
+
+    /**
      * Generates Time To Live parameter to use with APCu.
      *
      * This function takes either NULL, an integer or a string. When supplied
@@ -216,7 +233,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      * string into a UNIX seconds from Epoch expiration, and it then calculates
      * the corresponding TTL. When fed NULL, it uses the class default TTL.
      *
-     * @param null|int|string $ttl The length to cache or the expected expiration.
+     * @param null|int|string|\DateInterval $ttl The length to cache or the expected expiration.
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
@@ -227,6 +244,17 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     {
         if (is_null($ttl)) {
             return $this->defaultSeconds;
+        }
+        if(is_object($ttl)) {
+          if($ttl instanceof DateInterval) {
+            $seconds = $this->dateIntervalToSeconds($ttl);
+            if ($seconds < 0) {
+                throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::dateIntervalInPast();
+            }
+            return $seconds;
+          } else {
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::ttlTypeError($ttl);
+          }
         }
         if (! $this->strictType) {
             if (is_numeric($ttl)) {
@@ -279,12 +307,9 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     /**
      * A wrapper for the actual store of key => value pair in the cache
      *
-     * @param string          $realKey The internal key used with APCu
-     * @param mixed           $value   The value to be stored
-     * @param null|int|string $ttl     The TTL value of this item. If no value is sent
-     *                                 and the driver supports TTL then the library may
-     *                                 set a default value for it or let the driver
-     *                                 take care of that.
+     * @param string                        $realKey The internal key used with APCu
+     * @param mixed                         $value   The value to be stored
+     * @param null|int|string|\DateInterval $ttl     The TTL value of this item.
      *
      * @return bool Returns True on success, False on failure
      */
@@ -309,7 +334,7 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
     /**
      * Sets the default cache TTL in seconds.
      *
-     * @param int $seconds The default seconds to cache entries
+     * @param int|\DateInterval $ttl The default TTL to cache entries
      *
      * @throws \AWonderPHP\SimpleCacheAPCu\StrictTypeException
      * @throws \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
@@ -318,15 +343,21 @@ class SimpleCacheAPCu implements \Psr\SimpleCache\CacheInterface
      *
      * @return void
      */
-    public function setDefaultSeconds($seconds): void
+    public function setDefaultSeconds($ttl): void
     {
-        if (! $this->strictType) {
-            if (is_numeric($seconds)) {
-                $seconds = intval($seconds);
+        if(is_object($ttl)) {
+          if($ttl instanceof DateInterval) {
+            $seconds = $this->dateIntervalToSeconds($ttl);
+          } else {
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::defaultTTL($ttl);
+          }
+        } elseif (! $this->strictType) {
+            if (is_numeric($ttl)) {
+                $seconds = intval($ttl);
             }
         }
-        if (! is_int($seconds)) {
-            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::defaultTTL($seconds);
+        if (! isset($seconds)) {
+            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::defaultTTL($ttl);
         }
         if ($seconds < 0) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::negativeDefaultTTL($seconds);
