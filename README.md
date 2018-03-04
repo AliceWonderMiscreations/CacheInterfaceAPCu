@@ -120,7 +120,7 @@ not a stuck up prick and I can run the `phpcs` and `phpcbf` utilities myself,
 which I already do anyway because PSR-2 is not what I do in my text editors
 (vim mostly and sometimes [bluefish](http://bluefish.openoffice.nl/))
 
-### Vimeo/Psalm
+### Vimeo Psalm
 
 I recently discovered [Vimeo/Psalm](https://github.com/vimeo/psalm) and I must
 say it is a __FANTASTIC TOOL__. Notes related to both unfixed errors from
@@ -130,7 +130,7 @@ say it is a __FANTASTIC TOOL__. Notes related to both unfixed errors from
 I *highly* recommend you use that tool in your own code.
 
 
-About Alice Wonder Miscreations and GNU/Linux
+About Alice Wonder Miscreations and GNU Linux
 ---------------------------------------------
 
 I have been using using Linux since [MKLinux DR3](http://mklinux.org/) in 1998.
