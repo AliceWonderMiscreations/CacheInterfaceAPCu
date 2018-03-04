@@ -3,19 +3,19 @@ SimpleCacheAPCu Usage
 
 This documentation has the following sections:
 
-1. Calling the Class
-2. The Class Constructor
-3. PSR-16 Parameters
-4. PSR-16 Methods
-5. SimpleCacheAPCu Specific Methods
-6. Exceptions
+1. [Calling the Class](#calling-the-class)
+2. [The Class Constructor](#the-class-constructor)
+3. [PSR-16 Parameters](#psr-16-parameters)
+4. [PSR-16 Methods](#psr-16-methods)
+5. [SimpleCacheAPCu Specific Methods](#simplecacheapcu-specific-methods)
+6. [Exceptions](exceptions)
 
 Please note the PSR-16 related notes here are only partial. To read the full
 interface specification, please see the PHP-FIG website:
 
 [https://www.php-fig.org/psr/psr-16/](https://www.php-fig.org/psr/psr-16/)
 
-An Appendix follows the section on Exceptions.
+An [Appendix](#appendix) follows the section on Exceptions.
 
 __NOTE:__ I am sometimes accused of being too verbose when I write
 documentation. For less verbose documentation, you can read the code itself.
