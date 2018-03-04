@@ -23,6 +23,14 @@ cache class would treat it like a cache miss.
 The problem is not completely resolved, please see the [Security](#security-appendix) section
 of this document.
 
+* [Basic Requirements](#basic-requirements)
+* [The Constructor](#the-constructor)
+* [JSON Encoded Configuration File](#json-encoded-configuration-file)
+* [`makeAPCuSodiumConfig Utility](#makeapcusodiumconfig-utility)
+* [Encryption Dirty Work](#encryption-dirty-work)
+* [Performance](#performance)
+* [Security Appendix](#security-appendix)
+
 
 Basic Requirements
 ------------------
