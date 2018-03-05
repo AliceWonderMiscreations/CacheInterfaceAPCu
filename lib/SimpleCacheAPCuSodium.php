@@ -305,11 +305,9 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
     /**
      * A wrapper for the actual store of key => value pair in the cache
      *
-     * @param string          $realKey The internal key used with APCu
-     * @param mixed           $value   The value to be stored
-     * @param null|int|string $ttl     The TTL value of this item. If no value is sent and the
-     *                                 driver supports TTL then the library may set a default
-     *                                 value for it or let the driver take care of that.
+     * @param string                        $realKey The internal key used with APCu
+     * @param mixed                         $value   The value to be stored
+     * @param null|int|string|\DateInterval $ttl     The TTL value of this item.
      *
      * @return bool Returns True on success, False on failure
      */

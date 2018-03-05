@@ -1,7 +1,7 @@
 SimpleCacheAPCuUnitTest Unit Test Results
 =========================================
 
-__Test Date__           : 2018 March 4 at 08:00:10 AM UTC  
+__Test Date__           : 2018 March 5 at 03:55:48 AM UTC  
 __Test PHP Version__    : 7.1.14  
 __Test APCu Version__   : 5.1.9  
 __Test Sodium Version__ : 2.0.10  
@@ -45,9 +45,11 @@ Testing Cache TTL Features
 * Test Set Date Range from Now              : *PASSED*
 * Test Set Expiration Date as String        : *PASSED*
 * Test Set Very Very Large TTL              : *PASSED*
+* Test Set TTL as \DateInterval             : *PASSED*
 * Test Set Default TTL                      : *PASSED*
+* Test Set Default TTL with \DateInterval   : *PASSED*
 
-6 of 6 Unit Tests Passed.
+8 of 8 Unit Tests Passed.
 
 
 Testing Webapp Prefix and Salt Features
@@ -103,6 +105,7 @@ exceptions are thrown:
 * Test Empty Salt Exception                            : *PASSED*
 * Test Salt Barely Too Short Exception                 : *PASSED*
 * Test Negative Default TTL Exception                  : *PASSED*
+* Test Negative \DateInterval TTL Exception            : *PASSED*
 * Test Empty Key Exception                             : *PASSED*
 * Test Barely Too Long Key Exception                   : *PASSED*
 * Test PSR-16 Reserved Character In Key Exception      : *PASSED*
@@ -110,12 +113,13 @@ exceptions are thrown:
 * Test Cache Exp. String in Past `set()` Exception     : *PASSED*
 * Test Cache Date Range in Past `set()` Exception      : *PASSED*
 * Test Bogus TTL String in `set()` Exception           : *PASSED*
+* Test Cache \DateInterval in Past `set()` Exception   : *PASSED*
 * Test Illegal Key in Iterable Set                     : *PASSED*
 
-14 of 14 Unit Tests Passed.
+16 of 16 Unit Tests Passed.
 
 
 __END OF CURRENT TESTS__
 ========================
 
-55 of 55 Total Unit Tests Passed.
+59 of 59 Total Unit Tests Passed.

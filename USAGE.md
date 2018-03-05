@@ -172,8 +172,9 @@ the context of a method or function elsewhere in this documentation.
 ### Time To Live
 
 This parameter is either an integer specifying the number of seconds for which
-the cached value is to be considered valid *or* a string containing a valid
-[DateInterval](http://php.net/manual/en/class.dateinterval.php) string.
+the cached value is to be considered valid *or* a valid
+[DateInterval](http://php.net/manual/en/class.dateinterval.php) object that
+specifies how long the cached value is to ve considered valid
 
 This parameter is referred to as the `$ttl` when used in the context of a
 method or function elsewhere in this documentation.
@@ -189,6 +190,10 @@ hardware your server is running on will live.
 If the TTL evaluates to a time in the past, this class will throw an exception
 as that certainly is not what you intend and indicates a bug in your code that
 you need to know about.
+
+For the `set` and `setMultiple` methods, the implementation here also accepts
+a type `string` if the string can be interpreted by the core PHP `strtotime()`
+function.
 
 
 PSR-16 Methods

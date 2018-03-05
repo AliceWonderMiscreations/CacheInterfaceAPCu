@@ -219,8 +219,18 @@ $a = CacheUnitTest::testVeryVeryLargeTTL($key);
 showTestResults($name, $a);
 
 $a = false;
+$name = "Set TTL as \DateInterval             ";
+$a = CacheUnitTest::testDateIntervalTTL($key);
+showTestResults($name, $a);
+
+$a = false;
 $name = "Set Default TTL                      ";
 $a = CacheUnitTest::testSettingDefaultTTL($key);
+showTestResults($name, $a);
+
+$a = false;
+$name = "Set Default TTL with \DateInterval   ";
+$a = CacheUnitTest::testDateIntervalDefaultTTL($key);
 showTestResults($name, $a);
 
 echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
@@ -402,6 +412,11 @@ $a = ArgTests::testExceptionNegativeDefaultTTL($key);
 showTestResults($name, $a);
 
 $a = false;
+$name = "Negative \DateInterval TTL Exception            ";
+$a = ArgTests::testExceptionNegativeDateIntervalDefaultTTL($key);
+showTestResults($name, $a);
+
+$a = false;
 $name = "Empty Key Exception                             ";
 $a = ArgTests::testEmptyKey($key);
 showTestResults($name, $a);
@@ -434,6 +449,11 @@ showTestResults($name, $a);
 $a = false;
 $name = "Bogus TTL String in `set()` Exception           ";
 $a = ArgTests::testBogusStringinTTL($key);
+showTestResults($name, $a);
+
+$a = false;
+$name = "Cache \DateInterval in Past `set()` Exception   ";
+$a = ArgTests::testExceptionNegativeDateIntervalTTL($key);
 showTestResults($name, $a);
 
 $a = false;

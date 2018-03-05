@@ -702,7 +702,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->setDefaultSeconds($ttl);
         } catch (\TypeError $e) {
-            $reference = "The default cache TTL must be an integer. You supplied type NULL.";
+            $reference = "The default cache TTL must be a \DateInterval or integer. You supplied type NULL.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -719,7 +719,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->setDefaultSeconds($ttl);
         } catch (\TypeError $e) {
-            $reference = "The default cache TTL must be an integer. You supplied type double.";
+            $reference = "The default cache TTL must be a \DateInterval or integer. You supplied type double.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -736,7 +736,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->setDefaultSeconds($ttl);
         } catch (\TypeError $e) {
-            $reference = "The default cache TTL must be an integer. You supplied type boolean.";
+            $reference = "The default cache TTL must be a \DateInterval or integer. You supplied type boolean.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -753,7 +753,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->setDefaultSeconds($ttl);
         } catch (\TypeError $e) {
-            $reference = "The default cache TTL must be an integer. You supplied type array.";
+            $reference = "The default cache TTL must be a \DateInterval or integer. You supplied type array.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -771,7 +771,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->setDefaultSeconds($ttl);
         } catch (\TypeError $e) {
-            $reference = "The default cache TTL must be an integer. You supplied type object.";
+            $reference = "The default cache TTL must be a \DateInterval or integer. You supplied type object.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -829,7 +829,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->setDefaultSeconds($ttl);
         } catch (\TypeError $e) {
-            $reference = "The default cache TTL must be an integer. You supplied type NULL.";
+            $reference = "The default cache TTL must be a \DateInterval or integer. You supplied type NULL.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -857,7 +857,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->setDefaultSeconds($ttl);
         } catch (\TypeError $e) {
-            $reference = "The default cache TTL must be an integer. You supplied type boolean.";
+            $reference = "The default cache TTL must be a \DateInterval or integer. You supplied type boolean.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -874,7 +874,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->setDefaultSeconds($ttl);
         } catch (\TypeError $e) {
-            $reference = "The default cache TTL must be an integer. You supplied type array.";
+            $reference = "The default cache TTL must be a \DateInterval or integer. You supplied type array.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -892,7 +892,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->setDefaultSeconds($ttl);
         } catch (\TypeError $e) {
-            $reference = "The default cache TTL must be an integer. You supplied type object.";
+            $reference = "The default cache TTL must be a \DateInterval or integer. You supplied type object.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -1193,7 +1193,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->set($key, $value, $ttl);
         } catch (\TypeError $e) {
-            $reference = "The cache TTL argument must be an integer or a string. You supplied type double.";
+            $reference = "The cache TTL argument must be a \DateInterval, integer, or a string. You supplied type double.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -1210,7 +1210,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->set($key, $value, $ttl);
         } catch (\TypeError $e) {
-            $reference = "The cache TTL argument must be an integer or a string. You supplied type boolean.";
+            $reference = "The cache TTL argument must be a \DateInterval, integer, or a string. You supplied type boolean.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -1227,7 +1227,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->set($key, $value, $ttl);
         } catch (\TypeError $e) {
-            $reference = "The cache TTL argument must be an integer or a string. You supplied type array.";
+            $reference = "The cache TTL argument must be a \DateInterval, integer, or a string. You supplied type array.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -1245,7 +1245,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->set($key, $value, $ttl);
         } catch (\TypeError $e) {
-            $reference = "The cache TTL argument must be an integer or a string. You supplied type object.";
+            $reference = "The cache TTL argument must be a \DateInterval, integer, or a string. You supplied type object.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -1298,7 +1298,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->set($key, $value, $ttl);
         } catch (\TypeError $e) {
-            $reference = "The cache TTL argument must be an integer or a string. You supplied type boolean.";
+            $reference = "The cache TTL argument must be a \DateInterval, integer, or a string. You supplied type boolean.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -1315,7 +1315,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->set($key, $value, $ttl);
         } catch (\TypeError $e) {
-            $reference = "The cache TTL argument must be an integer or a string. You supplied type array.";
+            $reference = "The cache TTL argument must be a \DateInterval, integer, or a string. You supplied type array.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
@@ -1333,7 +1333,7 @@ class SimpleCacheAPCuTypeErrorTest
         try {
             $simpleCache->set($key, $value, $ttl);
         } catch (\TypeError $e) {
-            $reference = "The cache TTL argument must be an integer or a string. You supplied type object.";
+            $reference = "The cache TTL argument must be a \DateInterval, integer, or a string. You supplied type object.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 $caught = true;
