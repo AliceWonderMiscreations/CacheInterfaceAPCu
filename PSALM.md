@@ -8,43 +8,19 @@ warnings that are intentionally suppressed, and why they are suppressed.
 Unfixed Errors
 --------------
 
-There are two currently unfixed errors.
-
-Assigned as [Issue 1](https://github.com/AliceWonderMiscreations/SimpleCacheAPCu/issues/1)
-
-    ERROR: MoreSpecificImplementedParamType - lib/SimpleCacheAPCu.php:343:39 -
-    Argument 3 of AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu::set has wrong
-    type 'null|int|string', expecting 'null|int|Psr\SimpleCache\DateInterval'
-    as defined by Psr\SimpleCache\CacheInterface::set
-        public function set($key, $value, $ttl = null): bool
-        
-    ERROR: MoreSpecificImplementedParamType - lib/SimpleCacheAPCu.php:462:41 -
-    Argument 2 of AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu::setMultiple has
-    wrong type 'null|int|string', expecting 'null|int|Psr\SimpleCache\DateInterval'
-    as defined by Psr\SimpleCache\CacheInterface::setMultiple
-        public function setMultiple($pairs, $ttl = null): bool
-        
-First of all, I think there is a bug. The PSR-16 interface specification
-actually specified `\DateInterval` and not `Psr\SimpleCache\DateInterval` which
-is not defined. The `psalm` utility is confusing the namespace path.
-
-However even if that bug did not exist, it still would be a valid complaint. I
-specify `string` where the PSR-16 interface specification specifies
-`\DateInterval`
-
-This is caused by a confusion on my part. I thought the specification meant a
-date string that could be parsed with `strtotime` but that is not what the spec
-actually intended.
-
-Personally I do not the concept of accepting a `\DateInterval` object as a TTL
-parameter, but this is a bug I will fix, probably by adding a private function
-that simply converts it to a UNIX time stamp.
-
-This will be fixed before 1.1.0 release.
+There are no unfixed errors at this time.
 
 
 Suppressions
 ------------
+
+### MoreSpecificImplementedParamType
+
+This error is caused by a bug in the \Psr\SimpleCache\CacheInterface interface.
+The bug is fixed in the master branch of psr/simplecache and does not impact
+code operation.
+
+This is only suppressed in SimpleCacheAPCu `set()` and `setMultiple()`.
 
 ### RedundantConditionGivenDocblockType
 
