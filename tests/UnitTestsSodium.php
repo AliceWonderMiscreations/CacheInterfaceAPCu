@@ -31,41 +31,44 @@ if (! $continue) {
     die("I must have APCu loaded and enabled.");
 }
 
-if (file_exists('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.php')) {
-    require('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.php');
-    require('/usr/share/ccm/stable/libraries/psr/simplecache/InvalidArgumentException.php');
-    require('/usr/share/ccm/stable/libraries/psr/simplecache/CacheInterface.php');
-} else {
-    require('../vendor/psr/simple-cache/src/CacheException.php');
-    require('../vendor/psr/simple-cache/src/InvalidArgumentException.php');
-    require('../vendor/psr/simple-cache/src/CacheInterface.php');
+$sodiumtest = false;
+$sodiumcapable = false;
+
+if(function_exists('sodium_bin2hex')) {
+  $sodiumcapable = true;
+  if(isset($_GET['sodium'])) {
+    $sodiumtest = true;
+  }
 }
 
-if (file_exists('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/InvalidArgumentException.php')) {
-    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/InvalidArgumentException.php');
-    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/StrictTypeException.php');
-    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/InvalidSetupException.php');
-    
-    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/SimpleCacheAPCu.php');
-    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/SimpleCacheAPCuSodium.php');
-    
-    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/Test/SimpleCacheAPCuUnitTest.php');
-    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/Test/SimpleCacheAPCuTypeErrorTest.php');
-    require('/usr/share/ccm/custom/libraries/awonderphp/simplecacheapcu/Test/SimpleCacheAPCuInvalidArgumentTest.php');
-} else {
-    require('../lib/InvalidArgumentException.php');
-    require('../lib/StrictTypeException.php');
-    require('../lib/InvalidSetupException.php');
-    
-    require('../lib/SimpleCacheAPCu.php');
-    require('../lib/SimpleCacheAPCuSodium.php');
-    
-    require('../lib/Test/SimpleCacheAPCuUnitTest.php');
-    require('../lib/Test/SimpleCacheAPCuTypeErrorTest.php');
-    require('../lib/Test/SimpleCacheAPCuInvalidArgumentTest.php');
-}
 
-$key = "f42f663e72f74b9e852b172df7f57ff4ab42e505167116e13dacd0d1daf00e77";
+
+$parent = dirname( dirname(__FILE__) );
+
+require($parent . '/vendor/psr/simple-cache/src/CacheException.php');
+require($parent . '/vendor/psr/simple-cache/src/InvalidArgumentException.php');
+require($parent . '/vendor/psr/simple-cache/src/CacheInterface.php');
+
+require($parent . '/lib/InvalidArgumentException.php');
+require($parent . '/lib/StrictTypeException.php');
+require($parent . '/lib/InvalidSetupException.php');
+    
+require($parent . '/lib/SimpleCacheAPCu.php');
+require($parent . '/lib/SimpleCacheAPCuSodium.php');
+    
+require($parent . '/lib/Test/SimpleCacheAPCuUnitTest.php');
+require($parent . '/lib/Test/SimpleCacheAPCuTypeErrorTest.php');
+require($parent . '/lib/Test/SimpleCacheAPCuInvalidArgumentTest.php');
+
+require($parent . '/lib/Test/SimpleCacheAPCuSodiumUnitTest.php');
+
+if($sodiumtest) {
+  $notsosecret = random_bytes(32);
+  $key = sodium_bin2hex($notsosecret);
+} else {
+  $key = null;
+}
+//$key = "f42f663e72f74b9e852b172df7f57ff4ab42e505167116e13dacd0d1daf00e77";
 
 use \AWonderPHP\SimpleCacheAPCu\Test\SimpleCacheAPCuUnitTest as CacheUnitTest;
 
@@ -85,12 +88,21 @@ function showTestResults(string $name, bool $result)
 $TOTAL_PASSED=0;
 $TOTAL_TESTS=0;
 
-echo "SimpleCacheAPCuUnitTest Unit Test Results\n=========================================\n\n";
+if($sodiumtest) {
+  echo "SimpleCacheAPCu Sodium Unit Test Results\n========================================\n\n";
+} else {
+  echo "SimpleCacheAPCu Unit Test Results\n=================================\n\n";
+  if($sodiumcapable) {
+    echo "*For the sodium variant, add the __sodium__ get variable to PHP test uri*\n\n";
+  }
+}
 
 echo "__Test Date__           : " . date("Y F j \a\\t h:i:s A e") . "  \n";
 echo "__Test PHP Version__    : " . PHP_VERSION . "  \n";
 echo "__Test APCu Version__   : " . phpversion('apcu') . "  \n";
+if($sodiumtest) {
 echo "__Test Sodium Version__ : " . phpversion('sodium') . "  \n";
+}
 echo "__Test Platform__       : " . PHP_OS . "  \n";
 
 echo "\n\nTesting Single Key Features\n---------------------------\n\n";
@@ -465,6 +477,89 @@ echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
 
 $TOTAL_PASSED = $TOTAL_PASSED + $passed;
 $TOTAL_TESTS = $TOTAL_TESTS + $counter;
+
+use \AWonderPHP\SimpleCacheAPCu\Test\SimpleCacheAPCuSodiumUnitTest as SodiumTests;
+
+if($sodiumtest) {
+
+  
+
+  echo "\n\nSodium Constructor Specific Tests\n---------------------------------\n\n";
+
+  $counter = 0;
+  $passed = 0;
+
+  $a = false;
+  $name = "Test Exception with Null Secret in Constructor         ";
+  $a = SodiumTests::testNullKey();
+  showTestResults($name, $a);
+
+  $a = false;
+  $name = "Test Exception Binary Key Too Short in Constructor     ";
+  $a = SodiumTests::testSecretTooShortBinary();
+  showTestResults($name, $a);
+
+  $a = false;
+  $name = "Test Exception Hex Key Too Short in Constructor        ";
+  $a = SodiumTests::testSecretTooShortHex();
+  showTestResults($name, $a);
+
+  $a = false;
+  $name = "Test Exception Binary Key Too Long in Constructor      ";
+  $a = SodiumTests::testSecretTooLongBinary();
+  showTestResults($name, $a);
+
+  $a = false;
+  $name = "Test Exception Hex Key Too Long in Constructor         ";
+  $a = SodiumTests::testSecretTooLongHex();
+  showTestResults($name, $a);
+  
+  $a = false;
+  $name = "Test Exception Bogus Key in Constructor                ";
+  $a = SodiumTests::testBogusKey();
+  showTestResults($name, $a);
+  
+  $json = $parent . '/tests/valid.json';
+  $a = false;
+  $name = "Test Valid Config passed to the Constructor            ";
+  $a = SodiumTests::testValidConfig($json);
+  showTestResults($name, $a);
+  
+  $json = $parent . '/tests/badjson.json';
+  $a = false;
+  $name = "Test bad JSON passed to the Constructor                ";
+  $a = SodiumTests::testBadJsonConfig($json);
+  showTestResults($name, $a);
+  
+  $json = $parent . '/tests/nosecret.json';
+  $a = false;
+  $name = "Test Config w/o Secret passed to the Constructor       ";
+  $a = SodiumTests::testConfigNoSecret($json);
+  showTestResults($name, $a);
+  
+  $json = $parent . '/tests/shortkey.json';
+  $a = false;
+  $name = "Test Config w/ Secret too small passed the Constructor ";
+  $a = SodiumTests::testConfigSecretTooShort($json);
+  showTestResults($name, $a);
+  
+  $json = $parent . '/tests/longkey.json';
+  $a = false;
+  $name = "Test Config w/ Secret too long passed the Constructor  ";
+  $a = SodiumTests::testConfigSecretTooLong($json);
+  showTestResults($name, $a);
+  
+  $json = $parent . '/tests/valid.json';
+  $a = false;
+  $name = "Test Prefix passed to Constructor overrides config     ";
+  $a = SodiumTests::testConfigWithManualPrefix($json);
+  showTestResults($name, $a);
+
+  echo "\n" . $passed . " of " . $counter . " Unit Tests Passed.\n";
+
+  $TOTAL_PASSED = $TOTAL_PASSED + $passed;
+  $TOTAL_TESTS = $TOTAL_TESTS + $counter;
+}
 
 echo "\n\n__END OF CURRENT TESTS__\n========================\n";
 

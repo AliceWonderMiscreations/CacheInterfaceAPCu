@@ -198,7 +198,17 @@ class InvalidArgumentException extends \InvalidArgumentException implements \Psr
     public static function wrongByteSizeKey(int $len)
     {
         $bytes = intdiv($len, 2);
-        return new self(sprintf('The private key must be 32 bytes. You provided a %s byte key.', $bytes));
+        return new self(sprintf('The secret key must be 32 bytes. You provided a %s byte key.', $bytes));
+    }
+    
+    /**
+     * The exception message when the supplied encryption key only has printable characters
+     *
+     * @return \InvalidArgumentException
+     */
+    public static function secretOnlyPrintable()
+    {
+        return new self(sprintf('The secret key you supplied only contains printable characters.'));
     }
 
     /**

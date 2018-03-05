@@ -1,10 +1,11 @@
 <?php
 
 // testing stuff
+//set_time_limit(0);
 
 ob_end_flush();
 // tests should not take more than fraction of second
-set_time_limit(5);
+set_time_limit(0);
 header("Content-Type: text/plain");
 
 if (file_exists('/usr/share/ccm/stable/libraries/psr/simplecache/CacheException.php')) {
@@ -49,55 +50,32 @@ var_dump([
 
 //$key = "f42f663e72f74b9e852b172df7f57ff4ab42e505167116e13dacd0d1daf00e77";
 
-$foo = new \DateInterval('P3DT4H');
+$secret = 'Crimson and clover over and over';
 
-$now = new \DateTime();
-$future = $now->add($foo);
+$test = sodium_bin2hex($secret);
 
-$testMe = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+if(ctype_print($secret)) {
+  echo "\nOnly contains printable characters\n";
+}
 
-$testMe->setDefaultSeconds($foo);
+var_dump($test);
 
-//var_dump($testMe);
+$good = 0;
+$bad = 0;
 
-$now = time();
-$Today = new \DateTime('2012-01-02');
-$YesterDay = new \DateTime('2012-01-01');
-$interval = $Today->diff($YesterDay);
+echo "\n\n";
+for($i=0; $i<4294967296; $i++) {
+  //echo $i . "\n";
+  $secret = random_bytes(32);
+  if(ctype_print($secret)) {
+    $bad++;
+  } else {
+    $good++;
+  }
+}
 
-$interval = $YesterDay->diff($Today);
-$interval->d = "-1";
+print("\n\nGood: " . $good . "\n\n");
 
-var_dump($interval);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print("Bad: " . $bad . "\n\n");
 
 ?>

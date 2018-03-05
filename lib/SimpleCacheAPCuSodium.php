@@ -21,8 +21,6 @@ declare(strict_types = 1);
  +-------------------------------------------------------+
 */
 
-/* not yet unit tested */
-
 namespace AWonderPHP\SimpleCacheAPCu;
 
 /**
@@ -103,6 +101,9 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         }
         if ($len !== 64) {
             throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::wrongByteSizeKey($len);
+        }
+        if (ctype_print($cryptokey)) {
+            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::secretOnlyPrintable();
         }
         //test that the key supplied works
         $string = 'ABC test 123 test xyz';
@@ -433,3 +434,6 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         sodium_memzero($cryptokey);
     }
 }
+
+// Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.
+?>

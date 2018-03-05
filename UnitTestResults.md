@@ -1,10 +1,12 @@
-SimpleCacheAPCuUnitTest Unit Test Results
-=========================================
+SimpleCacheAPCu Unit Test Results
+=================================
 
-__Test Date__         : 2018 March 5 at 03:55:48 AM UTC  
-__Test PHP Version__  : 7.1.14  
-__Test APCu Version__ : 5.1.9  
-__Test Platform__     : Linux  
+*For the sodium variant, add the __sodium__ get variable to PHP test uri*
+
+__Test Date__           : 2018 March 5 at 11:53:54 AM UTC  
+__Test PHP Version__    : 7.1.14  
+__Test APCu Version__   : 5.1.9  
+__Test Platform__       : Linux  
 
 
 Testing Single Key Features

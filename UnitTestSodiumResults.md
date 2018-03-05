@@ -1,7 +1,7 @@
-SimpleCacheAPCuUnitTest Unit Test Results
-=========================================
+SimpleCacheAPCu Sodium Unit Test Results
+========================================
 
-__Test Date__           : 2018 March 5 at 03:55:48 AM UTC  
+__Test Date__           : 2018 March 5 at 11:53:54 AM UTC  
 __Test PHP Version__    : 7.1.14  
 __Test APCu Version__   : 5.1.9  
 __Test Sodium Version__ : 2.0.10  
@@ -119,7 +119,26 @@ exceptions are thrown:
 16 of 16 Unit Tests Passed.
 
 
+Sodium Constructor Specific Tests
+---------------------------------
+
+* Test Test Exception with Null Secret in Constructor         : *PASSED*
+* Test Test Exception Binary Key Too Short in Constructor     : *PASSED*
+* Test Test Exception Hex Key Too Short in Constructor        : *PASSED*
+* Test Test Exception Binary Key Too Long in Constructor      : *PASSED*
+* Test Test Exception Hex Key Too Long in Constructor         : *PASSED*
+* Test Test Exception Bogus Key in Constructor                : *PASSED*
+* Test Test Valid Config passed to the Constructor            : *PASSED*
+* Test Test bad JSON passed to the Constructor                : *PASSED*
+* Test Test Config w/o Secret passed to the Constructor       : *PASSED*
+* Test Test Config w/ Secret too small passed the Constructor : *PASSED*
+* Test Test Config w/ Secret too long passed the Constructor  : *PASSED*
+* Test Test Prefix passed to Constructor overrides config     : *PASSED*
+
+12 of 12 Unit Tests Passed.
+
+
 __END OF CURRENT TESTS__
 ========================
 
-59 of 59 Total Unit Tests Passed.
+71 of 71 Total Unit Tests Passed.
