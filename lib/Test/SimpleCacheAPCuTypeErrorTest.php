@@ -16,6 +16,9 @@
 
 namespace AWonderPHP\SimpleCacheAPCu\Test;
 
+/**
+ * Type Error unit tests
+ */
 class SimpleCacheAPCuTypeErrorTest
 {
     /**
@@ -1177,7 +1180,7 @@ class SimpleCacheAPCuTypeErrorTest
      *
      * @return bool
      */
-    public static function testTypeErrorTTL_Strict($hexkey = null): bool
+    public static function testTypeErrorStrictTTL($hexkey = null): bool
     {
         $key = 'foo';
         $value = 'bar';

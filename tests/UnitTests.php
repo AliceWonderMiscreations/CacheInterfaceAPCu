@@ -332,7 +332,7 @@ showTestResults($name, $a);
 
 $a = false;
 $name = "Type Error TTL Not Int or String Exception Strict       ";
-$a = TypeTests::testTypeErrorTTL_Strict();
+$a = TypeTests::testTypeErrorStrictTTL();
 showTestResults($name, $a);
 
 $a = false;

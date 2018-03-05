@@ -16,6 +16,9 @@
 
 namespace AWonderPHP\SimpleCacheAPCu\Test;
 
+/**
+ * Non-error unit tests
+ */
 class SimpleCacheAPCuUnitTest
 {
     /**
@@ -604,7 +607,7 @@ class SimpleCacheAPCuUnitTest
                 $cacheTTL = $cached['ttl'];
             }
         }
-        if($cacheTTL === 273600) {
+        if ($cacheTTL === 273600) {
             return true;
         }
         return false;

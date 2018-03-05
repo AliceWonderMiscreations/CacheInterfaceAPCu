@@ -16,6 +16,9 @@
 
 namespace AWonderPHP\SimpleCacheAPCu\Test;
 
+/**
+ * Invalid Argument unit tests
+ */
 class SimpleCacheAPCuInvalidArgumentTest
 {
     /**
