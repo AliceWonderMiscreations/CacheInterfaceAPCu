@@ -577,6 +577,40 @@ class SimpleCacheAPCuUnitTest
     }
 
     /**
+     * Error test for \DateInterval object as TTL
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
+    public static function testDateIntervalTTL($hexkey = null): bool
+    {
+        $key = 'Date Interval Test';
+        $value = 'Some Value';
+        // 76 hours - 273600 seconds
+        $interval = new \DateInterval('P3DT4H');
+         
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
+        $simpleCache->set($key, $value, $interval);
+        $realKey = $simpleCache->getRealKey($key);
+        $info = apcu_cache_info();
+        $cacheTTL = null;
+        foreach ($info['cache_list'] as $cached) {
+            if (strcmp($cached['info'], $realKey) === 0) {
+                $cacheTTL = $cached['ttl'];
+            }
+        }
+        if($cacheTTL === 273600) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Error test
      *
      * @param null|string $hexkey A hex key
@@ -604,6 +638,41 @@ class SimpleCacheAPCuUnitTest
             }
         }
         if ($cacheTTL === 300) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Error test for \DateInterval object as default TTL
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
+    public static function testDateIntervalDefaultTTL($hexkey = null): bool
+    {
+        $key = 'Setting Default';
+        $value = "Who Cares";
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
+        // 76 hours - 273600 seconds
+        $interval = new \DateInterval('P3DT4H');
+        $simpleCache->setDefaultSeconds($interval);
+        $simpleCache->set($key, $value);
+        
+        $realKey = $simpleCache->getRealKey($key);
+        $info = apcu_cache_info();
+        $cacheTTL = null;
+        foreach ($info['cache_list'] as $cached) {
+            if (strcmp($cached['info'], $realKey) === 0) {
+                $cacheTTL = $cached['ttl'];
+            }
+        }
+        if ($cacheTTL === 273600) {
             return true;
         }
         return false;

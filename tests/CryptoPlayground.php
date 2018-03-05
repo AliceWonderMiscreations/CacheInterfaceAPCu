@@ -58,8 +58,17 @@ $testMe = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
 
 $testMe->setDefaultSeconds($foo);
 
-var_dump($testMe);
+//var_dump($testMe);
 
+$now = time();
+$Today = new \DateTime('2012-01-02');
+$YesterDay = new \DateTime('2012-01-01');
+$interval = $Today->diff($YesterDay);
+
+$interval = $YesterDay->diff($Today);
+$interval->d = "-1";
+
+var_dump($interval);
 
 
 

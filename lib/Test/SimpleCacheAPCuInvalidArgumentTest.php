@@ -242,6 +242,39 @@ class SimpleCacheAPCuInvalidArgumentTest
         }
         return false;
     }
+    
+    /**
+     * Error test negative \DateInterval default TTL
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
+    public static function testExceptionNegativeDateIntervalDefaultTTL($hexkey = null): bool
+    {
+        $Today = new \DateTime('2012-01-02');
+        $YesterDay = new \DateTime('2012-01-01');
+        $interval = $Today->diff($YesterDay);
+        $interval = $YesterDay->diff($Today);
+        $interval->d = "-1";
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
+        try {
+            $simpleCache->setDefaultSeconds($interval);
+        } catch (\InvalidArgumentException $e) {
+            $reference = "The default TTL can not be a negative number. You supplied -86400.";
+            $actual = $e->getMessage();
+            if ($reference === $actual) {
+                return true;
+            } else {
+                print($actual . "\n");
+            }
+        }
+        return false;
+    }
 
     // key set tests
 
@@ -432,6 +465,39 @@ class SimpleCacheAPCuInvalidArgumentTest
             $simpleCache->set('foo', 'bar', $ttl);
         } catch (\InvalidArgumentException $e) {
             $reference = "The cache expiration can not be in the past. You supplied -1 week.";
+            $actual = $e->getMessage();
+            if ($reference === $actual) {
+                return true;
+            } else {
+                print($actual . "\n");
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Error test negative \DateInterval TTL in set()
+     *
+     * @param null|string $hexkey A hex key
+     *
+     * @return bool
+     */
+    public static function testExceptionNegativeDateIntervalTTL($hexkey = null): bool
+    {
+        $Today = new \DateTime('2012-01-02');
+        $YesterDay = new \DateTime('2012-01-01');
+        $interval = $Today->diff($YesterDay);
+        $interval = $YesterDay->diff($Today);
+        $interval->d = "-1";
+        if (is_null($hexkey)) {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
+        } else {
+            $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hexkey);
+        }
+        try {
+            $simpleCache->set('foo', 'bar', $interval);
+        } catch (\InvalidArgumentException $e) {
+            $reference = "The cache expiration can not be in the past.";
             $actual = $e->getMessage();
             if ($reference === $actual) {
                 return true;
