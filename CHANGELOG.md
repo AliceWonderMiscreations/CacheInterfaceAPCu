@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Version 1.1.0 (not yet released)
---------------------------------
+Version 1.1.0 (2018 March 05)
+-----------------------------
 
 * Added `SimpleCacheAPCuSodium` class (extends `SimpleCacheAPCu`) to provide
 support for encryption of cache via libsodium extensions to PHP.

@@ -9,7 +9,7 @@ If you want to use it in a project that is managed by
 `composer.json` file:
 
     "require": {
-        "awonderphp/simplecacheapcu": "^1.0"
+        "awonderphp/simplecacheapcu": "^1.1"
     },
 
 As long as your `composer.json` allows the [Packagist](https://packagist.org/)
