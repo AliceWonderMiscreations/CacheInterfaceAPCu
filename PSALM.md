@@ -14,7 +14,7 @@ There are no unfixed errors at this time.
 Suppressions
 ------------
 
-### RedundantConditionGivenDocblockType
+### `RedundantConditionGivenDocblockType`
 
 In many functions I suppress this warning. This warning is thrown when a the
 doc-block specifies what parameter types are allowed and the method checks to
