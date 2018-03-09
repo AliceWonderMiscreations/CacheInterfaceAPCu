@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+MASTER (next packaged version)
+------------------------------
+
+* Removed `psalm` suppression of `MoreSpecificImplementedParamType` as PSR-16
+`psr/simple-cache` has fixed their bug in 1.0.1 release.
+
 Version 1.1.0 (2018 March 05)
 -----------------------------
 

@@ -14,14 +14,6 @@ There are no unfixed errors at this time.
 Suppressions
 ------------
 
-### MoreSpecificImplementedParamType
-
-This error is caused by a bug in the \Psr\SimpleCache\CacheInterface interface.
-The bug is fixed in the master branch of psr/simplecache and does not impact
-code operation.
-
-This is only suppressed in SimpleCacheAPCu `set()` and `setMultiple()`.
-
 ### RedundantConditionGivenDocblockType
 
 In many functions I suppress this warning. This warning is thrown when a the
