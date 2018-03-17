@@ -5,21 +5,11 @@ declare(strict_types = 1);
  * An implementation of the PSR-16 SimpleCache Interface for APCu that uses AEAD
  * cipher to encrypt the value in the cached key => value pair.
  *
- * @package AWonderPHP\SimpleCacheAPCu
+ * @package AWonderPHP/SimpleCacheAPCu
  * @author  Alice Wonder <paypal@domblogger.net>
  * @license https://opensource.org/licenses/MIT MIT
  * @link    https://github.com/AliceWonderMiscreations/SimpleCacheAPCu
  */
-/*
- +-------------------------------------------------------+
- |                                                       |
- | Copyright (c) 2018 Alice Wonder Miscreations          |
- |  May be used under terms of MIT license               |
- |                                                       |
- +-------------------------------------------------------+
- | Purpose: PSR-16 APCu Encrypted Interface              |
- +-------------------------------------------------------+
-*/
 
 namespace AWonderPHP\SimpleCacheAPCu;
 
@@ -33,121 +23,8 @@ namespace AWonderPHP\SimpleCacheAPCu;
  * It needs PHP 7.1 or newer and obviously the [APCu PECL](https://pecl.php.net/package/APCu) extension.
  * In PHP 7.1 It needs the PECL libsodium (sodium) extension. The extension is built-in to PHP 7.2.
  */
-class SimpleCacheAPCuSodium extends SimpleCacheAPCu
+class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implements \Psr\SimpleCache\CacheInterface
 {
-    /**
-     * The secret key to use
-     *
-     * @var string
-     */
-    protected $cryptokey = '';
-
-    /**
-     * Constructor sets to true if CPU supports it
-     *
-     * @var bool
-     */
-    protected $aesgcm = false;
-
-    /**
-     * ALWAYS gets increments before encryption
-     *
-     * @var null|string
-     */
-    protected $nonce = null;
-
-    /**
-     * Checks to make sure sodium extension is available.
-     *
-     * Libsodium is part of PHP 7.2 but in earlier versions of PHP it needs to be installed
-     * via the PECL libsodium (aka sodium) extension.
-     *
-     * @throws \ErrorException if no libsodium support
-     *
-     * @return void
-     */
-    protected function checkForSodium(): void
-    {
-        if (! function_exists('sodium_memzero')) {
-            throw \AWonderPHP\SimpleCacheAPCu\InvalidSetupException::noLibSodium();
-        }
-    }
-
-    /**
-     * Sets the cryptokey property used by the class to encrypt/decrypt
-     *
-     * @param string $cryptokey the key to use
-     *
-     * @throws \TypeError
-     *
-     * @psalm-suppress RedundantConditionGivenDocblockType
-     *
-     * @return void
-     */
-    protected function setCryptoKey($cryptokey): void
-    {
-        if (! is_string($cryptokey)) {
-            throw \AWonderPHP\SimpleCacheAPCu\StrictTypeException::cryptoKeyNotString($cryptokey);
-        }
-        if (ctype_xdigit($cryptokey)) {
-            $len = strlen($cryptokey);
-            $cryptokey = sodium_hex2bin($cryptokey);
-        }
-        // insert check here to make sure is binary integer
-        if (! isset($len)) {
-            $hex = sodium_bin2hex($cryptokey);
-            $len = strlen($hex);
-            sodium_memzero($hex);
-        }
-        if ($len !== 64) {
-            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::wrongByteSizeKey($len);
-        }
-        if (ctype_print($cryptokey)) {
-            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::secretOnlyPrintable();
-        }
-        //test that the key supplied works
-        $string = 'ABC test 123 test xyz';
-        $TEST_NONCE = sodium_hex2bin('74b9e852b172df7f57ff4ab4');
-        if ($this->aesgcm) {
-            $ciphertext = sodium_crypto_aead_aes256gcm_encrypt($string, $TEST_NONCE, $TEST_NONCE, $cryptokey);
-            $test = sodium_crypto_aead_aes256gcm_decrypt($ciphertext, $TEST_NONCE, $TEST_NONCE, $cryptokey);
-        } else {
-            $ciphertext = sodium_crypto_aead_chacha20poly1305_encrypt($string, $TEST_NONCE, $TEST_NONCE, $cryptokey);
-            $test = sodium_crypto_aead_chacha20poly1305_decrypt($ciphertext, $TEST_NONCE, $TEST_NONCE, $cryptokey);
-        }
-        if ($string === $test) {
-            $this->cryptokey = $cryptokey;
-            $this->enabled = true;
-            sodium_memzero($cryptokey);
-            return;
-        }
-        return;
-    }
-
-    /**
-     * Reads a JSON configuration and extracts info
-     *
-     * @param string $file The path on the filesystem to the configuration file
-     *
-     * @throws \\ErrorException
-     *
-     * @return \stdClass object with the extracted configuration info
-     */
-    protected function readConfigurationFile($file)
-    {
-        if (! file_exists($file)) {
-            throw \AWonderPHP\SimpleCacheAPCu\InvalidSetupException::confNotFound($file);
-        }
-        if (! $json = file_get_contents($file)) {
-            throw \AWonderPHP\SimpleCacheAPCu\InvalidSetupException::confNotReadable($file);
-        }
-        if (! $config = json_decode($json)) {
-            throw \AWonderPHP\SimpleCacheAPCu\InvalidSetupException::confNotJson($file);
-        }
-        sodium_memzero($json);
-        return $config;
-    }
-
     /**
      * Creates hash substring to use in internal cache key.
      *
@@ -162,7 +39,7 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
      * encrypted when looking at a dump of the stored APCu keys.
      *
      * @param string $key The user defined cache key (from key => value pair)
-     *                    to hash
+     *                    to hash.
      *
      * @return string
      */
@@ -172,127 +49,16 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         $hash = sodium_crypto_generichash($key, $this->cryptokey, 16);
         $hexhash = sodium_bin2hex($hash);
         return substr($hexhash, 6, 20);
-    }
+    }//end weakHash()
+
 
     /**
-     * Serializes the value to be cached and encrypts it.
+     * A wrapper for the actual fetch from the cache.
      *
-     * A specification of this function is it MUST increment the nonce BEFORE encryption and
-     * verify it has incremented the nonce, throwing exception if increment failed.
+     * @param string $realKey The internal key used with APCu.
+     * @param mixed  $default The value to return if a cache miss.
      *
-     * @param mixed $value The value to be serialized and encrypted
-     *
-     * @throws \InvalidArgumentException
-     * @throws \ErrorException
-     *
-     * @return \stdClass object containing nonce and encrypted value
-     */
-    protected function encryptData($value)
-    {
-        try {
-            $serialized = serialize($value);
-        } catch (\Error $e) {
-            throw \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException::serializeFailed($e->getMessage());
-        }
-        $oldnonce = $this->nonce;
-        if (is_null($this->nonce)) {
-            // both IETF ChaCha20 and AES256GCM use 12 bytes for nonce
-            $this->nonce = random_bytes(12);
-        } else {
-            sodium_increment($this->nonce);
-        }
-        if ($oldnonce === $this->nonce) {
-            // This should never ever happen
-            throw \AWonderPHP\SimpleCacheAPCu\InvalidSetupException::nonceIncrementError();
-        }
-        $obj = new \stdClass;
-        $obj->nonce = $this->nonce;
-        if ($this->aesgcm) {
-            $obj->ciphertext = sodium_crypto_aead_aes256gcm_encrypt(
-                $serialized,
-                $obj->nonce,
-                $obj->nonce,
-                $this->cryptokey
-            );
-        } else {
-            $obj->ciphertext = sodium_crypto_aead_chacha20poly1305_ietf_encrypt(
-                $serialized,
-                $obj->nonce,
-                $obj->nonce,
-                $this->cryptokey
-            );
-        }
-        sodium_memzero($serialized);
-        // RESEARCH - How to zero out non-string? I don't believe recast
-        //  will do it it properly
-        if (is_string($value)) {
-            sodium_memzero($value);
-        }
-        return $obj;
-    }
-    
-    /**
-     * Returns the decrypted data retried from the APCu cache
-     *
-     * @param object $obj     The object containing the nonce and cyphertext
-     * @param mixed  $default Always return the default if there is a problem decrypting the
-     *                        the cyphertext so failure acts like a cache miss
-     *
-     * @return mixed The decrypted data, or the default if decrypt failed
-     */
-    protected function decryptData($obj, $default = null)
-    {
-        if (! isset($obj->nonce)) {
-            return $default;
-        }
-        if (! isset($obj->ciphertext)) {
-            return $default;
-        }
-        if ($this->aesgcm) {
-            try {
-                $serialized = sodium_crypto_aead_aes256gcm_decrypt(
-                    $obj->ciphertext,
-                    $obj->nonce,
-                    $obj->nonce,
-                    $this->cryptokey
-                );
-            } catch (\Error $e) {
-                error_log($e->getMessage());
-                return $default;
-            }
-        } else {
-            try {
-                $serialized = sodium_crypto_aead_chacha20poly1305_ietf_decrypt(
-                    $obj->ciphertext,
-                    $obj->nonce,
-                    $obj->nonce,
-                    $this->cryptokey
-                );
-            } catch (\Error $e) {
-                error_log($e->getMessage());
-                return $default;
-            }
-        }
-        if ($serialized === false) {
-            return $default;
-        }
-        try {
-            $value = unserialize($serialized);
-        } catch (\Error $e) {
-            error_log($e->getMessage());
-            return $default;
-        }
-        sodium_memzero($serialized);
-        return $value;
-    }
-
-    /**
-     * A wrapper for the actual fetch from the cache
-     *
-     * @param string $realKey The internal key used with APCu
-     * @param mixed  $default The value to return if a cache miss
-     *
-     * @return mixed The value in the cached key => value pair, or $default if a cache miss
+     * @return mixed The value in the cached key => value pair, or $default if a cache miss.
      */
     protected function cacheFetch($realKey, $default)
     {
@@ -301,13 +67,14 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
             return $this->decryptData($obj, $default);
         }
         return $default;
-    }
+    }//end cacheFetch()
+
 
     /**
-     * A wrapper for the actual store of key => value pair in the cache
+     * A wrapper for the actual store of key => value pair in the cache.
      *
-     * @param string                        $realKey The internal key used with APCu
-     * @param mixed                         $value   The value to be stored
+     * @param string                        $realKey The internal key used with APCu.
+     * @param mixed                         $value   The value to be stored.
      * @param null|int|string|\DateInterval $ttl     The TTL value of this item.
      *
      * @return bool Returns True on success, False on failure
@@ -317,7 +84,7 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         $seconds = $this->ttlToSeconds($ttl);
         try {
             $obj = $this->encryptData($value);
-        } catch (\AWonderPHP\SimpleCacheAPCu\InvalidArgumentException $e) {
+        } catch (\AWonderPHP\SimpleCache\InvalidArgumentException $e) {
             error_log($e->getMessage());
             sodium_memzero($value);
             return false;
@@ -328,13 +95,103 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
             sodium_memzero($value);
         }
         return apcu_store($realKey, $obj, $seconds);
-    }
+    }//end cacheStore()
+
+    
+    /**
+     * A wrapper for the actual delete of a key => value pair in the cache.
+     *
+     * @param string $realKey The key for the key => value pair to be removed from the cache.
+     *
+     * @return bool Returns True on success, False on failure.
+     */
+    protected function cacheDelete($realKey): bool
+    {
+        return apcu_delete($realKey);
+    }//end cacheDelete()
+
+    
+    /**
+     * Wipes clean the entire cache's keys. This implementation only wipes for matching
+     * webappPrefix (custom NON PSR-16 feature set during constructor).
+     *
+     * @return bool True on success and false on failure.
+     */
+    public function clear(): bool
+    {
+        if ($this->enabled) {
+            if (class_exists('\APCUIterator', false)) {
+                $iterator = new \APCUIterator('#^' . $this->webappPrefix . '#', APC_ITER_KEY);
+                foreach ($iterator as $item) {
+                    $key = $item['key'];
+                    apcu_delete($key);
+                }
+                return true;
+            }
+            $info = apcu_cache_info();
+            if (isset($info['cache_list'])) {
+                $return = true;
+                $cachelist = $info['cache_list'];
+                foreach ($cachelist as $item) {
+                    if (isset($item['info'])) {
+                        $key = $item['info'];
+                        if (strpos($key, $this->webappPrefix) === 0) {
+                            apcu_delete($key);
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }//end clear()
+
 
     /**
-     * Zeros and then removes the cryptokey from a var_dump of the object
-     * also removes nonce from var_dump
+     * Wipes clean the entire cache's keys regardless of webappPrefix.
      *
-     * @return array The array for var_dump()
+     * @return bool True on success and false on failure.
+     */
+    public function clearAll(): bool
+    {
+        $return = false;
+        if ($this->enabled) {
+            $return = true;
+            if (! apcu_clear_cache()) {
+                return false;
+            }
+        }
+        return $return;
+    }//end clearAll()
+
+    
+    /**
+     * Determines whether an item is present in the cache.
+     *
+     * NOTE: It is recommended that has() is only to be used for cache warming type purposes
+     * and not to be used within your live applications operations for get/set, as this method
+     * is subject to a race condition where your has() will return true and immediately after,
+     * another script can remove it making the state of your app out of date.
+     *
+     * @param string $key The cache item key.
+     *
+     * @return bool
+     */
+    public function has($key): bool
+    {
+        $key = $this->adjustKey($key);
+        if ($this->enabled) {
+            return apcu_exists($key);
+        }
+        return false;
+    }//end has()
+
+
+    /**
+     * Zeros and then removes the cryptokey from a var_dump of the object.
+     * Also removes nonce from var_dump.
+     *
+     * @return array The array for var_dump().
      */
     public function __debugInfo()
     {
@@ -343,17 +200,19 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         unset($result['cryptokey']);
         unset($result['nonce']);
         return $result;
-    }
+    }//end __debugInfo()
+
 
     /**
-     * Zeros the cryptokey property on class destruction
+     * Zeros the cryptokey property on class destruction.
      *
      * @return void
      */
     public function __destruct()
     {
         sodium_memzero($this->cryptokey);
-    }
+    }//end __destruct()
+
 
     /**
      * The class constructor function
@@ -425,15 +284,32 @@ class SimpleCacheAPCuSodium extends SimpleCacheAPCu
         if (is_null($strictType)) {
             $strictType = false;
         }
-        parent::__construct($webappPrefix, $salt, $strictType);
-        if ($this->enabled) {
-            // will be re-enabled with valid cryptokey
-            $this->enabled = false;
+        $this->strictType = $strictType;
+        
+        if (extension_loaded('apcu') && ini_get('apc.enabled')) {
+            $invalidTypes = array('array', 'object', 'boolean');
+            if (! is_null($webappPrefix)) {
+                if (! $strictType) {
+                    $type = gettype($webappPrefix);
+                    if (! in_array($type, $invalidTypes)) {
+                        $webappPrefix = (string)$webappPrefix;
+                    }
+                }
+                $this->setWebAppPrefix($webappPrefix);
+            }
+            if (! is_null($salt)) {
+                if (! $strictType) {
+                    $type = gettype($salt);
+                    if (! in_array($type, $invalidTypes)) {
+                        $salt = (string)$salt;
+                    }
+                }
+                $this->setHashSalt($salt);
+            }
             $this->setCryptoKey($cryptokey);
         }
         sodium_memzero($cryptokey);
-    }
-}
+    }//end __construct()
+}//end class
 
-// Dear PSR-2: You can take my closing PHP tag when you can pry it from my cold dead fingers.
 ?>
