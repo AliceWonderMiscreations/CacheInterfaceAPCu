@@ -58,8 +58,6 @@ final class SimpleCacheAPCuTest extends TestCase
         $key = 'I do not exist';
         $a = $this->testNotStrict->get($key);
         $this->assertNull($a);
-        //var_dump($this->testNotStrict);
-        //exit;
     }//end testMissReturnsNull()
 
     /**
