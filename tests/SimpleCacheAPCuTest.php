@@ -34,7 +34,7 @@ final class SimpleCacheAPCuTest extends TestCase
     {
         $this->testNotStrict = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
     }//end setUp()
-    
+
     /**
      * Check to see if APCu is even possible
      *
@@ -46,7 +46,6 @@ final class SimpleCacheAPCuTest extends TestCase
         $test = (int)$test;
         $this->assertEquals(1, $test);
     }//end testCanWeEvenAccessApcuFromTestEnvironment()
-
 
     /**
      * Cache test miss should return null, not false.
@@ -117,6 +116,21 @@ final class SimpleCacheAPCuTest extends TestCase
         $actual = $this->testNotStrict->get($key);
         $this->assertFalse($actual);
     }//end testSetAndRetrieveBoolean()
+
+    /**
+     * Set and retrieve a null
+     *
+     * @return void
+     */
+    public function testSetAndRetrieveNull(): void
+    {
+        $key = "A nothing test";
+        $this->testNotStrict->set($key, null);
+        $a = $this->testNotStrict->get($key);
+        $this->assertNull($a);
+        $bool = $this->testNotStrict->has($key);
+        $this->assertTrue($bool);
+    }//end testSetAndRetrieveNull()
 
     /**
      * Set and retrieve an array.
@@ -305,7 +319,8 @@ final class SimpleCacheAPCuTest extends TestCase
                 $cacheTTL = $cached['ttl'];
             }
         }
-        $this->assertEquals($rnd, $cacheTTL);
+        $race = abs($cacheTTL - $rnd);
+        $this->assertLessThan(3, $race);
     }//end testSetCacheLifeAsUnixTimestamp()
 
     /**
@@ -327,7 +342,8 @@ final class SimpleCacheAPCuTest extends TestCase
                 $cacheTTL = $cached['ttl'];
             }
         }
-        $this->assertEquals(604800, $cacheTTL);
+        $race = abs($cacheTTL - 604800);
+        $this->assertLessThan(3, $race);
     }//end testSetCacheLifeAsStringWithDateRange()
 
     /**
@@ -377,7 +393,8 @@ final class SimpleCacheAPCuTest extends TestCase
                 $cacheTTL = $cached['ttl'];
             }
         }
-        $this->assertEquals($ttl, $cacheTTL);
+        $race = abs($cacheTTL - $ttl);
+        $this->assertLessThan(3, $race);
     }//end testSetCacheLifeAsVeryVeryLargeInteger()
 
     /**
@@ -448,7 +465,8 @@ final class SimpleCacheAPCuTest extends TestCase
                 $cacheTTL = $cached['ttl'];
             }
         }
-        $this->assertEquals($expected, $cacheTTL);
+        $race = abs($cacheTTL - $expected);
+        $this->assertLessThan(3, $race);
     }//end testDefaultSecondsWithDateInterval()
 
     /**

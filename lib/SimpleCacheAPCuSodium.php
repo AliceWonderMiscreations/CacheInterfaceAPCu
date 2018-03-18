@@ -26,33 +26,6 @@ namespace AWonderPHP\SimpleCacheAPCu;
 class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implements \Psr\SimpleCache\CacheInterface
 {
     /**
-     * Creates hash substring to use in internal cache key.
-     *
-     * This class obfuscates the user supplied cache keys by using a substring
-     * of the hex representation of a hash of that key. This function creates
-     * the hex representation of the hash and grabs a 20 character substring.
-     *
-     * The hashing algorithm differs from the parent class so that if the same
-     * salt is used for both, the hash will be completely different.
-     *
-     * The substr() size also differs to make it easy to see which values are
-     * encrypted when looking at a dump of the stored APCu keys.
-     *
-     * @param string $key The user defined cache key (from key => value pair)
-     *                    to hash.
-     *
-     * @return string
-     */
-    protected function weakHash($key): string
-    {
-        $key = $key . $this->salt;
-        $hash = sodium_crypto_generichash($key, $this->cryptokey, 16);
-        $hexhash = sodium_bin2hex($hash);
-        return substr($hexhash, 6, 20);
-    }//end weakHash()
-
-
-    /**
      * A wrapper for the actual fetch from the cache.
      *
      * @param string $realKey The internal key used with APCu.

@@ -24,25 +24,6 @@ namespace AWonderPHP\SimpleCacheAPCu;
 class SimpleCacheAPCu extends \AWonderPHP\SimpleCache\SimpleCache implements \Psr\SimpleCache\CacheInterface
 {
     /**
-     * Creates hash substring to use in internal cache key.
-     *
-     * This class obfuscates the user supplied cache keys by using a substring
-     * of the hex representation of a hash of that key. This function creates
-     * the hex representation of the hash and grabs a 16 character substring.
-     *
-     * @param string $key The user defined key to hash.
-     *
-     * @return string
-     */
-    protected function weakHash($key): string
-    {
-        $key = $this->salt . $key;
-        $key = hash('ripemd160', $key);
-        // 16^16 should be enough of the hash to avoid collisions
-        return substr($key, 17, 16);
-    }//end weakHash()
-
-    /**
      * A wrapper for the actual fetch from the cache.
      *
      * @param string $realKey The internal key used with APCu.

@@ -1,4 +1,5 @@
 SimpleCacheAPCuConstructor
+ [x] Can we even access apcu from test environment
  [x] Constructor using three character prefix
  [x] Constructor using thirty two character prefix
  [x] Constructor invalid argument empty prefix
@@ -30,6 +31,8 @@ SimpleCacheAPCuConstructor
  [x] Sodium type error config file without secret
  [x] Sodium invalid argument config file secret too short
  [x] Sodium invalid argument config file secret too long
+ [x] Cache clear local prefix only
+ [x] Cache clear everything
 
 SimpleCacheAPCuException
  [x] Can we even access apcu from test environment
@@ -82,6 +85,7 @@ SimpleCacheAPCuSodium
  [x] Set and retrieve integer
  [x] Set and retrieve float
  [x] Set and retrieve boolean
+ [x] Set and retrieve null
  [x] Set and retrieve array
  [x] Set and retrieve object
  [x] Delete a key
@@ -114,6 +118,7 @@ SimpleCacheAPCu
  [x] Set and retrieve integer
  [x] Set and retrieve float
  [x] Set and retrieve boolean
+ [x] Set and retrieve null
  [x] Set and retrieve array
  [x] Set and retrieve object
  [x] Delete a key

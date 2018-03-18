@@ -34,8 +34,19 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
     {
         $this->tdir = dirname(__FILE__);
     }//end setUp()
-     
-  
+
+    /**
+     * Check to see if APCu is even possible
+     *
+     * @return void
+     */
+    public function testCanWeEvenAccessApcuFromTestEnvironment(): void
+    {
+        $test = ini_get('apc.enable_cli');
+        $test = (int)$test;
+        $this->assertEquals(1, $test);
+    }//end testCanWeEvenAccessApcuFromTestEnvironment()
+
     /**
      * Check to see if three character prefix works
      *
@@ -522,6 +533,114 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($json);
     }//end testSodiumInvalidArgumentConfigFileSecretTooLong()
+
+    /**
+     * Test to make sure we can clear the local cache without clearing other cache
+     *
+     * @return void
+     */
+    public function testCacheClearLocalPrefixOnly(): void
+    {
+        apcu_clear_cache();
+        $prefix = 'LOLIAMUNIQUE';
+        $simpleCacheA = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+        $prefix = 'IAMUNIQUE';
+        $simpleCacheB = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+        
+        $simpleCacheA->set('KeyShouldSurvive', 'Staying Alive');
+        $simpleCacheB->set('key1', 'value1');
+        $simpleCacheB->set('key2', 'value2');
+        $simpleCacheB->set('key3', 'value3');
+        $simpleCacheB->set('key4', 'value4');
+        $simpleCacheB->set('key5', 'value5');
+        $simpleCacheA->set('KeyShouldAlsoSurvive', 'Ooh ooh ooh ooh');
+        
+        // there should be seven total entries
+        $info = apcu_cache_info();
+        $count = count($info['cache_list']);
+        
+        $this->assertEquals(7, $count);
+        
+        $simpleCacheB->clear();
+        
+        // now there should be two
+        $info = apcu_cache_info();
+        $count = count($info['cache_list']);
+        
+        $this->assertEquals(2, $count);
+        
+        $value = $simpleCacheA->get('KeyShouldSurvive');
+        $this->assertEquals('Staying Alive', $value);
+        $value = $simpleCacheA->get('KeyShouldAlsoSurvive');
+        $this->assertEquals('Ooh ooh ooh ooh', $value);
+    }
+    
+    /**
+     * Test to make sure we can clear everything
+     *
+     * @return void
+     */
+    public function testCacheClearEverything(): void
+    {
+        apcu_clear_cache();
+        $prefix = 'PREFIXA';
+        $simpleCacheA = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+        $prefix = 'PREFIXB';
+        $simpleCacheB = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+        $prefix = 'PREFIXC';
+        $simpleCacheC = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
+        
+        $simpleCacheA->set('key1', 'value1');
+        $simpleCacheA->set('key2', 'value2');
+        $simpleCacheA->set('key3', 'value3');
+        $simpleCacheA->set('key4', 'value4');
+        $simpleCacheA->set('key5', 'value5');
+        
+        $simpleCacheB->set('key6', 'value6');
+        $simpleCacheB->set('key7', 'value7');
+        $simpleCacheB->set('key8', 'value8');
+        $simpleCacheB->set('key9', 'value9');
+        $simpleCacheB->set('key10', 'value10');
+        
+        $simpleCacheC->set('key11', 'value11');
+        $simpleCacheC->set('key12', 'value12');
+        $simpleCacheC->set('key13', 'value13');
+        $simpleCacheC->set('key14', 'value14');
+        $simpleCacheC->set('key15', 'value15');
+        
+        // there should be fifteen total entries
+        $info = apcu_cache_info();
+        $count = count($info['cache_list']);
+        
+        $this->assertEquals(15, $count);
+        
+        $simpleCacheA->clearAll();
+        
+        // now there should be 0
+        $info = apcu_cache_info();
+        $count = count($info['cache_list']);
+        
+        $this->assertEquals(0, $count);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }//end class
 
 ?>
