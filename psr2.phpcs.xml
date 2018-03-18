@@ -38,6 +38,7 @@
   <description>The coding standard for AWonderPHP</description>
   <file>lib</file>
   <file>tests</file>
+  <file>bin</file>
   <arg name="basepath" value="." />
   <arg name="colors" />
   <rule ref="PSR2">
