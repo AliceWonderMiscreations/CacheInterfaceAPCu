@@ -110,7 +110,7 @@ hexadecimal representation of the secret.
 The optional keyword `prefix` is used to define the `$webappPrefix` parameter
 to the constructor. If defined both here *and* in your call to the class
 constructor, the call to the constructor takes precedence. If present at all
-it must be string containing at least three alphanumeric characters but not
+it must be a string containing at least three alphanumeric characters but not
 more than 32.
 
 The optional keyword `salt` is used to define the `$salt` parameter to the
@@ -293,3 +293,7 @@ obtain the decrypted information, but it is still possible.
 
 Things like bank account numbers should not even be store on servers with a
 public IP address anyway.
+
+
+-------------------------------------------------
+__EOF__

@@ -7,6 +7,7 @@ MASTER (next packaged version)
 * Switched unit testing to PHPUnit.
 * Split out most of the functions that are not APCu specific into an abstract
 class that this class depends upon.
+* Moved the exception classes into the package with the abstract class.
 * Sodium version now extends that abstract class instead of SimpleCacheAPCu.
 * Removed `psalm` suppression of `MoreSpecificImplementedParamType` as PSR-16
 `psr/simple-cache` has fixed their bug in 1.0.1 release.
