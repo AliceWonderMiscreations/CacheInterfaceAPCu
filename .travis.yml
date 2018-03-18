@@ -13,6 +13,7 @@ install:
   - composer require psr/simple-cache:${PSRSIMPLE_VERSION}
   - composer require awonderphp/simplecache:${AWSIMPLE_VERSION}
 before_script:
+  - phpenv config-add travis.php.ini
   - pecl install libsodium
   - pecl install apcu
 script: vendor/bin/phpunit --testdox
