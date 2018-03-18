@@ -9,7 +9,7 @@ If you want to use it in a project that is managed by
 `composer.json` file:
 
     "require": {
-        "awonderphp/simplecacheapcu": "^1.1"
+        "awonderphp/simplecacheapcu": "^1.2"
     },
 
 As long as your `composer.json` allows the [Packagist](https://packagist.org/)
@@ -21,40 +21,24 @@ repository, that should pull in this library when you run the command:
 Manual Installation
 -------------------
 
-For manual installation, there are three class libraries you need to have where
-your auto-loader can find them:
+For manual installation, there are two other libraries you must install where
+your autoloader can find them first:
 
-1. `SimpleCacheAPCu.php` -- This is the class library.
-2. `InvalidArgumentException.php` -- This is a catch-able exception library,
-needed when things go wrong and part of the PSR-16 compliance.
-3. `StrictTypeException.php` -- This is a catch-able exception library, needed
-when things go wrong and part of the PSR-16 compliance.
+1. [`psr/simple-cache`](https://github.com/php-fig/simple-cache/tree/master/src)
+2. [`AWonderPHP/SimpleCache`](https://github.com/AliceWonderMiscreations/SimpleCache/)
 
-If you want the encrypted cache feature, you will also need these two files:
+Both of those libraries include exception classes that also must be installed
+where your autoloader can find them.
 
-1. `SimpleCacheAPCuSodium.php` -- Extended class that uses the PHP wrapper to the
-libsodium cryptography library.
-2. `InvalidSetupException.php` -- This is a catch-able exception library, needed
-when your setup is not suitable for encryption to work.
+Once those two dependencies are installed, there are two class files:
 
-They will need to be put where your auto-loader can find them. All three classes
-use the namespace `AWonderPHP\SimpleCacheAPCu`.
+1. [`SimpleCacheAPCu`](blob/master/lib/SimpleCacheAPCu.php)
+2. [`SimpleCacheAPCuSodium`](blob/master/lib/SimpleCacheAPCuSodium.php)
 
-Additionally you will need the three interface libraries from the PHP-FIG (or
-alternative edit my three class libraries to remove the `implements` parts from
-the class declarations):
+The first class provides PSR-16 without encryption, the second provides PSR-16
+with encryption.
 
-1. `CacheInterface.php` -- This is the PSR-16 interface definition.
-2. `CacheException.php` -- This is the base interface specification for
-exceptions that need to be thrown when things go bad.
-3. `InvalidArgumentException.php` -- This is the interface that exception
-classes in PSR-16 compliant caching classes must implement.
-
-Those three files are available at the PHP-FIG github:
-[https://github.com/php-fig/simple-cache/tree/master/src](https://github.com/php-fig/simple-cache/tree/master/src)
-
-All three classes use the namespace `\Psr\SimpleCache`. Put them where your
-auto-loader can find them.
+Both files use the namespace `AWonderPHP\SimpleCacheAPCu`.
 
 
 RPM Installation
@@ -70,3 +54,7 @@ Class Usage
 -----------
 
 Please see the file [`USAGE.md`](USAGE.md) for class usage.
+
+
+-------------------------------------------------
+__EOF__

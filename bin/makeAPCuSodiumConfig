@@ -1,10 +1,26 @@
 #!/usr/bin/env php
 <?php
+declare(strict_types=1);
+
+/**
+ * Utility for generating SimpleCacheAPCuSodium configuration file.
+ *
+ * @package AWonderPHP/SimpleCacheAPCu
+ * @author  Alice Wonder <paypal@domblogger.net>
+ * @license https://opensource.org/licenses/MIT MIT
+ * @link    https://github.com/AliceWonderMiscreations/SimpleCacheAPCu
+ */
 
 $PREFIX="DEFAULT";
 $STRICT_TYPE=false;
 
-/* part of my silly amusement described below */
+/**
+ * Part of my silly amusement described below.
+ *
+ * @param string $s a hex digit to convert to pseudo-upper case.
+ *
+ * @return string
+ */
 function fancy_strtoupper($s)
 {
     switch ($s) {
@@ -31,7 +47,8 @@ function fancy_strtoupper($s)
         default:
             return strtoupper($s);
     }
-}
+}//end fancy_strtoupper()
+
 
 if (! $CWD = getcwd()) {
     exit(1);

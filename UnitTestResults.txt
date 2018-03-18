@@ -1,0 +1,139 @@
+SimpleCacheAPCuConstructor
+ [x] Can we even access apcu from test environment
+ [x] Constructor using three character prefix
+ [x] Constructor using thirty two character prefix
+ [x] Constructor invalid argument empty prefix
+ [x] Constructor invalid argument two letter prefix
+ [x] Constructor invalid argument non alpha numeric prefix
+ [x] Constructor invalid argument 33 letter prefix
+ [x] Constructor invalid type prefix boolean
+ [x] Constructor invalid type prefix array
+ [x] Constructor invalid type prefix object
+ [x] Constructor strict invalid type prefix integer
+ [x] Constructor strict invalid type prefix float
+ [x] Constructor using eight character salt
+ [x] Constructor using absurdly long salt
+ [x] Constructor invalid argument empty salt
+ [x] Constructor invalid argument seven character salt
+ [x] Constructor invalid type salt boolean
+ [x] Constructor invalid type salt array
+ [x] Constructor invalid type salt object
+ [x] Constructor strict invalid type salt integer
+ [x] Constructor strict invalid type salt float
+ [x] Sodium constructor type error null secret
+ [x] Sodium constructor invalid argument secret too short binary
+ [x] Sodium constructor invalid argument secret too short hex
+ [x] Sodium constructor invalid argument secret too long binary
+ [x] Sodium constructor invalid argument secret too long hex
+ [x] Sodium constructor invalid argument secret all printable characters
+ [x] Sodium from valid config file
+ [x] Sodium error exception bad config file
+ [x] Sodium type error config file without secret
+ [x] Sodium invalid argument config file secret too short
+ [x] Sodium invalid argument config file secret too long
+ [x] Cache clear local prefix only
+ [x] Cache clear everything
+
+SimpleCacheAPCuException
+ [x] Can we even access apcu from test environment
+ [x] Default ttl invalid type null
+ [x] Default ttl invalid type boolean
+ [x] Default ttl invalid type array
+ [x] Default ttl invalid type object
+ [x] Cache key invalid type null
+ [x] Cache key invalid type boolean
+ [x] Cache key invalid type array
+ [x] Cache key invalid type object
+ [x] Set key pair ttl invalid type boolean
+ [x] Set key pair ttl invalid type array
+ [x] Set key pair ttl invalid type object
+ [x] Set multiple invalid type null
+ [x] Set multiple invalid type integer
+ [x] Set multiple invalid type float
+ [x] Set multiple invalid type boolean
+ [x] Set multiple invalid type string
+ [x] Set multiple invalid type key within not string
+ [x] Get multiple invalid type null
+ [x] Get multiple invalid type integer
+ [x] Get multiple invalid type float
+ [x] Get multiple invalid type boolean
+ [x] Get multiple invalid type string
+ [x] Get multiple invalid type key within not string
+ [x] Default ttl invalid argument negative integer
+ [x] Default ttl invalid argument negative date interval
+ [x] Set key pair invalid argument empty key
+ [x] Set key pair invalid argument key barely too long
+ [x] Set key pair invalid argument key contains left curly
+ [x] Set key pair invalid argument key contains right curly
+ [x] Set key pair invalid argument key contains left parenthesis
+ [x] Set key pair invalid argument key contains right parenthesis
+ [x] Set key pair invalid argument key contains forward slash
+ [x] Set key pair invalid argument key contains back slash
+ [x] Set key pair invalid argument key contains atmark
+ [x] Set key pair invalid argument key contains colon
+ [x] Set key pair ttl invalid argument negative integer
+ [x] Set key pair ttl invalid argument date string in past
+ [x] Set key pair ttl invalid argument date range in past
+ [x] Set key pair ttl invalid argument negative date interval
+ [x] Set key pair ttl invalid argument bogus string
+ [x] Set multiple invalid argument key in iterable has reserved character
+
+SimpleCacheAPCuSodium
+ [x] Can we even access apcu from test environment
+ [x] Miss returns null
+ [x] Set and retrieve string
+ [x] Set and retrieve integer
+ [x] Set and retrieve float
+ [x] Set and retrieve boolean
+ [x] Set and retrieve null
+ [x] Set and retrieve array
+ [x] Set and retrieve object
+ [x] Delete a key
+ [x] Accept key length of 1
+ [x] Accept key length of 255
+ [x] Accept multibyte character key
+ [x] Set cache life as integer
+ [x] Set cache life as unix timestamp
+ [x] Set cache life as string with date range
+ [x] Set cache life as string with fixed date
+ [x] Set cache life as very very large integer
+ [x] Set cache life as date interval object
+ [x] Set default seconds with integer
+ [x] Default seconds with date interval
+ [x] Set multiple key value pairs at once
+ [x] Get multiple key value pairs at once
+ [x] Delete multiple key value pairs at once
+
+SimpleCacheAPCuStrictException
+ [x] Can we even access apcu from test environment
+ [x] Default ttl invalid type float
+ [x] Cache key invalid type integer
+ [x] Cache key invalid type float
+ [x] Set key pair ttl invalid type float
+
+SimpleCacheAPCu
+ [x] Can we even access apcu from test environment
+ [x] Miss returns null
+ [x] Set and retrieve string
+ [x] Set and retrieve integer
+ [x] Set and retrieve float
+ [x] Set and retrieve boolean
+ [x] Set and retrieve null
+ [x] Set and retrieve array
+ [x] Set and retrieve object
+ [x] Delete a key
+ [x] Accept key length of 1
+ [x] Accept key length of 255
+ [x] Accept multibyte character key
+ [x] Set cache life as integer
+ [x] Set cache life as unix timestamp
+ [x] Set cache life as string with date range
+ [x] Set cache life as string with fixed date
+ [x] Set cache life as very very large integer
+ [x] Set cache life as date interval object
+ [x] Set default seconds with integer
+ [x] Default seconds with date interval
+ [x] Set multiple key value pairs at once
+ [x] Get multiple key value pairs at once
+ [x] Delete multiple key value pairs at once
+
