@@ -213,9 +213,6 @@ class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implemen
     public function __construct($cryptokey, $webappPrefix = null, $salt = null, $strictType = null)
     {
         $this->checkForSodium();
-        if (sodium_crypto_aead_aes256gcm_is_available()) {
-            $this->aesgcm = true;
-        }
         if (is_string($cryptokey)) {
             $end = substr($cryptokey, -5);
             $end = strtolower($end);
