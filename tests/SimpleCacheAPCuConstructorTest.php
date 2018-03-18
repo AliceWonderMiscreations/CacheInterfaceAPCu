@@ -573,7 +573,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $this->assertEquals('Staying Alive', $value);
         $value = $simpleCacheA->get('KeyShouldAlsoSurvive');
         $this->assertEquals('Ooh ooh ooh ooh', $value);
-    }
+    }//end testCacheClearLocalPrefixOnly()
+
     
     /**
      * Test to make sure we can clear everything
@@ -621,26 +622,7 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $count = count($info['cache_list']);
         
         $this->assertEquals(0, $count);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }//end testCacheClearEverything()
 }//end class
 
 ?>
