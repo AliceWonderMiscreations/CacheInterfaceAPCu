@@ -1,3 +1,36 @@
+SimpleCacheAPCuConstructor
+ [x] Constructor using three character prefix
+ [x] Constructor using thirty two character prefix
+ [x] Constructor invalid argument empty prefix
+ [x] Constructor invalid argument two letter prefix
+ [x] Constructor invalid argument non alpha numeric prefix
+ [x] Constructor invalid argument 33 letter prefix
+ [x] Constructor invalid type prefix boolean
+ [x] Constructor invalid type prefix array
+ [x] Constructor invalid type prefix object
+ [x] Constructor strict invalid type prefix integer
+ [x] Constructor strict invalid type prefix float
+ [x] Constructor using eight character salt
+ [x] Constructor using absurdly long salt
+ [x] Constructor invalid argument empty salt
+ [x] Constructor invalid argument seven character salt
+ [x] Constructor invalid type salt boolean
+ [x] Constructor invalid type salt array
+ [x] Constructor invalid type salt object
+ [x] Constructor strict invalid type salt integer
+ [x] Constructor strict invalid type salt float
+ [x] Sodium constructor type error null secret
+ [x] Sodium constructor invalid argument secret too short binary
+ [x] Sodium constructor invalid argument secret too short hex
+ [x] Sodium constructor invalid argument secret too long binary
+ [x] Sodium constructor invalid argument secret too long hex
+ [x] Sodium constructor invalid argument secret all printable characters
+ [x] Sodium from valid config file
+ [x] Sodium error exception bad config file
+ [x] Sodium type error config file without secret
+ [x] Sodium invalid argument config file secret too short
+ [x] Sodium invalid argument config file secret too long
+
 SimpleCacheAPCuException
  [x] Can we even access apcu from test environment
  [x] Default ttl invalid type null
