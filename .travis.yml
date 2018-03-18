@@ -8,6 +8,7 @@ before_install:
   - sudo add-apt-repository ppa:ondrej/php -y
   - sudo apt-get -qq update
   - sudo apt-get install -y libsodium-dev
+  - sudo apt-get install -y php-apcu
 install:
   - composer require phpunit/phpunit:${PHPUNIT_VERSION}
   - composer require psr/simple-cache:${PSRSIMPLE_VERSION}
