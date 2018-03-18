@@ -4,8 +4,9 @@ SimpleCacheAPCu
 This is an implementation of [PSR-16](https://www.php-fig.org/psr/psr-16/) for
 the APCu caching engine.
 
-Two different classes are provided, a standard class and an extension of that
-class that allows for AEAD encryption of the cached data.
+Two different classes are provided. The first just provides a PSR-16 compliant
+interface to APCu and the second provides encryption of the cached data via
+the libsodium extension.
 
 Please refer to the files [`INSTALL.md`](INSTALL.md), [`USAGE.md`](USAGE.md),
 and [`SURVIVAL.md`](SURVIVAL.md) for more information specific to
@@ -20,8 +21,7 @@ License this software is released under.
 * [About APCu Caching](#about-apcu-caching)
 * [About PHP-FIG and PSR-16](#about-php-fig-and-psr-16)
 * [Coding Standard](#coding-standard)
-* [Vimeo/Psalm](#vimeo-psalm)
-* [About Alice Wonder Miscreations and GNU/Linux](#about-alice-wonder-miscreations-and-gnu-linux)
+* [About AWonderPHP](#about-awonderphp)
 
 About APCu Caching
 ------------------
@@ -85,94 +85,37 @@ result.
 Coding Standard
 ---------------
 
-I am not a huge fan of so-called ‘Coding Standards’ that are about style
-than about security. I do not give a damn about things like four spaces
-instead of two or `if()` vs `if ()` of `function( $var)` vs `function($var)`
-and find such standards to be silly.
+The coding standard used is primarily
+[PSR-2](https://www.php-fig.org/psr/psr-2/) except with the closing `?>`
+allowed, and the addition of some
+[PHPDoc](https://en.wikipedia.org/wiki/PHPDoc) requirements largely but not
+completely borrowed from the
+[PEAR standard](http://pear.php.net/manual/en/standards.php).
 
-I care about standards like __NEVER__ putting script nodes in the `<body />`
-and `ALWAYS` attempting to make the interface as
-[accessible](https://www.w3.org/WAI/intro/accessibility.php) as possible and
-__NEVER__ using third party resources that track users.
+The intent is switch PHPDoc standard to
+[PSR-5](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc.md)
+if it ever becomes an accepted standard.
 
-Those are kind of coding standards I like.
-
-That being said, [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
-has a utility called `phpcbf` that makes it cake to take the style I am happy
-writing in and turning it into [PSR-2](https://www.php-fig.org/psr/psr-2/)
-compliant code. With the exception of closing `?>` tags, that is what I am
-doing for this project:
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <ruleset name="PHP_CodeSniffer">
-      <description>The coding standard for SimpleCacheAPCu</description>
-      <file>lib</file>
-      <arg name="basepath" value="."/>
-      <arg name="colors" />
-      <rule ref="PSR2">
-        <exclude name="PSR2.Files.ClosingTag" />
-        <exclude name="PSR2.Files.EndFileNewline" />
-      </rule>
-    </ruleset>
-
-However I will take patches that fix broken things in any form, because I am
-not a stuck up prick and I can run the `phpcs` and `phpcbf` utilities myself,
-which I already do anyway because PSR-2 is not what I do in my text editors
-(vim mostly and sometimes [bluefish](http://bluefish.openoffice.nl/))
-
-### Vimeo Psalm
-
-I recently discovered [Vimeo/Psalm](https://github.com/vimeo/psalm) and I must
-say it is a __FANTASTIC TOOL__. Notes related to both unfixed errors from
-`psalm` and any error/warning suppression will be maintained in the file
-[`PSALM.md`](PSALM.md).
-
-I *highly* recommend you use that tool in your own code.
+The `phpcs` sniff rules being used: [psr2.phpcs.xml](psr2.phpcs.xml)
 
 
-About Alice Wonder Miscreations and GNU Linux
----------------------------------------------
+About AWonderPHP
+----------------
 
-I have been using using Linux since [MKLinux DR3](http://mklinux.org/) in 1998.
-That distribution no longer exists, other than in fond memories. It was a port
-of Red Hat 5.2 to the Mach microkernel running on PowerPC hardware.
+I may become homeless before the end of 2018. I do not know how to survive, I
+try but what I try, it always seems to fail. This just is not a society people
+like me are meant to be a part of.
 
-I quickly transitioned to LinuxPPC 1999 and then Yellow Dog Linux, before I
-ultimately ditched PowerPC hardware for Red Hat 8 and then Fedora and now then
-[CentOS](https://www.centos.org/) when I got sick and tired of Fedora releases
-being End of Life as soon as the bugs were worked out and they started to feel
-somewhat stable.
+If I do become homeless, I fear my mental health will deteriorate at an
+accelerated rate and I do not want to witness that happening to myself.
 
-Currently I run CentOS 7, both on Linode] VM servers and on my desktop and my
-laptop (a Thinkpad T410 that is begging me to let it die, but I can not afford
-a replacement.)
+AWonderPHP is my attempt to clean up and package a lot of the PHP classes I
+personally use so that something of me will be left behind.
 
-I started and currently maintain the [LibreLAMP](https://librelamp.com/)
-project to bring a modern LAMP stack to CentOS 7 but build against LibreSSL
-instead of OpenSSL. It lets my servers have the stability of CentOS while
-running modern Apache, PHP, MariaDB, Dovecot, etc.
+If you wish to help, please see the [SURVIVAL.md](SURVIVAL.md) file.
 
-I also run a [Multimedia Repository](https://media.librelamp.com/) that
-provides a modern multimedia stack for CentOS 7 including FFmpeg, VLC, and a
-modern GStreamer.
+Thank you for your time.
 
-I am starting a new project to allow better management of PHP Libraries than
-Composer offers. I am calling it the
-[Composer Class Manager](https://github.com/AliceWonderMiscreations/CCM).
 
-It will allow platform independent management of PHP classes in a more security
-minded way than Composer does. Composer is great for development, but it really
-sucks for deployment as it is much like static linking.
-
-Many live web servers have vulnerable code they do not even know about because
-Composer pulled it in as a dependency and the `composer.lock` file prevents it
-from easily being updated.
-
-The CCM project will make the web more secure, if I am able to actually do it.
-See the `SURVIVAL.md` file for why I may not be able to.
-
-Thank you for your time, and thank you for using the free software I so
-passionately work on.
-
-Alice Out.
-
+-------------------------------------------------
+__EOF__
