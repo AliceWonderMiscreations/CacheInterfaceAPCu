@@ -53,10 +53,10 @@ __**NOTE:**__ To use the encryption enabled version of the class, see the
 
 ### The Web Application Prefix
 
-APCu does not provide any kind of namespacing, which means key collisions where
-two different web applications or the same web application on two different
-virtual hosts running on the same web server use the same key for different
-data.
+APCu does not provide any kind of namespacing, which means key collisions are
+possible when two different web applications or the same web application on two
+different virtual hosts running on the same web server use the same key for
+different data.
 
 Key collisions are bad. Not only can they potentially screw up how your
 application works, but they can potentially leak information.
@@ -80,7 +80,7 @@ you.
 
 ### Web Application Salt
 
-The key you supply to the class to store and fetch data with APCu is hsshed
+The key you supply to the class to store and fetch data with APCu is hashed
 using `ripemd160` and a sixteen character substring of the hex representation
 of that hash is then used as part of the internal key.
 
@@ -110,21 +110,21 @@ properties: The data itself, and the *data type*.
 When the data type does not match what the function or method expects, there
 are two options:
 
-A. Throw an exception and stop processing
-B. Attempt to recast the data type to what is needed
+1. Throw an exception and stop processing.
+2. Attempt to recast the data type to what is needed.
 
-You can not always do option B. You can not recast an array as an integer and
-you can not recast an object as a boolean.
+You can not always do option 2. You can not recast an array as an integer and
+you can not recast an object as a Boolean, for example.
 
 It also can be dangerous to recast. If a function that normally outputs an
-integer fails and instead responds with the boolean type False, that boolean
+integer fails and instead responds with the Boolean type False, that Boolean
 False if recast as an integer would equate to 0 which may cause problems if
 the code did not check the data type before using it as an integer.
 
 I prefer Option A, to throw an exception when the data type is not what is
 expected, but PSR-16 does not specify strict data type checking, so it is an
 option that is disabled by default. With the default of false, this class
-recast data types when I believe it is safe to do so.
+recasts data types *when I believe it is safe to do so*.
 
 To enable strict data type checking, set the third option to true:
 
@@ -138,12 +138,8 @@ method uses type hinting to let PHP know what type the method expects. This
 is because with type hinting, PHP will automatically recast the type if it
 can and throw a `TypeError` exception if it can not.
 
-Personally I find automatic type casting to be dangerous, so this class does
-use parameter type hinting *except* with this parameter, to make sure that if
-a value is specified, it is type `bool`. All other parameters, the type is
-checked by the method itself. If `$strictType` is `FALSE` *and* it is *safe*
-to recast a parameter that does not meet the expected type, then the method
-will recast the parameter itself. Otherwise it throws an exception.
+Personally I find automatic type casting to be dangerous, so I do not use
+parameter type hinting very often.
 
 
 PSR-16 Parameters
@@ -369,7 +365,7 @@ uncaught error happened somewhere (or it is sloppy code).
 
 Under those circumstances, this class will throw a:
 
-    \AWonderPHP\SimpleCacheAPCu\StrictTypeException
+    \AWonderPHP\SimpleCache\StrictTypeException
         extends \TypeError
         implements \Psr\SimpleCache\InvalidArgumentException
 
@@ -386,7 +382,7 @@ contain one of the characters PSR-16 considers to be reserved.
 
 In those circumstances, this class will throw a:
 
-    \AWonderPHP\SimpleCacheAPCu\InvalidArgumentException
+    \AWonderPHP\SimpleCache\InvalidArgumentException
         extends \InvalidArgumentException
         implements \Psr\SimpleCache\InvalidArgumentException
 
@@ -474,32 +470,24 @@ You can also of course add custom methods of your own.
 UNIT TESTING
 ------------
 
-Unit Tests are __NOT__ being done with [PHPUnit](https://phpunit.de/) because
-APCu stores its cache in the server daemon memory and PHPUnit uses the php-cli
-environment.
+Unit tests are currently being done with [PHPUnit 7](https://phpunit.de/).
 
-It is *possible* to configure APCu to work with `php-cli` and that *might*
-allow unit testing with PHPUnit, but it would mean everyone who uses this class
-would have configure APCu to work within php-cli in order to run the unit tests.
+Because PHPUnit runs on the command line and not through the web server,
+the tests will largely fail if you do have
 
-Instead, I wrote the unit tests to work within a web browser and generate a
-[Markdown](https://daringfireball.net/projects/markdown/syntax) compatible
-report.
+    apc.enable_cli=1
 
-I actually spent more time on the unit tests than on the class itself, but it
-was important to do so as it revealed some bugs (e.g. improper handling of
-cached boolean type).
+set in your APCu configuration file.
 
-I will be rewriting the unit tests, creating a framework that makes it easy for
-me to reuse the same style of unit testing elsewhere and with better ability
-report what went wrong in the failures.
+I have attempted specifically setting that option at the beginning of the
+tests and in the `phpunit.xml` file, but so far without success.
 
-I will not be able to create something as extensive as PHPUnit, but I actually
-see value in being able to run the tests within a server configured the same
-way as the production server and generate a markdown report of the tests.
+For the [`travis-ci`](https://travis-ci.org/) builds I am *hoping* there
+is a way to turn that on before the test runs but I have no found it yet.
+Perhaps a `sudo` sed command that modifies the configuration file would
+work, but I have not tried yet. I first would need to figure out where
+they keep the configuration file for that.
 
-The actual unit tests themselves are within classes in the `Test/` subdirectory
-of the `lib/` directory, and the script that runs the tests is within the
-`tests/` directory that is parallel to the `lib/` directory.
 
-More extensive testing is planned once I design the framework for it.
+-------------------------------------------------
+__EOF__

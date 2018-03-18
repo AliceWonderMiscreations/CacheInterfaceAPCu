@@ -1,9 +1,8 @@
 SimpleCacheAPCuSodium Class Usage
 =================================
 
-The `SimpleCacheAPCuSodium` class extends the `SimpleCacheAPCuSodium` class to
-provide AEAD encryption/decryption of the `value` portion of the `key => value`
-pairs cached in APCu.
+The `SimpleCacheAPCuSodium` class provides AEAD encryption/decryption of the
+`value` portion of the `key => value` pairs cached in APCu.
 
 The problem I am trying to solve, APCu does not require any authentication to
 query or create cached records. It also runs directly in server memory, which

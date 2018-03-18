@@ -54,3 +54,7 @@ Class Usage
 -----------
 
 Please see the file [`USAGE.md`](USAGE.md) for class usage.
+
+
+-------------------------------------------------
+__EOF__
