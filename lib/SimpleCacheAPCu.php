@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * An implementation of the PSR-16 SimpleCache Interface for APCu.
@@ -40,7 +40,6 @@ class SimpleCacheAPCu extends \AWonderPHP\SimpleCache\SimpleCache implements \Ps
         return $default;
     }//end cacheFetch()
 
-
     /**
      * A wrapper for the actual store of key => value pair in the cache.
      *
@@ -56,7 +55,6 @@ class SimpleCacheAPCu extends \AWonderPHP\SimpleCache\SimpleCache implements \Ps
         return apcu_store($realKey, $value, $seconds);
     }//end cacheStore()
 
-
     /**
      * A wrapper for the actual delete of a key => value pair in the cache.
      *
@@ -68,7 +66,6 @@ class SimpleCacheAPCu extends \AWonderPHP\SimpleCache\SimpleCache implements \Ps
     {
         return apcu_delete($realKey);
     }//end cacheDelete()
-
 
     /**
      * Wipes clean the entire cache's keys. This implementation only wipes for matching
@@ -105,7 +102,6 @@ class SimpleCacheAPCu extends \AWonderPHP\SimpleCache\SimpleCache implements \Ps
         return false;
     }//end clear()
 
-
     /**
      * Wipes clean the entire cache's keys regardless of webappPrefix.
      *
@@ -122,7 +118,6 @@ class SimpleCacheAPCu extends \AWonderPHP\SimpleCache\SimpleCache implements \Ps
         }
         return $return;
     }//end clearAll()
-
 
     /**
      * Determines whether an item is present in the cache.
@@ -144,7 +139,6 @@ class SimpleCacheAPCu extends \AWonderPHP\SimpleCache\SimpleCache implements \Ps
         }
         return false;
     }//end has()
-
 
     /**
      * Class constructor function. Takes three arguments with defaults.

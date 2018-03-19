@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * Unit testing for SimpleCacheAPCu Exceptions
+ * Unit testing for SimpleCacheAPCu Exceptions.
  *
  * @package AWonderPHP/SimpleCacheAPCu
  * @author  Alice Wonder <paypal@domblogger.net>
@@ -13,20 +13,20 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test class for SimpleCacheAPCu Exceptions no strict no encryption
+ * Test class for SimpleCacheAPCu Exceptions no strict no encryption.
  */
 // @codingStandardsIgnoreLine
 final class SimpleCacheAPCuExceptionTest extends TestCase
 {
     /**
-     * The test object
+     * The test object.
      *
      * @var \AWonderPHP\SimpleCache\SimpleCache
      */
     private $testNotStrict;
 
     /**
-     * PHPUnit Setup, create an instance of SimpleCacheAPCu
+     * PHPUnit Setup, create an instance of SimpleCacheAPCu.
      *
      * @return void
      */
@@ -34,9 +34,9 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     {
         $this->testNotStrict = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
     }//end setUp()
-    
+
     /**
-     * Check to see if APCu is even possible
+     * Check to see if APCu is even possible.
      *
      * @return void
      */
@@ -47,11 +47,10 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
         $this->assertEquals(1, $test);
     }//end testCanWeEvenAccessApcuFromTestEnvironment()
 
-
     /* type error tests */
 
     /**
-     * Feed null data when setting the default TTL
+     * Feed null data when setting the default TTL.
      *
      * @psalm-suppress NullArgument
      *
@@ -65,7 +64,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testDefaultTtlInvalidTypeNull()
 
     /**
-     * Feed boolean data when setting the default TTL
+     * Feed boolean data when setting the default TTL.
      *
      * @psalm-suppress PossiblyFalseArgument
      *
@@ -79,7 +78,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testDefaultTtlInvalidTypeBoolean()
 
     /**
-     * Feed array data when setting the default TTL
+     * Feed array data when setting the default TTL.
      *
      * @psalm-suppress InvalidArgument
      *
@@ -93,7 +92,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testDefaultTtlInvalidTypeArray()
 
     /**
-     * Feed stdClass object data when setting the default TTL
+     * Feed stdClass object data when setting the default TTL.
      *
      * @psalm-suppress InvalidArgument
      *
@@ -108,7 +107,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testDefaultTtlInvalidTypeObject()
 
     /**
-     * Use null as key
+     * Use null as key.
      *
      * @psalm-suppress NullArgument
      *
@@ -123,7 +122,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testCacheKeyInvalidTypeNull()
 
     /**
-     * Use boolean as key
+     * Use boolean as key.
      *
      * @psalm-suppress InvalidScalarArgument
      *
@@ -138,7 +137,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testCacheKeyInvalidTypeBoolean()
 
     /**
-     * Use array as key
+     * Use array as key.
      *
      * @psalm-suppress InvalidArgument
      *
@@ -153,7 +152,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testCacheKeyInvalidTypeArray()
 
     /**
-     * Use object as key
+     * Use object as key.
      *
      * @psalm-suppress InvalidArgument
      *
@@ -169,7 +168,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testCacheKeyInvalidTypeObject()
 
     /**
-     * Use boolean for key pair ttl
+     * Use boolean for key pair ttl.
      *
      * @psalm-suppress InvalidScalarArgument
      *
@@ -183,7 +182,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairTtlInvalidTypeBoolean()
 
     /**
-     * Use array for key pair ttl
+     * Use array for key pair ttl.
      *
      * @psalm-suppress InvalidArgument
      *
@@ -197,7 +196,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairTtlInvalidTypeArray()
 
     /**
-     * Use object for key pair ttl
+     * Use object for key pair ttl.
      *
      * @psalm-suppress InvalidArgument
      *
@@ -282,7 +281,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetMultipleInvalidTypeString()
 
     /**
-     * Set multiple with iterable but key not string
+     * Set multiple with iterable but key not string.
      *
      * @return void
      */
@@ -378,7 +377,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testGetMultipleInvalidTypeString()
 
     /**
-     * Get multiple with iterable but key not string
+     * Get multiple with iterable but key not string.
      *
      * @return void
      */
@@ -406,7 +405,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     /* Invalid Argument Tests */
 
     /**
-     * Try setting a negative default ttl integer
+     * Try setting a negative default ttl integer.
      *
      * @return void
      */
@@ -418,7 +417,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testDefaultTtlInvalidArgumentNegativeInteger()
 
     /**
-     * Try setting a negative default ttl DateInterval
+     * Try setting a negative default ttl DateInterval.
      *
      * @return void
      */
@@ -434,7 +433,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testDefaultTtlInvalidArgumentNegativeDateInterval()
 
     /**
-     * Try setting empty key
+     * Try setting empty key.
      *
      * @return void
      */
@@ -447,7 +446,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairInvalidArgumentEmptyKey()
 
     /**
-     * Try setting barely too long key
+     * Try setting barely too long key.
      *
      * @return void
      */
@@ -468,7 +467,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairInvalidArgumentKeyBarelyTooLong()
 
     /**
-     * Reserved Character In Key Left Curly
+     * Reserved Character In Key Left Curly.
      *
      * @return void
      */
@@ -481,7 +480,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairInvalidArgumentKeyContainsLeftCurly()
 
     /**
-     * Reserved Character In Key Right Curly
+     * Reserved Character In Key Right Curly.
      *
      * @return void
      */
@@ -494,7 +493,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairInvalidArgumentKeyContainsRightCurly()
 
     /**
-     * Reserved Character In Key Left Parenthesis
+     * Reserved Character In Key Left Parenthesis.
      *
      * @return void
      */
@@ -507,7 +506,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairInvalidArgumentKeyContainsLeftParenthesis()
 
     /**
-     * Reserved Character In Key Right Parenthesis
+     * Reserved Character In Key Right Parenthesis.
      *
      * @return void
      */
@@ -520,7 +519,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairInvalidArgumentKeyContainsRightParenthesis()
 
     /**
-     * Reserved Character In Key Forward Slash
+     * Reserved Character In Key Forward Slash.
      *
      * @return void
      */
@@ -533,7 +532,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairInvalidArgumentKeyContainsForwardSlash()
 
     /**
-     * Reserved Character In Key Back Slash
+     * Reserved Character In Key Back Slash.
      *
      * @return void
      */
@@ -546,7 +545,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairInvalidArgumentKeyContainsBackSlash()
 
     /**
-     * Reserved Character In Key atmark
+     * Reserved Character In Key atmark.
      *
      * @return void
      */
@@ -559,7 +558,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairInvalidArgumentKeyContainsAtmark()
 
     /**
-     * Reserved Character In Key colon
+     * Reserved Character In Key colon.
      *
      * @return void
      */
@@ -572,7 +571,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairInvalidArgumentKeyContainsColon()
 
     /**
-     * Negative TTL in set integer
+     * Negative TTL in set integer.
      *
      * @return void
      */
@@ -586,7 +585,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairTtlInvalidArgumentNegativeInteger()
 
     /**
-     * Negative TTL Date String In Past
+     * Negative TTL Date String In Past.
      *
      * @return void
      */
@@ -600,7 +599,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairTtlInvalidArgumentDateStringInPast()
 
     /**
-     * Negative TTL Date Range In Past
+     * Negative TTL Date Range In Past.
      *
      * @return void
      */
@@ -614,7 +613,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairTtlInvalidArgumentDateRangeInPast()
 
     /**
-     * Negative TTL Date Interval In Past
+     * Negative TTL Date Interval In Past.
      *
      * @return void
      */
@@ -632,7 +631,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairTtlInvalidArgumentNegativeDateInterval()
 
     /**
-     * Bogus String TTL
+     * Bogus String TTL.
      *
      * @return void
      */
@@ -646,7 +645,7 @@ final class SimpleCacheAPCuExceptionTest extends TestCase
     }//end testSetKeyPairTtlInvalidArgumentBogusString()
 
     /**
-     * Test key in iterable not legal
+     * Test key in iterable not legal.
      *
      * @return void
      */

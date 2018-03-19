@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * Unit testing for SimpleCacheAPCu Exceptions strict mode
+ * Unit testing for SimpleCacheAPCu Exceptions strict mode.
  *
  * @package AWonderPHP/SimpleCacheAPCu
  * @author  Alice Wonder <paypal@domblogger.net>
@@ -13,20 +13,20 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test class for SimpleCache no strict no encryption
+ * Test class for SimpleCache no strict no encryption.
  */
 // @codingStandardsIgnoreLine
 final class SimpleCacheAPCuStrictExceptionTest extends TestCase
 {
     /**
-     * The test object
+     * The test object.
      *
      * @var \AWonderPHP\SimpleCache\SimpleCache
      */
     private $testStrict;
 
     /**
-     * PHPUnit Setup, create an instance of SimpleCacheAPCu
+     * PHPUnit Setup, create an instance of SimpleCacheAPCu.
      *
      * @return void
      */
@@ -34,9 +34,9 @@ final class SimpleCacheAPCuStrictExceptionTest extends TestCase
     {
         $this->testStrict = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, null, true);
     }//end setUp()
-    
+
     /**
-     * Check to see if APCu is even possible
+     * Check to see if APCu is even possible.
      *
      * @return void
      */
@@ -46,7 +46,6 @@ final class SimpleCacheAPCuStrictExceptionTest extends TestCase
         $test = (int)$test;
         $this->assertEquals(1, $test);
     }//end testCanWeEvenAccessApcuFromTestEnvironment()
-
 
     /* type error tests */
 
@@ -65,7 +64,7 @@ final class SimpleCacheAPCuStrictExceptionTest extends TestCase
     }//end testDefaultTtlInvalidTypeFloat()
 
     /**
-     * Use integer as key. Strict test only
+     * Use integer as key. Strict test only.
      *
      * @psalm-suppress InvalidScalarArgument
      *
@@ -80,7 +79,7 @@ final class SimpleCacheAPCuStrictExceptionTest extends TestCase
     }//end testCacheKeyInvalidTypeInteger()
 
     /**
-     * Use float as key. Strict test only
+     * Use float as key. Strict test only.
      *
      * @psalm-suppress InvalidScalarArgument
      *
@@ -95,7 +94,7 @@ final class SimpleCacheAPCuStrictExceptionTest extends TestCase
     }//end testCacheKeyInvalidTypeFloat()
 
     /**
-     * Use float for key pair ttl. Strict test only
+     * Use float for key pair ttl. Strict test only.
      *
      * @psalm-suppress InvalidScalarArgument
      *

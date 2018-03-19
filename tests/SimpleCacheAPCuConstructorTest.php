@@ -19,14 +19,14 @@ use PHPUnit\Framework\TestCase;
 final class SimpleCacheAPCuConstructorTest extends TestCase
 {
     /**
-     * The directory with test data
+     * The directory with JSON config test data.
      *
      * @var string
      */
     protected $tdir;
-    
+
     /**
-     * Setup function to set test data directory
+     * Setup function to set test data directory.
      *
      * @return void
      */
@@ -36,7 +36,7 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
     }//end setUp()
 
     /**
-     * Check to see if APCu is even possible
+     * Check to see if APCu is even possible.
      *
      * @return void
      */
@@ -48,7 +48,7 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
     }//end testCanWeEvenAccessApcuFromTestEnvironment()
 
     /**
-     * Check to see if three character prefix works
+     * Check to see if three character prefix works.
      *
      * @return void
      */
@@ -65,9 +65,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $this->assertEquals($prefix, $setPrefix);
     }//end testConstructorUsingThreeCharacterPrefix()
 
-    
     /**
-     * Check to see if three character prefix works
+     * Check to see if three character prefix works.
      *
      * @return void
      */
@@ -84,9 +83,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $this->assertEquals($prefix, $setPrefix);
     }//end testConstructorUsingThirtyTwoCharacterPrefix()
 
-    
     /**
-     * Check for failure on null empty prefix
+     * Check for failure on empty prefix.
      *
      * @return void
      */
@@ -97,9 +95,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
     }//end testConstructorInvalidArgumentEmptyPrefix()
 
-    
     /**
-     * Check for failure on two letter prefix
+     * Check for failure on two letter prefix.
      *
      * @return void
      */
@@ -110,9 +107,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
     }//end testConstructorInvalidArgumentTwoLetterPrefix()
 
-    
     /**
-     * Check for failure on non-alphanumeric
+     * Check for failure on non-alphanumeric prefix.
      *
      * @return void
      */
@@ -123,9 +119,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
     }//end testConstructorInvalidArgumentNonAlphaNumericPrefix()
 
-    
     /**
-     * Check for failure on 33 letter prefix
+     * Check for failure on 33 letter prefix.
      *
      * @return void
      */
@@ -136,9 +131,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
     }//end testConstructorInvalidArgument33LetterPrefix()
 
-    
     /**
-     * Check for failure on boolean prefix
+     * Check for failure on boolean prefix.
      *
      * @psalm-suppress InvalidScalarArgument
      *
@@ -151,9 +145,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
     }//end testConstructorInvalidTypePrefixBoolean()
 
-    
     /**
-     * Check for failure on array prefix
+     * Check for failure on array prefix.
      *
      * @psalm-suppress InvalidArgument
      *
@@ -166,9 +159,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
     }//end testConstructorInvalidTypePrefixArray()
 
-    
     /**
-     * Check for failure on object prefix
+     * Check for failure on object prefix.
      *
      * @psalm-suppress InvalidArgument
      *
@@ -182,9 +174,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
     }//end testConstructorInvalidTypePrefixObject()
 
-    
     /**
-     * Check for strict failure on integer prefix
+     * Check for strict failure on integer prefix.
      *
      * @psalm-suppress InvalidScalarArgument
      *
@@ -198,9 +189,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, null, true);
     }//end testConstructorStrictInvalidTypePrefixInteger()
 
-    
     /**
-     * Check for strict failure on float prefix
+     * Check for strict failure on float prefix.
      *
      * @psalm-suppress InvalidScalarArgument
      *
@@ -214,9 +204,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix, null, true);
     }//end testConstructorStrictInvalidTypePrefixFloat()
 
-    
     /**
-     * Check to see if eight character salt works
+     * Check to see if eight character salt works.
      *
      * @return void
      */
@@ -225,27 +214,20 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $salt = 'ldr##sdr';
         $simpleCacheA = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, $salt);
         $simpleCacheB = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
-        
         $key = 'Some Key';
         $value = 'Some Value';
-        
         $simpleCacheA->set($key, $value);
         $simpleCacheB->set($key, $value);
-        
         $a = $simpleCacheA->get($key);
         $b = $simpleCacheB->get($key);
-        
         $this->assertEquals($a, $b);
-        
         $realKeyA = $simpleCacheA->getRealKey($key);
         $realKeyB = $simpleCacheB->getRealKey($key);
-        
         $this->assertNotEquals($realKeyA, $realKeyB);
     }//end testConstructorUsingEightCharacterSalt()
 
-    
     /**
-     * Check to see if really long salt works
+     * Check to see if really long salt works.
      *
      * @return void
      */
@@ -258,27 +240,20 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         }
         $simpleCacheA = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, $salt);
         $simpleCacheB = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu();
-        
         $key = 'Some Key';
         $value = 'Some Value';
-        
         $simpleCacheA->set($key, $value);
         $simpleCacheB->set($key, $value);
-        
         $a = $simpleCacheA->get($key);
         $b = $simpleCacheB->get($key);
-        
         $this->assertEquals($a, $b);
-        
         $realKeyA = $simpleCacheA->getRealKey($key);
         $realKeyB = $simpleCacheB->getRealKey($key);
-        
         $this->assertNotEquals($realKeyA, $realKeyB);
     }//end testConstructorUsingAbsurdlyLongSalt()
 
-    
     /**
-     * Check for failure on empty salt
+     * Check for failure on empty salt.
      *
      * @return void
      */
@@ -289,9 +264,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, $salt);
     }//end testConstructorInvalidArgumentEmptySalt()
 
-    
     /**
-     * Check for failure on too short salt
+     * Check for failure on too short salt.
      *
      * @return void
      */
@@ -302,9 +276,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, $salt);
     }//end testConstructorInvalidArgumentSevenCharacterSalt()
 
-    
     /**
-     * Check for failure on boolean salt
+     * Check for failure on boolean salt.
      *
      * @psalm-suppress InvalidScalarArgument
      *
@@ -317,9 +290,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, $salt);
     }//end testConstructorInvalidTypeSaltBoolean()
 
-    
     /**
-     * Check for failure on array salt
+     * Check for failure on array salt.
      *
      * @psalm-suppress InvalidArgument
      *
@@ -332,9 +304,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, $salt);
     }//end testConstructorInvalidTypeSaltArray()
 
-    
     /**
-     * Check for failure on object salt
+     * Check for failure on object salt.
      *
      * @psalm-suppress InvalidArgument
      *
@@ -348,9 +319,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, $salt);
     }//end testConstructorInvalidTypeSaltObject()
 
-
     /**
-     * Check for strict failure on integer salt
+     * Check for strict failure on integer salt.
      *
      * @psalm-suppress InvalidScalarArgument
      *
@@ -363,9 +333,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, $salt, true);
     }//end testConstructorStrictInvalidTypeSaltInteger()
 
-    
     /**
-     * Check for strict failure on float salt
+     * Check for strict failure on float salt.
      *
      * @psalm-suppress InvalidScalarArgument
      *
@@ -378,11 +347,10 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu(null, $salt, true);
     }//end testConstructorStrictInvalidTypeSaltFloat()
 
-
     /* sodium related */
-    
+
     /**
-     * Check for failure on null key to sodium
+     * Check for failure on null key to sodium.
      *
      * @psalm-suppress NullArgument
      *
@@ -395,9 +363,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($secret);
     }//end testSodiumConstructorTypeErrorNullSecret()
 
-    
     /**
-     * Check for failure on secret to short binary
+     * Check for failure on secret too short binary.
      *
      * @return void
      */
@@ -408,9 +375,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($secret);
     }//end testSodiumConstructorInvalidArgumentSecretTooShortBinary()
 
-    
     /**
-     * Check for failure on secret to short hex
+     * Check for failure on secret too short hex.
      *
      * @return void
      */
@@ -422,9 +388,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hex);
     }//end testSodiumConstructorInvalidArgumentSecretTooShortHex()
 
-    
     /**
-     * Check for failure on secret to long binary
+     * Check for failure on secret too long binary.
      *
      * @return void
      */
@@ -435,9 +400,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($secret);
     }//end testSodiumConstructorInvalidArgumentSecretTooLongBinary()
 
-    
     /**
-     * Check for failure on secret to long hex
+     * Check for failure on secret too long hex.
      *
      * @return void
      */
@@ -449,9 +413,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($hex);
     }//end testSodiumConstructorInvalidArgumentSecretTooLongHex()
 
-    
     /**
-     * Check for failure on printable secret
+     * Check for failure on printable secret.
      *
      * @return void
      */
@@ -463,11 +426,10 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($secret);
     }//end testSodiumConstructorInvalidArgumentSecretAllPrintableCharacters()
 
-    
     /* configuration file */
-    
+
     /**
-     * Check that we can load from valid config file
+     * Check that we can load from valid config file.
      *
      * @return void
      */
@@ -482,9 +444,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $this->assertEquals($a, $value);
     }//end testSodiumFromValidConfigFile()
 
-    
     /**
-     * Check for error bad config file
+     * Check for error bad config file.
      *
      * @return void
      */
@@ -495,9 +456,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($json);
     }//end testSodiumErrorExceptionBadConfigFile()
 
-    
     /**
-     * Check for error config file no secret
+     * Check for error config file no secret.
      *
      * @return void
      */
@@ -508,9 +468,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($json);
     }//end testSodiumTypeErrorConfigFileWithoutSecret()
 
-    
     /**
-     * Check for error config file secret too short
+     * Check for error config file secret too short.
      *
      * @return void
      */
@@ -521,9 +480,8 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCache = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCuSodium($json);
     }//end testSodiumInvalidArgumentConfigFileSecretTooShort()
 
-    
     /**
-     * Check for error config file secret too long
+     * Check for error config file secret too long.
      *
      * @return void
      */
@@ -535,7 +493,7 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
     }//end testSodiumInvalidArgumentConfigFileSecretTooLong()
 
     /**
-     * Test to make sure we can clear the local cache without clearing other cache
+     * Test to make sure we can clear the local cache without clearing other cache.
      *
      * @return void
      */
@@ -546,7 +504,6 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCacheA = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         $prefix = 'IAMUNIQUE';
         $simpleCacheB = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        
         $simpleCacheA->set('KeyShouldSurvive', 'Staying Alive');
         $simpleCacheB->set('key1', 'value1');
         $simpleCacheB->set('key2', 'value2');
@@ -554,30 +511,23 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCacheB->set('key4', 'value4');
         $simpleCacheB->set('key5', 'value5');
         $simpleCacheA->set('KeyShouldAlsoSurvive', 'Ooh ooh ooh ooh');
-        
         // there should be seven total entries
         $info = apcu_cache_info();
         $count = count($info['cache_list']);
-        
         $this->assertEquals(7, $count);
-        
         $simpleCacheB->clear();
-        
         // now there should be two
         $info = apcu_cache_info();
         $count = count($info['cache_list']);
-        
         $this->assertEquals(2, $count);
-        
         $value = $simpleCacheA->get('KeyShouldSurvive');
         $this->assertEquals('Staying Alive', $value);
         $value = $simpleCacheA->get('KeyShouldAlsoSurvive');
         $this->assertEquals('Ooh ooh ooh ooh', $value);
     }//end testCacheClearLocalPrefixOnly()
 
-    
     /**
-     * Test to make sure we can clear everything
+     * Test to make sure we can clear everything.
      *
      * @return void
      */
@@ -590,37 +540,29 @@ final class SimpleCacheAPCuConstructorTest extends TestCase
         $simpleCacheB = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
         $prefix = 'PREFIXC';
         $simpleCacheC = new \AWonderPHP\SimpleCacheAPCu\SimpleCacheAPCu($prefix);
-        
         $simpleCacheA->set('key1', 'value1');
         $simpleCacheA->set('key2', 'value2');
         $simpleCacheA->set('key3', 'value3');
         $simpleCacheA->set('key4', 'value4');
         $simpleCacheA->set('key5', 'value5');
-        
         $simpleCacheB->set('key6', 'value6');
         $simpleCacheB->set('key7', 'value7');
         $simpleCacheB->set('key8', 'value8');
         $simpleCacheB->set('key9', 'value9');
         $simpleCacheB->set('key10', 'value10');
-        
         $simpleCacheC->set('key11', 'value11');
         $simpleCacheC->set('key12', 'value12');
         $simpleCacheC->set('key13', 'value13');
         $simpleCacheC->set('key14', 'value14');
         $simpleCacheC->set('key15', 'value15');
-        
         // there should be fifteen total entries
         $info = apcu_cache_info();
         $count = count($info['cache_list']);
-        
         $this->assertEquals(15, $count);
-        
         $simpleCacheA->clearAll();
-        
         // now there should be 0
         $info = apcu_cache_info();
         $count = count($info['cache_list']);
-        
         $this->assertEquals(0, $count);
     }//end testCacheClearEverything()
 }//end class

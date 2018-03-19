@@ -13,20 +13,20 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test class for SimpleCache no strict no encryption
+ * Test class for SimpleCache no strict no encryption.
  */
 // @codingStandardsIgnoreLine
 final class SimpleCacheAPCuTest extends TestCase
 {
     /**
-     * The test object
+     * The test object.
      *
      * @var \AWonderPHP\SimpleCache\SimpleCache
      */
     private $testNotStrict;
 
     /**
-     * PHPUnit Setup, create an anonymous class instance of SimpleCache
+     * PHPUnit Setup, create an anonymous class instance of SimpleCache.
      *
      * @return void
      */
@@ -36,7 +36,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end setUp()
 
     /**
-     * Check to see if APCu is even possible
+     * Check to see if APCu is even possible.
      *
      * @return void
      */
@@ -118,7 +118,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testSetAndRetrieveBoolean()
 
     /**
-     * Set and retrieve a null
+     * Set and retrieve a null.
      *
      * @return void
      */
@@ -190,7 +190,6 @@ final class SimpleCacheAPCuTest extends TestCase
         $a = $this->testNotStrict->get($key);
         $bool = is_object($a);
         $this->assertTrue($bool);
-
         $this->assertEquals($testObj->testInt, $a->testInt);
         $this->assertEquals($testObj->testFloat, $a->testFloat);
         $this->assertEquals($testObj->testString, $a->testString);
@@ -201,7 +200,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testSetAndRetrieveObject()
 
     /**
-     * Delete a key
+     * Delete a key.
      *
      * @return void
      */
@@ -216,7 +215,6 @@ final class SimpleCacheAPCuTest extends TestCase
         $this->assertTrue($bool);
         $bool = $this->testNotStrict->has('Test Key 3');
         $this->assertTrue($bool);
-
         $this->testNotStrict->delete('Test Key 2');
         $bool = $this->testNotStrict->has('Test Key 1');
         $this->assertTrue($bool);
@@ -227,7 +225,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testDeleteAKey()
 
     /**
-     * Test Key Length of 1 character
+     * Test Key Length of 1 character.
      *
      * @return void
      */
@@ -241,7 +239,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testAcceptKeyLengthOf1()
 
     /**
-     * Test Key Length of 255 characters
+     * Test Key Length of 255 characters.
      *
      * @return void
      */
@@ -256,7 +254,6 @@ final class SimpleCacheAPCuTest extends TestCase
         $key .= $a;
         $keylength = strlen($key);
         $this->assertEquals(255, $keylength);
-
         $expected = 'fooBar 2001';
         $this->testNotStrict->set($key, $expected);
         $actual = $this->testNotStrict->get($key);
@@ -264,7 +261,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testAcceptKeyLengthOf255()
 
     /**
-     * Accept multibyte character key
+     * Accept multibyte character key.
      *
      * @return void
      */
@@ -278,7 +275,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testAcceptMultibyteCharacterKey()
 
     /**
-     * Set ttl for key => value pair as integer
+     * Set ttl for key => value pair as integer.
      *
      * @return void
      */
@@ -300,7 +297,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testSetCacheLifeAsInteger()
 
     /**
-     * Set ttl for key => value with unix timestamp
+     * Set ttl for key => value with unix timestamp.
      *
      * @return void
      */
@@ -324,7 +321,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testSetCacheLifeAsUnixTimestamp()
 
     /**
-     * Set ttl for key => value with date range
+     * Set ttl for key => value with date range.
      *
      * @return void
      */
@@ -347,7 +344,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testSetCacheLifeAsStringWithDateRange()
 
     /**
-     * Set TTL for key => value with date as string
+     * Set TTL for key => value with date as string.
      *
      * @return void
      */
@@ -375,7 +372,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testSetCacheLifeAsStringWithFixedDate()
 
     /**
-     * Test with a very very very large TTL but not current timestamp large
+     * Test with a very very very large TTL but not current timestamp large.
      *
      * @return void
      */
@@ -398,7 +395,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testSetCacheLifeAsVeryVeryLargeInteger()
 
     /**
-     * Test setting $key => $value pair as a DateInterval object
+     * Test setting $key => $value pair as a DateInterval object.
      *
      * @return void
      */
@@ -422,7 +419,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testSetCacheLifeAsDateIntervalObject()
 
     /**
-     * Set default TTL with integer
+     * Set default TTL with integer.
      *
      * @return void
      */
@@ -445,7 +442,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testSetDefaultSecondsWithInteger()
 
     /**
-     * Set default TTL with DateInterval
+     * Set default TTL with DateInterval.
      *
      * @return void
      */
@@ -470,7 +467,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testDefaultSecondsWithDateInterval()
 
     /**
-     * Set multiple key => value pairs
+     * Set multiple key => value pairs.
      *
      * @return void
      */
@@ -491,9 +488,7 @@ final class SimpleCacheAPCuTest extends TestCase
         );
         $arr['Hello'] = null;
         $arr['Goodbye'] = null;
-
         $this->testNotStrict->setMultiple($arr);
-
         foreach (array(
             'testInt',
             'testFloat',
@@ -523,7 +518,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testSetMultipleKeyValuePairsAtOnce()
 
     /**
-     * Test Get Multiple Pairs At Once
+     * Test Get Multiple Pairs At Once.
      *
      * @return void
      */
@@ -544,16 +539,13 @@ final class SimpleCacheAPCuTest extends TestCase
         );
         $arr['Hello'] = null;
         $arr['Goodbye'] = null;
-
         $this->testNotStrict->setMultiple($arr);
-
         $tarr = array();
         $tarr[] = 'testBoolean';
         $tarr[] = 'testFloat';
         $tarr[] = 'testCacheMiss';
         $tarr[] = 'testString';
         $result = $this->testNotStrict->getMultiple($tarr);
-
         $boolean = array_key_exists('testBoolean', $result);
         $this->assertTrue($boolean);
         $boolean = array_key_exists('testFloat', $result);
@@ -562,7 +554,6 @@ final class SimpleCacheAPCuTest extends TestCase
         $this->assertTrue($boolean);
         $boolean = array_key_exists('testString', $result);
         $this->assertTrue($boolean);
-
         $this->assertEquals($result['testBoolean'], $arr['testBoolean']);
         $this->assertEquals($result['testFloat'], $arr['testFloat']);
         $this->assertEquals($result['testString'], $arr['testString']);
@@ -570,7 +561,7 @@ final class SimpleCacheAPCuTest extends TestCase
     }//end testGetMultipleKeyValuePairsAtOnce()
 
     /**
-     * Test deleting multiple keys at once
+     * Test deleting multiple keys at once.
      *
      * @return void
      */
@@ -597,7 +588,6 @@ final class SimpleCacheAPCuTest extends TestCase
         }
         $delcount = count($del);
         $expected = $start - $delcount;
-
         $this->testNotStrict->deleteMultiple($del);
         $hits = 0;
         for ($i=0; $i<= $records; $i++) {

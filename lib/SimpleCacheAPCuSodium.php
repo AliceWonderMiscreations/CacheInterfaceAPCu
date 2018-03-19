@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * An implementation of the PSR-16 SimpleCache Interface for APCu that uses AEAD
@@ -42,7 +42,6 @@ class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implemen
         return $default;
     }//end cacheFetch()
 
-
     /**
      * A wrapper for the actual store of key => value pair in the cache.
      *
@@ -70,7 +69,6 @@ class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implemen
         return apcu_store($realKey, $obj, $seconds);
     }//end cacheStore()
 
-    
     /**
      * A wrapper for the actual delete of a key => value pair in the cache.
      *
@@ -82,7 +80,6 @@ class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implemen
     {
         return apcu_delete($realKey);
     }//end cacheDelete()
-
     
     /**
      * Wipes clean the entire cache's keys. This implementation only wipes for matching
@@ -119,7 +116,6 @@ class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implemen
         return false;
     }//end clear()
 
-
     /**
      * Wipes clean the entire cache's keys regardless of webappPrefix.
      *
@@ -137,7 +133,6 @@ class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implemen
         return $return;
     }//end clearAll()
 
-    
     /**
      * Determines whether an item is present in the cache.
      *
@@ -159,7 +154,6 @@ class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implemen
         return false;
     }//end has()
 
-
     /**
      * Zeros and then removes the cryptokey from a var_dump of the object.
      * Also removes nonce from var_dump.
@@ -175,7 +169,6 @@ class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implemen
         return $result;
     }//end __debugInfo()
 
-
     /**
      * Zeros the cryptokey property on class destruction.
      *
@@ -185,7 +178,6 @@ class SimpleCacheAPCuSodium extends \AWonderPHP\SimpleCache\SimpleCache implemen
     {
         sodium_memzero($this->cryptokey);
     }//end __destruct()
-
 
     /**
      * The class constructor function
