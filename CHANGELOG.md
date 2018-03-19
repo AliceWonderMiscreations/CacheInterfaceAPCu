@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-MASTER (next packaged version)
-------------------------------
+Version 1.2.0 (2018 March 18) - I Got No Answers
+------------------------------------------------
 
 * Switched unit testing to PHPUnit.
 * Split out most of the functions that are not APCu specific into an abstract
