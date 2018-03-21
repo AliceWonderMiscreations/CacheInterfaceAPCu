@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+Version devel-branch (not released)
+
+* Throw exception if APCu not available
+
 Version 1.2.0 (2018 March 18) - I Got No Answers
 ------------------------------------------------
 

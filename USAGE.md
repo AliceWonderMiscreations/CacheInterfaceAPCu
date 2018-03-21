@@ -81,12 +81,13 @@ you.
 ### Web Application Salt
 
 The key you supply to the class to store and fetch data with APCu is hashed
-using `ripemd160` and a sixteen character substring of the hex representation
-of that hash is then used as part of the internal key.
+and a sixteen or twenty character substring (depending on whether you are using
+the Sodium variant or not) of the hex representation of that hash is then used
+as part of the internal key.
 
 The benefit of using a hash, I do not have to care what characters are legal to
-the actual cache engine. If I want to use a username as part of the the web
-application uses and a user uses “バニーガール” as their username, it's cool. I
+the actual cache engine. If I want to use a username as part of the key and one
+of my users uses something like “バニーガール” as their username, it's cool. I
 can feed that to the class and it will hash it to produce a simple ASCII key
 that will work with any cache engine.
 
@@ -216,6 +217,17 @@ It returns a boolean type `TRUE` on success and `FALSE` on failure.
 
 If the `$ttl` parameter is not specified, the class default TTL will be used.
 
+#### Special TTL Note
+
+If you specify a TTL of `0` in the `set` function, thy `key => value` pair will
+be cached as long as possible.
+
+If you specify a TTL of `-1` in the `set` function and you have previously set
+the default TTL to at least 6000 seconds (100 minutes), then a random number of
+seconds between 0 and 15% of the default TTL will randomly be added or
+substracted to the default TTL and used. This is to allow staggering the cache
+expiration when you cache a lot of items at once, such as with cache warming.
+
 
 ### `$CacheObj->delete($key);`
 
@@ -271,6 +283,18 @@ the `key => value` pairs, this method does not support specifying a different
 TTL to use depending on the individual pair.
 
 This method returns a boolean type `TRUE` on success and `FALSE` on failure.
+
+#### Special TTL Note
+
+If you specify a TTL of `0` in the `setMultiple` function, thy `key => value`
+pair will be cached as long as possible.
+
+If you specify a TTL of `-1` in the `setMultiple` function and you have
+previously set the default TTL to at least 6000 seconds (100 minutes), then a
+random number of seconds between 0 and 15% of the default TTL will randomly be
+added or substracted to the default TTL and used. This is to allow staggering
+the cache expiration when you cache a lot of items at once, such as with cache
+warming.
 
 
 ### `$CacheObj->deleteMultiple($keys);`

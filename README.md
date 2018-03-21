@@ -12,7 +12,7 @@ Please refer to the files [`INSTALL.md`](INSTALL.md), [`USAGE.md`](USAGE.md),
 and [`SURVIVAL.md`](SURVIVAL.md) for more information specific to
 SimpleCacheAPCu.
 
-For instructions specific to the encryption option. see the file
+For instructions specific to the encryption option, see the file
 [`SODIUM.md`](SODIUM.md).
 
 Please refer to the file [`LICENSE.md`](LICENSE.md) for the terms of the MIT
@@ -42,6 +42,10 @@ APCu cache *only* lives in the web server memory. If you restart the web server
 daemon, everything stored is gone. If the web server needs the memory for its
 own uses, it will dump some or all of the `key => value` pairs.
 
+If you wish to have a more persistent cache than APCu provides, you should use
+[SimpleCacheRedis](https://github.com/AliceWonderMiscreations/SimpleCacheRedis)
+instead.
+
 When web applications need information that *can be* cached, a unique key for
 that information that should be used. The web application then attempts to
 fetch the needed information from the cache.
@@ -52,9 +56,9 @@ fast response times. When the information is not there (what is called a
 database query with processing of the data) and then store it in the cache so
 it is highly *likely* to be there the next time it is queried from the cache.
 
-If you need a networked cache, APCu is not the best choice for you. However for
-local caching on the public facing server, it is incredibly lightweight and
-fast.
+If you need a networked cache, APCu is not the best choice for you, see the
+Redis link given earlier. However for local caching on the public facing
+server, it is incredibly lightweight and fast.
 
 
 About PHP-FIG and PSR-16
