@@ -369,6 +369,8 @@ an exception:
 
 1. The data type used in a parameter is incorrect
 2. The data used in a parameter is not valid for use
+3. APCu is not available or if you are using the Sodium variant, there is an
+issue that will prevent encryption from working.
 
 ### Data Type Exceptions
 
@@ -412,7 +414,26 @@ In those circumstances, this class will throw a:
 
 Exception.
 
-You can catch these based on `InvalidArgumentException` or the PSR implementation.
+You can catch these based on `\InvalidArgumentException` or the PSR
+implementation.
+
+### Setup Exceptions
+
+Exceptions of this type only happen when either the class is not able to
+use APCu, you are using the Sodium variant and do not have the libsodium
+functions available, you specified a JSON configuration file that does not
+exist or is invalid, your encryption key is not valid, or something is broken
+resulting in the encryption nonce not being properly incremented.
+
+In those circumstances, this class will throw a:
+
+    \AWonderPHP\SimpleCache\InvalidSetupException
+        extends \ErrorException
+        implements \Psr\SimpleCache\CacheException
+
+Exception.
+
+You can catch these based on `\ErrorException` or the PSR implementation.
 
 
 ### About Catching Exceptions
