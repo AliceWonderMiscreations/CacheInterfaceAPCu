@@ -24,6 +24,19 @@ namespace AWonderPHP\SimpleCacheAPCu;
 class SimpleCacheAPCu extends \AWonderPHP\SimpleCache\SimpleCache implements \Psr\SimpleCache\CacheInterface
 {
     /**
+     * Verify APCu is installed and available.
+     *
+     * @return bool
+     */
+    protected function verifyApcuAvailable(): bool
+    {
+        if (extension_loaded('apcu') && ini_get('apc.enabled')) {
+            return true;
+        }
+        throw \AWonderPHP\SimpleCache\InvalidSetupException::apcuNotAvailable();
+    }//end verifyApcuAvailable()
+
+    /**
      * A wrapper for the actual fetch from the cache.
      *
      * @param string $realKey The internal key used with APCu.
@@ -157,7 +170,7 @@ class SimpleCacheAPCu extends \AWonderPHP\SimpleCache\SimpleCache implements \Ps
      */
     public function __construct($webappPrefix = null, $salt = null, bool $strictType = false)
     {
-        if (extension_loaded('apcu') && ini_get('apc.enabled')) {
+        if ($this->verifyApcuAvailable()) {
             $invalidTypes = array('array', 'object', 'boolean');
             if (! is_null($webappPrefix)) {
                 if (! $strictType) {

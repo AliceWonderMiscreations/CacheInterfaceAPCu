@@ -1,6 +1,8 @@
 SimpleCacheAPCu Installation
 ============================
 
+You will need to have the [PECL APCu](https://pecl.php.net/package/APCu)
+installed and available.
 
 SimpleCacheAPCu is a library, it is not a stand alone application.
 
@@ -32,8 +34,8 @@ where your autoloader can find them.
 
 Once those two dependencies are installed, there are two class files:
 
-1. [`SimpleCacheAPCu`](blob/master/lib/SimpleCacheAPCu.php)
-2. [`SimpleCacheAPCuSodium`](blob/master/lib/SimpleCacheAPCuSodium.php)
+1. [`SimpleCacheAPCu`](lib/SimpleCacheAPCu.php)
+2. [`SimpleCacheAPCuSodium`](lib/SimpleCacheAPCuSodium.php)
 
 The first class provides PSR-16 without encryption, the second provides PSR-16
 with encryption.
@@ -46,8 +48,8 @@ RPM Installation
 
 I have started a project called
 [PHP Composer Class Manager](https://github.com/AliceWonderMiscreations/php-ccm)
-but it is not yet ready for deployment, and as of today (February 28 2018) it
-will likely be awhile.
+but it is not yet ready for deployment, and as of today (March 21 2018) it will
+likely be awhile.
 
 
 Class Usage
